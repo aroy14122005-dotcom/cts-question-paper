@@ -1,0 +1,166 @@
+/* GOOGLE FONT */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body{
+    background: #f4f7fc;
+    min-height: 100vh;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.container{
+    width: 100%;
+    max-width: 700px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+h1{
+    text-align: center;
+    margin-bottom: 25px;
+    color: #0d1936;
+}
+
+h2{
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: #0d1936;
+}
+
+form{
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+input[type="file"]{
+    border: 2px dashed #0d6efd;
+    padding: 10px;
+    border-radius: 10px;
+    background: #f8fbff;
+    width: 100%;
+    cursor: pointer;
+}
+
+button{
+    background: #0d6efd;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover{
+    background: #084298;
+    transform: scale(1.05);
+}
+
+hr{
+    margin: 25px 0;
+    border: none;
+    height: 2px;
+    background: #ddd;
+}
+
+.pdf-box{
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.pdf-box a{
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.pdf-box a:first-child{
+    color: #0d6efd;
+}
+
+.delete-btn{
+    background: red;
+    color: white !important;
+    padding: 8px 15px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.delete-btn:hover{
+    background: darkred;
+}
+
+p{
+    text-align: center;
+    color: gray;
+}
+
+/* PDF Name Link */
+.pdf-link{
+    text-decoration: none;
+    color: #0d6efd;
+    font-weight: 600;
+    font-size: 16px;
+    word-break: break-word;
+}
+
+.pdf-link:hover{
+    text-decoration: underline;
+    color: #084298;
+}
+
+/* Buttons Container */
+.action-buttons{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Download Button */
+.download-btn{
+    background: #198754;
+    color: white !important;
+    padding: 8px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.download-btn:hover{
+    background: #146c43;
+    transform: scale(1.05);
+}
+
+/* Delete Button */
+.delete-btn{
+    background: red;
+    color: white !important;
+    padding: 8px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.delete-btn:hover{
+    background: darkred;
+    transform: scale(1.05);
+}

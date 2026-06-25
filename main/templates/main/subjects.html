@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Semester Subjects</title>
+    <link rel="stylesheet" href="{% static 'css/style3.css' %}">
+</head>
+<body>
+
+<div class="page-box">
+    <div class="header">Semester Subjects Page</div>
+
+    {% for sem, subject_list in subjects.items %}
+        <div class="sem-title">Semester {{ sem }}</div>
+
+        <div class="subject-list">
+            {% for subject in subject_list %}
+                <a class="subject-link" href="{% url 'subject_upload' dept_name sem subject %}">
+                    📄 {{ subject }}
+                </a>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+
+</body>
+</html>

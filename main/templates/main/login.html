@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Boxicons -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    {% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}?v=2028">
+
+    <title>CTS_question paper</title>
+  </head>
+
+  <body>
+    <div class="wrapper">
+
+      <!-- FORM HEADER -->
+      <div class="form-header">
+        <div class="titles">
+          <!-- Register ke age rakha holo -->
+          <span class="title-register">Register</span>
+          <span class="title-login">Login</span>
+        </div>
+      </div>
+
+      <!-- REGISTER FORM FIRST -->
+      <div class="register-form" style="left: 0px;">
+        <form method="POST">
+          {% csrf_token %}
+
+         <input type="hidden" name="form_type" value="register">
+        <div class="input-box">
+
+          <input type="text" name="username" id="reg-user" class="input-field" autocomplete="off" required />
+
+          <label for="reg-user" class="label">Username</label>
+          <i class="bx bx-user icon"></i>
+        </div>
+
+        <div class="input-box">
+
+          <input type="email" name="email" id="email" class="input-field" autocomplete="off" required />
+
+          <label for="email" class="label">Email</label>
+          <i class="bx bx-envelope icon"></i>
+        </div>
+
+        <div class="input-box">
+
+          <input type="password" name="password" id="reg-pass" class="input-field" autocomplete="off" required />
+
+          <label for="reg-pass" class="label">Password</label>
+          <i class="bx bx-lock-alt icon"></i>
+        </div>
+
+        <div class="form-cols">
+          <div class="col-1">
+            <input type="checkbox" id="remember" />
+            <label for="remember">
+              I agree to the terms & condition
+            </label>
+          </div>
+        </div>
+
+        <div class="input-box">
+          <button type="submit" class="btn-submit" id="SignUpBtn">
+          Sign Up <i class="bx bx-user-plus"></i>
+         </button>
+        </div>
+
+        <div class="switch-form">
+          <span>
+            Already have an account?
+            <a href="#" onclick="loginFunction()">Login</a>
+          </span>
+        </div>
+      </div>
+      </form>
+
+      <!-- LOGIN FORM SECOND -->
+      <div class="login-form" style="left: -500px;">
+        <form method="POST">
+       {% csrf_token %}
+
+       <input type="hidden" name="form_type" value="login">
+        <div class="input-box">
+
+          <input type="text" name="username" id="user" class="input-field" required>
+
+          <label for="user" class="label">Username</label>
+          <i class="bx bx-user icon"></i>
+        </div>
+
+        <div class="input-box">
+          
+          <input type="password" name="password" id="pass" class="input-field" required>
+
+          <label for="pass" class="label">Password</label>
+          <i class="bx bx-lock-alt icon"></i>
+        </div>
+
+        <div class="form-cols">
+          <div class="col-2">
+            <a href="#">Forgot password?</a>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="SignInBtn">
+          Login <i class="bx bx-log-in"></i>
+          </button>
+          
+        <div class="switch-form">
+          <span>
+            Don't have an account?
+            <a href="#" onclick="registerFunction()">Register</a>
+          </span>
+        </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="toaster">
+      <p>Logged In !</p>
+    </div>
+
+    <!-- SCRIPT -->
+<script>
+  function loginFunction() {
+    document.querySelector(".login-form").style.left = "32px";
+    document.querySelector(".register-form").style.left = "100%";
+
+    document.querySelector(".title-login").style.top = "-10px";
+    document.querySelector(".title-register").style.top = "-60px";
+  }
+
+  function registerFunction() {
+    document.querySelector(".login-form").style.left = "-100%";
+    document.querySelector(".register-form").style.left = "32px";
+
+    document.querySelector(".title-login").style.top = "40px";
+    document.querySelector(".title-register").style.top = "-10px";
+  }
+
+  window.onload = function () {
+
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.get("login") === "true") {
+      loginFunction();
+    } else {
+      registerFunction();
+    }
+  };
+</script>
+  </body>
+</html>

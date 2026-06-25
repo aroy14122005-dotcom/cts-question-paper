@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semester {{ sem_no }} PDF Upload</title>
+
+   {% load static %}
+<link rel="stylesheet" href="{% static 'css/style4.css' %}">
+
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Upload PDF</h1>
+
+{% if subject_name %}
+    <h3>Subject: {{ subject_name }}</h3>
+{% endif %}
+
+<h3>Semester: {{ sem_no }}</h3>
+
+    <!-- Upload Form -->
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <input type="file" 
+               name="pdf_file" 
+               accept=".pdf" 
+               required>
+
+        <button type="submit">
+            Upload PDF
+        </button>
+    </form>
+
+    <hr>
+
+    <h2>Uploaded PDFs</h2>
+
+    <!-- Uploaded PDF List -->
+    {% for pdf in pdfs %}
+
+       <div class="pdf-box">
+
+    <a href="{{ pdf.pdf_file.url }}"
+       target="_blank"
+       class="pdf-link">
+        📄 {{ pdf.pdf_file.name }}
+    </a>
+
+    <div class="action-buttons">
+
+        <a href="{{ pdf.pdf_file.url }}"
+           download
+           class="download-btn">
+            Download
+        </a>
+
+        {% if is_subject_upload %}
+    <a href="{% url 'delete_subject_pdf' pdf.id %}"
+       class="delete-btn">
+        Delete
+    </a>
+{% else %}
+    <a href="{% url 'delete_pdf' pdf.id %}"
+       class="delete-btn">
+        Delete
+    </a>
+{% endif %}
+
+    </div>
+
+</div>
+
+    {% empty %}
+
+        <p>No PDF uploaded yet.</p>
+
+    {% endfor %}
+
+</div>
+
+</body>
+</html>

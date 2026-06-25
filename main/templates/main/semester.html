@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semester System</title>
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+</head>
+
+<body>
+<div class="container">
+
+    <div class="title">SEMESTER SYSTEM</div>
+    <br>
+
+    <div class="semester">
+        <a href="{% url 'upload_pdf' 1 %}"><button class="sem-btn">1 SEMESTER</button></a>
+        <a href="{% url 'upload_pdf' 2 %}"><button class="sem-btn">2 SEMESTER</button></a>
+        <a href="{% url 'upload_pdf' 3 %}"><button class="sem-btn">3 SEMESTER</button></a>
+        <a href="{% url 'upload_pdf' 4 %}"><button class="sem-btn">4 SEMESTER</button></a>
+        <a href="{% url 'upload_pdf' 5 %}"><button class="sem-btn">5 SEMESTER</button></a>
+        <a href="{% url 'upload_pdf' 6 %}"><button class="sem-btn">6 SEMESTER</button></a>
+    </div>
+
+    <hr>
+    <hr>
+
+    <div class="subject-section">
+        <h3 class="subject-title">Subject</h3>
+        <button class="subject-btn" onclick="window.location.href='{% url 'subject_page' dept_name %}'">
+          Subject
+       </button>
+    </div>
+
+</div>
+</body>
+</html>

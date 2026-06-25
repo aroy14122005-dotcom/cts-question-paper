@@ -1,0 +1,29 @@
+/* HOME PAGE */
+.home-container {
+  text-align: center;
+  margin-top: 100px;
+  color: #fff;
+}
+h1 {
+    margin-bottom: 40px;
+    font-size: 28px;
+    color: black;
+    text-decoration: underline;
+    text-decoration-color: #1a56db; /* blue color */
+    text-underline-offset: 8px; /* text theke ektu niche */
+    text-decoration-thickness: 3px; /* underline mota korar jonno */
+}
+.dept-box {
+  width: 300px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+
+  background: rgba(0, 3, 168, 0.949);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.dept-box:hover {
+  background: #007bff;
+}

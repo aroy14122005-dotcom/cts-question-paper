@@ -1,0 +1,134 @@
+body {
+    /*font-family: Arial, sans-serif;
+    background: #f2f2f2;
+    margin: 0;*/
+}
+
+/* Header */
+.header {
+    background: white;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 4px solid rgb(75, 38, 221);
+}
+
+.header h1 {
+    margin: 0;
+    color: #2b2b8f;
+}
+
+/* Main Container */
+.container {
+    max-width: 500px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.title {
+    text-align: center;
+    color: rgb(255, 0, 0);
+    text-decoration: underline;
+    text-decoration-color: #1a56db; /* blue color */
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+/* Semester Grid */
+.semester {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+/* Buttons */
+.sem-btn {
+    padding: 15px;
+    border: 2px solid #999;
+    border-radius: 8px;
+    background: #fafafa;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.sem-btn:hover {
+    background: rgb(0, 64, 255);
+    color: white;
+    border-color: rgb(2, 2, 2);
+}
+/* Subject Section */
+.subject-section {
+    margin-top: 40px;
+}
+
+/* Subject Title */
+.subject-title {
+    text-align: center;
+    color: #8b0000;
+    text-decoration: underline;
+    font-size: 20px;
+}
+
+/* Subject Button */
+/*.subject-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: 2px solid #999;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+}
+
+.subject-btn:hover {
+    background: orange;
+    color: white;
+}*/
+/*.subject-btn {
+    padding: 15px;
+    border: 2px solid #999;
+    border-radius: 8px;
+    background: #fafafa;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.subject-btn:hover {
+    background: rgb(0, 64, 255);
+    color: white;
+    border-color: rgb(2, 2, 2);
+}*/
+/* Subject title center */
+.subject-title{
+    text-align: center;
+    margin-top: 40px;
+    font-size: 32px;
+    text-decoration: underline;
+    color: maroon;
+}
+
+/* Subject button container middle e anar jonno */
+.subject-container{
+    display: flex;
+    justify-content: center;   /* middle e anbe */
+    margin-top: 30px;
+}
+
+/* Subject button semester er moto size */
+.subject-btn{
+    width: 340px;      /* semester button er width */
+    height: 80px;      /* semester button er height */
+    font-size: 28px;
+    border: 2px solid black;
+    border-radius: 15px;
+    background: white;
+    cursor: pointer;
+}
+
+.subject-btn:hover{
+   /* background: #f0f0f0;*/
+    background: rgb(0, 64, 255);
+    color: white;
+    border-color: rgb(2, 2, 2);
+}
