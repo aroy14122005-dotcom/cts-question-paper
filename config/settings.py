@@ -135,15 +135,14 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dbvttljhn',
-    'API_KEY': '548882782553366',
-    'API_SECRET': 'hGOdXfN1etfheuDrzmQgtyspYCM',
+    "CLOUD_NAME": "dbvttljhn",
+    "API_KEY": "548882782553366",
+    "API_SECRET": "hGOdXfN1etfheuDrzmQgtyspYCM",
 }
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
 STORAGES = {
     "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+        "BACKEND": "cloudinary_storage.storage.RawMediaCloudinaryStorage",
     },
     "staticfiles": {
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
