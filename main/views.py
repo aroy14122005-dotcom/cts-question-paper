@@ -19,7 +19,11 @@ def login_page(request):
                 messages.error(request, "Username already exists")
                 return redirect("/?login=true")
 
-            User.objects.create_user(username=username, email=email, password=password)
+            User.objects.create_user(
+                username=username,
+                email=email,
+                password=password
+            )
             messages.success(request, "Registration successful. Please login.")
             return redirect("/?login=true")
 
@@ -27,7 +31,11 @@ def login_page(request):
             username = request.POST.get("username")
             password = request.POST.get("password")
 
-            user = authenticate(request, username=username, password=password)
+            user = authenticate(
+                request,
+                username=username,
+                password=password
+            )
 
             if user is not None:
                 login(request, user)

@@ -18,6 +18,13 @@
   </head>
 
   <body>
+    {% if messages %}
+    {% for message in messages %}
+        <p style="color:red;">
+            {{ message }}
+        </p>
+    {% endfor %}
+{% endif %}
     <div class="wrapper">
 
       <!-- FORM HEADER -->
