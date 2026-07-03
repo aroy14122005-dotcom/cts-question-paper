@@ -11,8 +11,8 @@ def login_page(request):
         form_type = request.POST.get("form_type")
 
         if form_type == "register":
-            username = request.POST.get("username")
-            email = request.POST.get("email")
+            username = request.POST.get("username", "").strip()
+            email = request.POST.get("email", "").strip()
             password = request.POST.get("password")
 
             if User.objects.filter(username=username).exists():
@@ -24,18 +24,24 @@ def login_page(request):
                 email=email,
                 password=password
             )
+
             messages.success(request, "Registration successful. Please login.")
             return redirect("/?login=true")
 
         elif form_type == "login":
-            username = request.POST.get("username")
+            username = request.POST.get("username", "").strip()
             password = request.POST.get("password")
+
+            print("Username:", repr(username))
+            print("Password:", repr(password))
 
             user = authenticate(
                 request,
                 username=username,
                 password=password
             )
+
+            print("Authenticated User:", user)
 
             if user is not None:
                 login(request, user)
