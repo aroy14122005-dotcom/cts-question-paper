@@ -19,11 +19,13 @@
 
   <body>
     {% if messages %}
+<div class="message-container">
     {% for message in messages %}
-        <p style="color:red;">
+        <div class="message {{ message.tags }}">
             {{ message }}
-        </p>
+        </div>
     {% endfor %}
+</div>
 {% endif %}
     <div class="wrapper">
 
