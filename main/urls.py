@@ -14,4 +14,5 @@ urlpatterns = [
     path('semester/<str:dept_name>/<int:sem_no>/<str:subject_name>/subject-upload/', views.subject_upload, name='subject_upload'),
     path('subject-pdf/delete/<int:pdf_id>/', views.delete_subject_pdf, name='delete_subject_pdf'),
     path("search/", views.search_page, name="search"),
+    path("search-api/", views.search_api, name="search_api"),
 ]

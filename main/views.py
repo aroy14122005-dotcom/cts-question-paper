@@ -5,6 +5,7 @@ from django.contrib import messages
 from .models import PDFUpload, SubjectPDF
 import os
 from django.db.models import Q
+from django.http import JsonResponse
 
 
 def login_page(request):
@@ -209,3 +210,20 @@ def search_page(request):
         "results": results
 
     })
+def search_api(request):
+    query = request.GET.get("q", "").strip()
+
+    results = SubjectPDF.objects.filter(
+        subject__icontains=query
+    )[:8]
+
+    data = []
+
+    for pdf in results:
+        data.append({
+            "subject": pdf.subject,
+            "department": pdf.department,
+            "semester": pdf.semester,
+        })
+
+    return JsonResponse(data, safe=False)

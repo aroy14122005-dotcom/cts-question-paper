@@ -139,8 +139,10 @@
 
     <input
         type="text"
+        id="search-input"
         name="q"
-        placeholder="Search by Subject, Code..."
+        placeholder="Search question papers..."
+        autocomplete="off"
     >
 
     <select name="department">
@@ -162,6 +164,8 @@
     </button>
 
 </form>
+
+<div id="search-suggestions"></div>
 
         <!-- Right -->
 
@@ -240,6 +244,25 @@ document.addEventListener("click", function(e){
     if(!papersBtn.contains(e.target) && !papersMenu.contains(e.target)){
         papersMenu.classList.remove("show");
     }
+
+});
+const searchInput = document.getElementById("search-input");
+
+searchInput.addEventListener("keyup", function () {
+
+    const query = this.value;
+
+    if (query.length < 2) {
+        return;
+    }
+
+    fetch(`/search-api/?q=${query}`)
+        .then(response => response.json())
+        .then(data => {
+
+            console.log(data);
+
+        });
 
 });
 </script>
