@@ -1,11 +1,17 @@
 /* ================= NAVBAR ================= */
 
 .navbar{
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
     display:flex;
     justify-content:space-between;
     align-items:center;
     gap:25px;
     padding:15px 40px;
+
+    background:#0f172a;
 }
 
 /* Logo */
@@ -17,7 +23,7 @@
 .logo a{
     font-size: 32px;
     font-weight: 700;
-    color: white;
+    color: rgb(234, 54, 54);
     white-space: nowrap;
 }
 /* Menu */
@@ -33,7 +39,7 @@ nav{
     gap:35px;
 }
 .nav-links a{
-    color:white;
+    color:rgb(209, 236, 10);
     font-size:16px;
     font-weight:500;
     transition:.3s;
@@ -43,35 +49,57 @@ nav{
     color:#38bdf8;
 }
 
-/* Search */
+/* ================= SEARCH ================= */
 
 .search-box{
     display:flex;
     align-items:center;
+    background:white;
+    border-radius:30px;
+    overflow:hidden;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
 }
 
 .search-box input{
 
-    width:220px;
+    width:240px;
 
-    padding:10px 15px;
+    padding:12px 18px;
 
     border:none;
 
     outline:none;
 
-    border-radius:25px 0 0 25px;
+    font-size:15px;
+
+}
+
+.search-box select{
+
+    border:none;
+
+    outline:none;
+
+    padding:12px;
+
+    background:#f3f4f6;
+
+    cursor:pointer;
+
 }
 
 .search-box button{
 
-    padding:10px 15px;
+    width:55px;
+
+    height:45px;
 
     background:#2563eb;
 
     color:white;
 
-    border-radius:0 25px 25px 0;
+    font-size:20px;
+
 }
 
 .search-box button:hover{
@@ -90,7 +118,7 @@ nav{
 
 .user-menu a{
 
-    color:white;
+    color:rgb(243, 110, 110);
 
     font-weight:500;
 
@@ -107,61 +135,44 @@ nav{
     position:relative;
 }
 
-.dropdown>a{
+.dropdown > a{
     display:flex;
     align-items:center;
     gap:5px;
 }
 
 .dropdown-menu{
-
     position:absolute;
-
-    top:45px;
+    top:100%;
     left:0;
 
     width:270px;
 
-    background:#ffffff;
+    background:white;
 
-    border-radius:10px;
+    border-radius:8px;
 
-    box-shadow:0 10px 25px rgba(0,0,0,.15);
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
 
     display:none;
 
-    overflow:hidden;
-
+    z-index:999;
+}
+.dropdown-menu.show{
+    display:block;
 }
 
 .dropdown-menu li{
-
     width:100%;
-
 }
 
-.dropdown-menu a{
-
+.dropdown-menu li a{
     display:block;
-
     padding:14px 18px;
-
     color:#222;
-
-    font-size:15px;
-
 }
 
-.dropdown-menu a:hover{
-
+.dropdown-menu li a:hover{
     background:#2563eb;
-
     color:white;
-
-}
-
-.dropdown:hover .dropdown-menu{
-
-    display:block;
-
 }

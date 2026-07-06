@@ -42,12 +42,12 @@
 
                 <li class="dropdown">
 
-    <a href="#">
+    <a href="#" id="department-btn">
         Departments
         <i class='bx bx-chevron-down'></i>
     </a>
 
-    <ul class="dropdown-menu">
+    <ul class="dropdown-menu" id="department-menu">
 
         <li>
             <a href="{% url 'semester' 'cst' %}">
@@ -76,9 +76,54 @@
     </ul>
 
 </li>
+                <li class="dropdown">
 
-                <li><a href="#">Question Papers</a></li>
+    <a href="#">
+        Question Papers
+        <i class='bx bx-chevron-down'></i>
+    </a>
 
+    <ul class="dropdown-menu">
+
+        <li>
+            <a href="#">
+                Latest Papers
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                Recent Uploads
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                Most Downloaded
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                Browse by Department
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                Browse by Semester
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                Browse by Year
+            </a>
+        </li>
+
+    </ul>
+
+</li>
                 <li><a href="#">Favorites</a></li>
 
                 <li><a href="#">Contact</a></li>
@@ -89,17 +134,33 @@
 
         <!-- Search -->
 
-        <div class="search-box">
+        <form action="{% url 'search' %}" method="GET" class="search-box">
 
-            <input type="text" placeholder="Search question papers...">
+    <input
+        type="text"
+        name="q"
+        placeholder="Search by Subject, Code..."
+    >
 
-            <button>
+    <select name="department">
 
-                <i class='bx bx-search'></i>
+        <option value="">Department</option>
 
-            </button>
+        <option value="cst">CST</option>
 
-        </div>
+        <option value="civil">Civil</option>
+
+        <option value="electrical">Electrical</option>
+
+        <option value="mechanical">Mechanical</option>
+
+    </select>
+
+    <button type="submit">
+        <i class='bx bx-search'></i>
+    </button>
+
+</form>
 
         <!-- Right -->
 
@@ -142,7 +203,45 @@
         </p>
 
     </footer>
+<script>
 
+const btn = document.getElementById("department-btn");
+const menu = document.getElementById("department-menu");
+
+btn.addEventListener("click", function(e){
+
+    e.preventDefault();
+
+    menu.classList.toggle("show");
+
+});
+
+document.addEventListener("click", function(e){
+
+    if(!btn.contains(e.target) && !menu.contains(e.target)){
+        menu.classList.remove("show");
+    }
+
+});
+const papersBtn = document.getElementById("papers-btn");
+const papersMenu = document.getElementById("papers-menu");
+
+papersBtn.addEventListener("click", function(e){
+
+    e.preventDefault();
+
+    papersMenu.classList.toggle("show");
+
+});
+
+document.addEventListener("click", function(e){
+
+    if(!papersBtn.contains(e.target) && !papersMenu.contains(e.target)){
+        papersMenu.classList.remove("show");
+    }
+
+});
+</script>
 </body>
 
 </html>

@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .models import PDFUpload, SubjectPDF
 import os
+from django.db.models import Q
 
 
 def login_page(request):
@@ -186,3 +187,25 @@ def delete_subject_pdf(request, pdf_id):
         sem_no=sem_no,
         subject_name=subject_name
     )
+def search_page(request):
+
+    query = request.GET.get("q", "").strip()
+
+    results = SubjectPDF.objects.none()
+
+    if query:
+
+        results = SubjectPDF.objects.filter(
+
+            Q(subject__icontains=query) |
+            Q(department__icontains=query) |
+            Q(semester__icontains=query)
+
+        ).order_by("-uploaded_at")
+
+    return render(request, "main/search.html", {
+
+        "query": query,
+        "results": results
+
+    })

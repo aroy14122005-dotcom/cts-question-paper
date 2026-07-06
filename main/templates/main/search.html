@@ -1,0 +1,53 @@
+{% extends "main/base.html" %}
+
+{% block title %}
+Search
+{% endblock %}
+
+{% block content %}
+
+<h2>Search Results</h2>
+
+{% if query %}
+<p>Search: <b>{{ query }}</b></p>
+{% endif %}
+
+{% if results %}
+
+{% for pdf in results %}
+
+<div class="paper-card">
+
+<h3>{{ pdf.subject }}</h3>
+
+<p>Department : {{ pdf.department }}</p>
+
+<p>Semester : {{ pdf.semester }}</p>
+
+<a href="{{ pdf.pdf_file.url }}" target="_blank">
+
+Preview PDF
+
+</a>
+
+|
+
+<a href="{{ pdf.pdf_file.url }}" download>
+
+Download
+
+</a>
+
+</div>
+
+<hr>
+
+{% endfor %}
+
+{% else %}
+
+<p>No question paper found.</p>
+
+{% endif %}
+
+{% endblock %}
