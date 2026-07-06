@@ -1,53 +1,64 @@
 {% extends "main/base.html" %}
 
 {% block title %}
-Search
+Search Results
 {% endblock %}
 
 {% block content %}
 
-<h2>Search Results</h2>
+<div class="search-container">
 
-{% if query %}
-<p>Search: <b>{{ query }}</b></p>
-{% endif %}
+    <h1>🔍 Search Results</h1>
 
-{% if results %}
+    {% if query %}
+        <p style="text-align:center; margin-bottom:25px;">
+            Search for:
+            <strong>"{{ query }}"</strong>
+        </p>
+    {% endif %}
 
-{% for pdf in results %}
+    <p style="text-align:center; margin-bottom:35px;">
+        {{ results|length }} Result{{ results|length|pluralize }} Found
+    </p>
 
-<div class="paper-card">
+    {% if results %}
 
-<h3>{{ pdf.subject }}</h3>
+        {% for pdf in results %}
 
-<p>Department : {{ pdf.department }}</p>
+        <div class="paper-card">
 
-<p>Semester : {{ pdf.semester }}</p>
+            <h2>{{ pdf.subject }}</h2>
 
-<a href="{{ pdf.pdf_file.url }}" target="_blank">
+            <div class="paper-info">
+                <span>🏢 <b>Department:</b> {{ pdf.department|upper }}</span>
+                <span>🎓 <b>Semester:</b> {{ pdf.semester }}</span>
+            </div>
 
-Preview PDF
+            <div class="paper-buttons">
 
-</a>
+                <a href="{{ pdf.pdf_file.url }}" target="_blank" class="preview-btn">
+                    👁 Preview PDF
+                </a>
 
-|
+                <a href="{{ pdf.pdf_file.url }}" download class="download-btn">
+                    📥 Download PDF
+                </a>
 
-<a href="{{ pdf.pdf_file.url }}" download>
+            </div>
 
-Download
+        </div>
 
-</a>
+        {% endfor %}
+
+    {% else %}
+
+        <div class="paper-card" style="text-align:center;">
+            <h2>❌ No Question Paper Found</h2>
+            <p>Try another subject, department or semester.</p>
+        </div>
+
+    {% endif %}
 
 </div>
-
-<hr>
-
-{% endfor %}
-
-{% else %}
-
-<p>No question paper found.</p>
-
-{% endif %}
 
 {% endblock %}

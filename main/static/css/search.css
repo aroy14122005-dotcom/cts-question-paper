@@ -74,3 +74,45 @@
     transform:translateY(-2px);
     opacity:.9;
 }
+.paper-buttons a{
+    text-decoration:none;
+    padding:12px 22px;
+    border-radius:8px;
+    color:white;
+    font-weight:600;
+    transition:.3s;
+}
+
+.preview-btn{
+    background:#0ea5e9;
+}
+
+.download-btn{
+    background:#16a34a;
+}
+
+.paper-buttons a:hover{
+    transform:translateY(-2px);
+    opacity:.9;
+}
+.paper-buttons a{
+    text-decoration:none;
+    padding:12px 22px;
+    border-radius:8px;
+    color:white;
+    font-weight:600;
+    transition:.3s;
+}
+
+.preview-btn{
+    background:#0ea5e9;
+}
+
+.download-btn{
+    background:#16a34a;
+}
+
+.paper-buttons a:hover{
+    transform:translateY(-2px);
+    opacity:.9;
+}
