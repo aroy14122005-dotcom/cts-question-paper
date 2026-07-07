@@ -7,6 +7,11 @@ import os
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .models import Favorite
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from .models import SubjectPDF, Favorite
 
 
 def login_page(request):
@@ -234,3 +239,34 @@ def paper_detail(request, pdf_id):
     return render(request, "main/paper_detail.html", {
         "pdf": pdf
     })
+@login_required
+def favorites(request):
+    favorites = Favorite.objects.filter(user=request.user)
+
+    return render(request, "main/favorites.html", {
+        "favorites": favorites,
+    })
+
+
+@login_required
+def add_favorite(request, paper_id):
+    paper = get_object_or_404(SubjectPDF, id=paper_id)
+
+    Favorite.objects.get_or_create(
+        user=request.user,
+        paper=paper
+    )
+
+    return redirect("favorites")
+
+
+@login_required
+def remove_favorite(request, paper_id):
+    paper = get_object_or_404(SubjectPDF, id=paper_id)
+
+    Favorite.objects.filter(
+        user=request.user,
+        paper=paper
+    ).delete()
+
+    return redirect("favorites")

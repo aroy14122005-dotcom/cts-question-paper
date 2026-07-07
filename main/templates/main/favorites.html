@@ -1,0 +1,63 @@
+{% extends "main/base.html" %}
+
+{% block title %}
+Favorites
+{% endblock %}
+
+{% block content %}
+
+<div class="favorites-page">
+
+    <h1 class="page-title">❤️ My Favorite Papers</h1>
+
+    {% if favorites %}
+
+        {% for fav in favorites %}
+
+        <div class="favorite-card">
+
+            <h2>{{ fav.paper.subject }}</h2>
+
+            <div class="paper-info">
+                <span>🏢 <b>Department:</b> {{ fav.paper.department|upper }}</span>
+
+                <span>🎓 <b>Semester:</b> {{ fav.paper.semester }}</span>
+            </div>
+
+            <div class="paper-buttons">
+
+                <a href="{% url 'paper_detail' fav.paper.id %}" class="preview-btn">
+                    👁 Preview
+                </a>
+
+                <a href="{{ fav.paper.pdf_file.url }}" download class="download-btn">
+                    📥 Download
+                </a>
+
+               <a href="{% url 'remove_favorite' fav.paper.id %}" class="remove-btn">
+                   🗑 Remove
+               </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty-box">
+
+            <h2>No Favorite Papers Yet ❤️</h2>
+
+            <p>
+                Add your favorite question papers and they will appear here.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

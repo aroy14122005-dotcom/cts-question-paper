@@ -1,5 +1,11 @@
 from django.urls import path
 from . import views
+from django.contrib import admin
+from .models import PDFUpload, SubjectPDF, Favorite
+
+admin.site.register(PDFUpload)
+admin.site.register(SubjectPDF)
+admin.site.register(Favorite)
 
 urlpatterns = [
     path('', views.login_page, name='login'),

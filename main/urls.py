@@ -16,4 +16,7 @@ urlpatterns = [
     path("search/", views.search_page, name="search"),
     path("search-api/", views.search_api, name="search_api"),
     path("paper/<int:pdf_id>/", views.paper_detail, name="paper_detail"),
+    path("favorites/", views.favorites, name="favorites"),
+    path("favorite/add/<int:paper_id>/", views.add_favorite, name="add_favorite"),
+    path("favorite/remove/<int:paper_id>/", views.remove_favorite, name="remove_favorite"),
 ]

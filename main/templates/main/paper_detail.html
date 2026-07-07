@@ -1,27 +1,66 @@
 {% extends "main/base.html" %}
+{% load static %}
 
 {% block title %}
 {{ pdf.subject }}
 {% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/paper_detail.css' %}">
+{% endblock %}
+
 {% block content %}
 
-<h1>{{ pdf.subject }}</h1>
+<div class="paper-container">
 
-<p><strong>Department:</strong> {{ pdf.department|upper }}</p>
+    <div class="paper-card">
 
-<p><strong>Semester:</strong> {{ pdf.semester }}</p>
+        <h1>{{ pdf.subject }}</h1>
 
-<p>
-    <a href="{{ pdf.pdf_file.url }}" target="_blank">
-        👁 Preview PDF
-    </a>
-</p>
+        <div class="paper-info">
 
-<p>
-    <a href="{{ pdf.pdf_file.url }}" download>
-        📥 Download PDF
-    </a>
-</p>
+            <p>
+                <strong>🏢 Department:</strong>
+                {{ pdf.department|upper }}
+            </p>
+
+            <p>
+                <strong>🎓 Semester:</strong>
+                {{ pdf.semester }}
+            </p>
+
+            <p>
+                <strong>📅 Uploaded:</strong>
+                {{ pdf.uploaded_at|date:"d M Y" }}
+            </p>
+
+        </div>
+
+        <div class="paper-buttons">
+
+            <a href="{{ pdf.pdf_file.url }}"
+               target="_blank"
+               class="preview-btn">
+
+                👁 Preview PDF
+
+            </a>
+
+            <a href="{{ pdf.pdf_file.url }}"
+               download
+               class="download-btn">
+
+                📥 Download PDF
+
+            </a>
+            <a href="{% url 'add_favorite' paper.id %}" class="favorite-btn">
+    ❤️ Add to Favorites
+</a>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}

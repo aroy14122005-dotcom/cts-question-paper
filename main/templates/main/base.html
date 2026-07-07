@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
     <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
     <link rel="stylesheet" href="{% static 'css/search.css' %}">
+    <link rel="stylesheet" href="{% static 'css/paper_detail.css' %}">
+    <link rel="stylesheet" href="{% static 'css/favorites.css' %}">
 
     <!-- Page CSS -->
     {% block extra_css %}{% endblock %}
@@ -125,7 +127,7 @@
     </ul>
 
 </li>
-                <li><a href="#">Favorites</a></li>
+                <a href="{% url 'favorites' %}">Favorites</a>
 
                 <li><a href="#">Contact</a></li>
 

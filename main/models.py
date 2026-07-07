@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from django.contrib.auth.models import User
 
 
 class PDFUpload(models.Model):
@@ -27,3 +28,15 @@ class SubjectPDF(models.Model):
             self.slug = slugify(self.subject)
 
         super().save(*args, **kwargs)
+
+
+class Favorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    paper = models.ForeignKey(SubjectPDF, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("user", "paper")
+
+    def __str__(self):
+        return f"{self.user.username} - {self.paper.subject}"
