@@ -1,0 +1,27 @@
+{% extends "main/base.html" %}
+
+{% block title %}
+{{ pdf.subject }}
+{% endblock %}
+
+{% block content %}
+
+<h1>{{ pdf.subject }}</h1>
+
+<p><strong>Department:</strong> {{ pdf.department|upper }}</p>
+
+<p><strong>Semester:</strong> {{ pdf.semester }}</p>
+
+<p>
+    <a href="{{ pdf.pdf_file.url }}" target="_blank">
+        👁 Preview PDF
+    </a>
+</p>
+
+<p>
+    <a href="{{ pdf.pdf_file.url }}" download>
+        📥 Download PDF
+    </a>
+</p>
+
+{% endblock %}

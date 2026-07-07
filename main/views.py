@@ -6,6 +6,7 @@ from .models import PDFUpload, SubjectPDF
 import os
 from django.db.models import Q
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 
 
 def login_page(request):
@@ -227,3 +228,9 @@ def search_api(request):
         })
 
     return JsonResponse(data, safe=False)
+def paper_detail(request, pdf_id):
+    pdf = get_object_or_404(SubjectPDF, id=pdf_id)
+
+    return render(request, "main/paper_detail.html", {
+        "pdf": pdf
+    })

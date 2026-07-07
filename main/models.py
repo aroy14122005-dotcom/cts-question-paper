@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 
 
 class PDFUpload(models.Model):
@@ -16,5 +17,13 @@ class SubjectPDF(models.Model):
     pdf_file = models.FileField(upload_to='subject_pdfs/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
+    slug = models.SlugField(max_length=200, blank=True)
+
     def __str__(self):
         return f"{self.department} - Sem {self.semester} - {self.subject}"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.subject)
+
+        super().save(*args, **kwargs)

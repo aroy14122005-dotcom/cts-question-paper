@@ -15,4 +15,5 @@ urlpatterns = [
     path('subject-pdf/delete/<int:pdf_id>/', views.delete_subject_pdf, name='delete_subject_pdf'),
     path("search/", views.search_page, name="search"),
     path("search-api/", views.search_api, name="search_api"),
+    path("paper/<int:pdf_id>/", views.paper_detail, name="paper_detail"),
 ]
