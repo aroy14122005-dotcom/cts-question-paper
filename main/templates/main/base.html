@@ -83,13 +83,12 @@
 </li>
                 <li class="dropdown">
 
-    <a href="#">
-        Question Papers
-        <i class='bx bx-chevron-down'></i>
-    </a>
+    <a href="#" id="papers-btn">
+    Question Papers
+    <i class='bx bx-chevron-down'></i>
+</a>
 
-    <ul class="dropdown-menu">
-
+<ul class="dropdown-menu" id="papers-menu">
         <li>
             <a href="#">
                 Latest Papers
@@ -175,21 +174,54 @@
 
         <div class="user-menu">
 
-    {% if user.is_authenticated %}
-    <div class="nav-auth">
-        <a href="{% url 'profile' %}">
+            {% if user.is_authenticated %}
+
+            <div class="nav-auth">
+
+    <div class="profile-dropdown">
+
+        <a href="#" id="profile-btn">
             <i class='bx bx-user'></i>
             Profile
+            <i class='bx bx-chevron-down'></i>
         </a>
 
-        <a href="{% url 'logout' %}">
-            <i class='bx bx-log-out'></i>
-            Logout
-        </a>
+        <ul class="profile-menu" id="profile-menu">
+
+            <li>
+                <a href="{% url 'profile' %}">
+                    <i class='bx bx-user-circle'></i>
+                    My Profile
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'favorites' %}">
+                    <i class='bx bx-heart'></i>
+                    Favorites
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'logout' %}" id="logout-btn">
+                    <i class='bx bx-log-out'></i>
+                    Logout
+                </a>
+            </li>
+
+        </ul>
+
     </div>
-    {% endif %}
 
 </div>
+
+            {% else %}
+
+                <a href="{% url 'login' %}">Login</a>
+
+            {% endif %}
+
+        </div>
 
     </header>
 
@@ -202,6 +234,32 @@
         {% endblock %}
 
     </main>
+
+    <!-- Logout Modal -->
+
+<div class="logout-modal" id="logout-modal">
+
+    <div class="logout-box">
+
+        <h2>Logout</h2>
+
+        <p>Are you sure you want to logout?</p>
+
+        <div class="logout-buttons">
+
+            <button id="cancel-logout">
+                Cancel
+            </button>
+
+            <a href="{% url 'logout' %}" class="logout-confirm">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
 
     <!-- ================= FOOTER ================= -->
 
@@ -269,6 +327,57 @@ searchInput.addEventListener("keyup", function () {
             console.log(data);
 
         });
+
+});
+
+const profileBtn = document.getElementById("profile-btn");
+const profileMenu = document.getElementById("profile-menu");
+
+profileBtn.addEventListener("click", function(e){
+
+    e.preventDefault();
+
+    profileMenu.classList.toggle("show");
+
+});
+
+document.addEventListener("click", function(e){
+
+    if(!profileBtn.contains(e.target) && !profileMenu.contains(e.target)){
+        profileMenu.classList.remove("show");
+    }
+
+});
+
+const logoutBtn = document.getElementById("logout-btn");
+const logoutModal = document.getElementById("logout-modal");
+const cancelLogout = document.getElementById("cancel-logout");
+
+if(logoutBtn){
+
+    logoutBtn.addEventListener("click", function(e){
+
+        e.preventDefault();
+
+        logoutModal.classList.add("show");
+
+    });
+
+}
+
+cancelLogout.addEventListener("click", function(){
+
+    logoutModal.classList.remove("show");
+
+});
+
+window.addEventListener("click", function(e){
+
+    if(e.target === logoutModal){
+
+        logoutModal.classList.remove("show");
+
+    }
 
 });
 </script>
