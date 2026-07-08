@@ -1,0 +1,51 @@
+{% extends "main/base.html" %}
+
+{% block title %}
+Contact Us
+{% endblock %}
+
+{% block content %}
+
+<div class="profile-container">
+
+    <div class="profile-card">
+
+        <h1>📞 Contact Us</h1>
+
+        <div class="profile-info">
+
+            <p><strong>👤 Developer:</strong> Ankit Roy</p>
+
+            <p><strong>🏫 College:</strong> The Calcutta Technical School</p>
+
+            <p><strong>📧 Email:</strong> aroy14122005@gmail.com</p>
+
+            <p><strong>📱 Phone:</strong> +91 6289168104</p>
+
+            <p>
+               <strong>💻 GitHub:</strong>
+            <a href="https://github.com/aroyl4122005-dotcom" target="_blank">
+               Visit GitHub
+            </a>
+            </p>
+
+            <p>
+               <strong>🔗 LinkedIn:</strong>
+            <a href="https://linkedin.com/in/yourusername" target="_blank">
+               Visit LinkedIn
+            </a>
+            </p>
+
+        </div>
+
+        <br>
+
+        <a href="{% url 'home' %}" class="home-btn">
+            🏠 Back to Home
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

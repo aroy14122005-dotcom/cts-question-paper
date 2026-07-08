@@ -5,56 +5,65 @@
     top: 0;
     z-index: 1000;
 
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:25px;
-    padding:15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
 
-    background:#0f172a;
+    gap: 20px;
+    padding: 15px 30px;
+
+    background: #0f172a;
 }
 
-/* Logo */
+/* ================= LOGO ================= */
 
 .logo{
-    flex: 0 0 220px;
+    flex: 0 0 170px;
 }
 
 .logo a{
-    font-size: 32px;
+    font-size: 24px;
     font-weight: 700;
-    color: rgb(234, 54, 54);
+    color: rgb(234,54,54);
     white-space: nowrap;
 }
-/* Menu */
+
+/* ================= MENU ================= */
 
 nav{
-    flex:1;
+    flex: 1;
 }
 
 .nav-links{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
 }
+
 .nav-links a{
-    color:rgb(209, 236, 10);
-    font-size:16px;
-    font-weight:500;
-    transition:.3s;
+    color: rgb(209,236,10);
+    font-size: 16px;
+    font-weight: 500;
+    transition: .3s;
 }
 
 .nav-links a:hover{
-    color:#38bdf8;
+    color: #38bdf8;
 }
 
 /* ================= SEARCH ================= */
 
 .search-box{
+    position: relative;
+
     display: flex;
     align-items: center;
-    width: 430px;
+
+   width: 300px;
+    flex-shrink: 0;
+
     overflow: hidden;
     border-radius: 30px;
     background: white;
@@ -68,104 +77,126 @@ nav{
 }
 
 .search-box select{
-    width: 150px;
+    width: 140px;
+    padding: 12px;
+
     border: none;
     outline: none;
-    padding: 12px;
+
     background: white;
 }
 
 .search-box button{
     width: 55px;
     height: 48px;
+
     border: none;
+
     background: #2563eb;
     color: white;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     flex-shrink: 0;
 }
 
 .search-box button i{
     font-size: 22px;
 }
-/* User */
+
+/* ================= USER MENU ================= */
+
 .user-menu{
-    min-width:120px;
-    display:flex;
-    justify-content:flex-end;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    flex-shrink: 0;
 }
 
-
-.user-menu a{
-
-    color:rgb(243, 110, 110);
-
-    font-weight:500;
-
+.nav-auth{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    white-space: nowrap;
 }
 
-.user-menu a:hover{
+.nav-auth a{
+    display: flex;
+    align-items: center;
+    gap: 6px;
 
-    color:#38bdf8;
-
+    color: rgb(243,110,110);
+    font-weight: 500;
+    transition: .3s;
 }
+
+.nav-auth a:hover{
+    color: #38bdf8;
+}
+
+.nav-auth i{
+    font-size: 20px;
+}
+
 /* ================= DROPDOWN ================= */
 
 .dropdown{
-    position:relative;
-}
-
-.dropdown > a{
-    display:flex;
-    align-items:center;
-    gap:5px;
-}
-
-.dropdown-menu{
-    position:absolute;
-    top:100%;
-    left:0;
-
-    width:270px;
-
-    background:white;
-
-    border-radius:8px;
-
-    box-shadow:0 8px 20px rgba(0,0,0,.15);
-
-    display:none;
-
-    z-index:999;
-}
-.dropdown-menu.show{
-    display:block;
-}
-
-.dropdown-menu li{
-    width:100%;
-}
-
-.dropdown-menu li a{
-    display:block;
-    padding:14px 18px;
-    color:#222;
-}
-
-.dropdown-menu li a:hover{
-    background:#2563eb;
-    color:white;
-}
-/* ================= SEARCH SUGGESTIONS ================= */
-
-.search-box{
     position: relative;
 }
 
+.dropdown > a{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.dropdown-menu{
+    position: absolute;
+    top: 100%;
+    left: 0;
+
+    width: 270px;
+
+    background: white;
+
+    border-radius: 8px;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,.15);
+
+    display: none;
+
+    z-index: 999;
+}
+
+.dropdown-menu.show{
+    display: block;
+}
+
+.dropdown-menu li{
+    width: 100%;
+}
+
+.dropdown-menu li a{
+    display: block;
+
+    padding: 14px 18px;
+
+    color: #222;
+}
+
+.dropdown-menu li a:hover{
+    background: #2563eb;
+    color: white;
+}
+
+/* ================= SEARCH SUGGESTIONS ================= */
+
 #search-suggestions{
     position: absolute;
+
     top: 100%;
     right: 0;
 

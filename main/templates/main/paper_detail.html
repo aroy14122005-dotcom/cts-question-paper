@@ -53,9 +53,29 @@
                 📥 Download PDF
 
             </a>
-            <a href="{% url 'add_favorite' paper.id %}" class="favorite-btn">
-    ❤️ Add to Favorites
-</a>
+            {% if user.is_authenticated %}
+
+    {% if is_favorite %}
+
+        <a href="{% url 'remove_favorite' pdf.id %}" class="favorite-btn remove-btn">
+            💔 Remove from Favorites
+        </a>
+
+    {% else %}
+
+        <a href="{% url 'add_favorite' pdf.id %}" class="favorite-btn">
+            ❤️ Add to Favorites
+        </a>
+
+    {% endif %}
+
+{% else %}
+
+    <a href="{% url 'login' %}?login=true" class="favorite-btn">
+        ❤️ Login to Add Favorite
+    </a>
+
+{% endif %}
 
         </div>
 

@@ -1,0 +1,45 @@
+{% extends "main/base.html" %}
+
+{% block title %}
+My Profile
+{% endblock %}
+
+{% block content %}
+
+<div class="profile-container">
+
+    <div class="profile-card">
+
+        <h1>👤 My Profile</h1>
+
+        <div class="profile-info">
+
+            <p><strong>Username:</strong> {{ request.user.username }}</p>
+
+            <p><strong>Email:</strong> {{ request.user.email }}</p>
+
+            <p><strong>Favorite Papers:</strong> ❤️ {{ favorite_count }}</p>
+
+        </div>
+
+        <div class="profile-buttons">
+
+            <a href="{% url 'favorites' %}" class="favorite-btn">
+                ❤️ My Favorites
+            </a>
+
+            <a href="{% url 'change_password' %}" class="home-btn">
+                🔒 Change Password
+            </a>
+
+            <a href="{% url 'home' %}" class="home-btn">
+                🏠 Back to Home
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

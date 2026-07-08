@@ -12,6 +12,9 @@ from .models import Favorite
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import SubjectPDF, Favorite
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
+from django.contrib.auth import logout
 
 
 def login_page(request):
@@ -233,12 +236,23 @@ def search_api(request):
         })
 
     return JsonResponse(data, safe=False)
+
 def paper_detail(request, pdf_id):
     pdf = get_object_or_404(SubjectPDF, id=pdf_id)
 
+    is_favorite = False
+
+    if request.user.is_authenticated:
+        is_favorite = Favorite.objects.filter(
+            user=request.user,
+            paper=pdf
+        ).exists()
+
     return render(request, "main/paper_detail.html", {
-        "pdf": pdf
+        "pdf": pdf,
+        "is_favorite": is_favorite,
     })
+
 @login_required
 def favorites(request):
     favorites = Favorite.objects.filter(user=request.user)
@@ -270,3 +284,27 @@ def remove_favorite(request, paper_id):
     ).delete()
 
     return redirect("favorites")
+
+
+@login_required
+def profile(request):
+    favorite_count = Favorite.objects.filter(user=request.user).count()
+
+    return render(request, "main/profile.html", {
+        "favorite_count": favorite_count,
+    })
+
+
+class CustomPasswordChangeView(PasswordChangeView):
+    template_name = "main/change_password.html"
+    success_url = reverse_lazy("profile")
+
+def contact(request):
+    return render(request, "main/contact.html")
+
+def error_404(request, exception):
+    return render(request, "main/404.html", status=404)
+
+def logout_user(request):
+    logout(request)
+    return redirect("login")

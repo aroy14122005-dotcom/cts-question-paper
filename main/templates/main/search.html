@@ -36,7 +36,7 @@ Search Results
 
             <div class="paper-buttons">
 
-                <a href="{{ pdf.pdf_file.url }}" target="_blank" class="preview-btn">
+                <a href="{% url 'paper_detail' pdf.id %}" class="preview-btn">
                     👁 Preview PDF
                 </a>
 

@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="{% static 'css/search.css' %}">
     <link rel="stylesheet" href="{% static 'css/paper_detail.css' %}">
     <link rel="stylesheet" href="{% static 'css/favorites.css' %}">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'css/change_password.css' %}">
 
     <!-- Page CSS -->
     {% block extra_css %}{% endblock %}
@@ -129,7 +131,7 @@
 </li>
                 <a href="{% url 'favorites' %}">Favorites</a>
 
-                <li><a href="#">Contact</a></li>
+                <a href="{% url 'contact' %}">Contact</a>
 
             </ul>
 
@@ -173,19 +175,21 @@
 
         <div class="user-menu">
 
-            {% if user.is_authenticated %}
+    {% if user.is_authenticated %}
+    <div class="nav-auth">
+        <a href="{% url 'profile' %}">
+            <i class='bx bx-user'></i>
+            Profile
+        </a>
 
-                <a href="#">Profile</a>
+        <a href="{% url 'logout' %}">
+            <i class='bx bx-log-out'></i>
+            Logout
+        </a>
+    </div>
+    {% endif %}
 
-                <a href="{% url 'login' %}">Logout</a>
-
-            {% else %}
-
-                <a href="{% url 'login' %}">Login</a>
-
-            {% endif %}
-
-        </div>
+</div>
 
     </header>
 
