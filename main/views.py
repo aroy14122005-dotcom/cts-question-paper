@@ -15,6 +15,8 @@ from .models import SubjectPDF, Favorite
 from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
 from django.contrib.auth import logout
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 def login_page(request):
@@ -230,10 +232,11 @@ def search_api(request):
 
     for pdf in results:
         data.append({
-            "subject": pdf.subject,
-            "department": pdf.department,
-            "semester": pdf.semester,
-        })
+           "id": pdf.id,
+           "subject": pdf.subject,
+           "department": pdf.department,
+           "semester": pdf.semester,
+})
 
     return JsonResponse(data, safe=False)
 
@@ -308,3 +311,50 @@ def error_404(request, exception):
 def logout_user(request):
     logout(request)
     return redirect("login")
+
+@login_required
+def edit_profile(request):
+
+    if request.method == "POST":
+
+        # .strip() যোগ করো
+        username = request.POST.get("username").strip()
+        email = request.POST.get("email").strip()
+
+        # Debug (Terminal-এ দেখাবে)
+        print("Logged in user:", request.user.username)
+        print("Entered username:", username)
+
+        # Username already exists?
+        if User.objects.exclude(id=request.user.id).filter(username=username).exists():
+           messages.error(request, "Username already exists.")
+
+           return render(request, "main/edit_profile.html", {
+              "username": username,
+              "email": email,
+    })
+        
+
+        # Email already exists?
+        if User.objects.exclude(id=request.user.id).filter(email=email).exists():
+
+           messages.error(request, "Email already exists.")
+
+           return render(request, "main/edit_profile.html", {
+              "username": username,
+              "email": email,
+    })
+        
+        user = request.user
+        user.username = username
+        user.email = email
+        user.save()
+
+        messages.success(request, "Profile updated successfully.")
+
+        return redirect("profile")
+
+    return render(request, "main/edit_profile.html", {
+    "username": request.user.username,
+    "email": request.user.email,
+})

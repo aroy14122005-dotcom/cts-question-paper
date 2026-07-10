@@ -137,6 +137,7 @@
         </nav>
 
         <!-- Search -->
+         <div class="search-wrapper">
 
         <form action="{% url 'search' %}" method="GET" class="search-box">
 
@@ -169,6 +170,7 @@
 </form>
 
 <div id="search-suggestions"></div>
+</div>
 
         <!-- Right -->
 
@@ -228,6 +230,20 @@
     <!-- ================= MAIN ================= -->
 
     <main>
+
+        {% if messages %}
+    <div class="message-container">
+
+        {% for message in messages %}
+
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+    </div>
+    {% endif %}
 
         {% block content %}
 
@@ -310,23 +326,66 @@ document.addEventListener("click", function(e){
     }
 
 });
+
 const searchInput = document.getElementById("search-input");
+const suggestionsBox = document.getElementById("search-suggestions");
 
 searchInput.addEventListener("keyup", function () {
 
-    const query = this.value;
+    const query = this.value.trim();
 
-    if (query.length < 2) {
+    if(query.length < 2){
+
+        suggestionsBox.style.display = "none";
+        suggestionsBox.innerHTML = "";
+
         return;
+
     }
 
-    fetch(`/search-api/?q=${query}`)
-        .then(response => response.json())
-        .then(data => {
+    suggestionsBox.style.display = "none";
 
-            console.log(data);
+    fetch(`/search-api/?q=${query}`)
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        suggestionsBox.innerHTML = "";
+
+        if(data.length === 0){
+
+            suggestionsBox.style.display = "block";
+
+            suggestionsBox.innerHTML =
+            "<div class='suggestion-item'>No results found</div>";
+
+            return;
+
+        }
+
+        data.forEach(item => {
+
+            suggestionsBox.innerHTML += `
+
+            <a href="/paper/${item.id}/" class="suggestion-item">
+
+                <strong>${item.subject}</strong><br>
+
+                <small>
+                    ${item.department.toUpperCase()} |
+                    Semester ${item.semester}
+                </small>
+
+            </a>
+
+            `;
 
         });
+
+        suggestionsBox.style.display = "block";
+
+    });
 
 });
 
@@ -380,6 +439,39 @@ window.addEventListener("click", function(e){
     }
 
 });
+
+document.addEventListener("click", function(e){
+
+    if(
+        !searchInput.contains(e.target) &&
+        !suggestionsBox.contains(e.target)
+    ){
+
+        suggestionsBox.style.display = "none";
+
+    }
+
+});
+
+setTimeout(function () {
+
+    const messages = document.querySelector(".message-container");
+
+    if(messages){
+
+        messages.style.transition = "0.5s";
+
+        messages.style.opacity = "0";
+
+        setTimeout(() => {
+
+            messages.remove();
+
+        },500);
+
+    }
+
+},3000);
 </script>
 </body>
 

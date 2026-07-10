@@ -1,0 +1,63 @@
+{% extends "main/base.html" %}
+
+{% block title %}
+Edit Profile
+{% endblock %}
+
+{% block content %}
+
+<div class="profile-container">
+
+    <div class="profile-card">
+
+        <h1>✏️ Edit Profile</h1>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="profile-info">
+
+                <label><strong>Username</strong></label>
+
+               <input
+                  type="text"
+                  name="username"
+                  value="{{ username|default:request.user.username }}"
+                  required
+               >
+
+                <br><br>
+
+                <label><strong>Email</strong></label>
+
+               <input
+                  type="email"
+                  name="email"
+                  value="{{ email|default:request.user.email }}"
+                  required
+               >
+
+            </div>
+
+            <br>
+
+            <div class="profile-buttons">
+
+                <button type="submit" class="favorite-btn">
+                    💾 Save Changes
+                </button>
+
+                <a href="{% url 'profile' %}" class="home-btn">
+                    ← Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

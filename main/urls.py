@@ -20,6 +20,7 @@ urlpatterns = [
     path("favorite/add/<int:paper_id>/", views.add_favorite, name="add_favorite"),
     path("favorite/remove/<int:paper_id>/", views.remove_favorite, name="remove_favorite"),
     path("profile/", views.profile, name="profile"),
+    path("profile/edit/", views.edit_profile, name="edit_profile"),
     path("change-password/", views.CustomPasswordChangeView.as_view(), name="change_password"),
     path("contact/", views.contact, name="contact"),
     path("logout/", views.logout_user, name="logout"),

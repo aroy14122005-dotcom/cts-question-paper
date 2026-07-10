@@ -62,3 +62,120 @@ footer{
     margin-top:50px;
     font-size:15px;
 }
+
+/* ==========================
+   Django Messages
+========================== */
+
+.message-container{
+
+    position: fixed;
+
+    top: 90px;          /* Navbar-এর নিচে */
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    z-index: 9999;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 12px;
+
+    pointer-events: none;
+
+}
+
+.message{
+
+    min-width: 340px;
+
+    max-width: 500px;
+
+    padding: 15px 25px;
+
+    border-radius: 12px;
+
+    text-align: center;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,.18);
+
+    animation: messageDrop .35s ease;
+}
+
+/* Success */
+
+.message.success{
+
+    background: #d4edda;
+
+    color: #155724;
+
+    border-left: 6px solid #28a745;
+
+}
+
+/* Error */
+
+.message.error{
+
+    background: #fde2e2;
+
+    color: #b00020;
+
+    border-left: 6px solid #dc3545;
+
+}
+
+/* Warning */
+
+.message.warning{
+
+    background: #fff3cd;
+
+    color: #856404;
+
+    border-left: 6px solid #ffc107;
+
+}
+
+/* Info */
+
+.message.info{
+
+    background: #d1ecf1;
+
+    color: #0c5460;
+
+    border-left: 6px solid #17a2b8;
+
+}
+
+@keyframes messageDrop{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
