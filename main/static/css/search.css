@@ -185,3 +185,21 @@
 .suggestion-item:hover small{
     color: #e5e7eb;
 }
+
+.search-wrapper{
+    position: relative;
+    width: 400px;
+}
+
+.suggestion-item.active{
+
+    background:#2563eb;
+    color:white;
+
+}
+
+.suggestion-item.active small{
+
+    color:#e5e7eb;
+
+}
