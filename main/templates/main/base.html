@@ -149,19 +149,27 @@
         autocomplete="off"
     >
 
-    <select name="department">
+    <select name="department" id="department-filter">
 
-        <option value="">Department</option>
+    <option value="">Department</option>
 
-        <option value="cst">CST</option>
+    <option value="cst" {% if department == "cst" %}selected{% endif %}>
+        CST
+    </option>
 
-        <option value="civil">Civil</option>
+    <option value="civil" {% if department == "civil" %}selected{% endif %}>
+        Civil
+    </option>
 
-        <option value="electrical">Electrical</option>
+    <option value="electrical" {% if department == "electrical" %}selected{% endif %}>
+        Electrical
+    </option>
 
-        <option value="mechanical">Mechanical</option>
+    <option value="mechanical" {% if department == "mechanical" %}selected{% endif %}>
+        Mechanical
+    </option>
 
-    </select>
+</select>
 
     <button type="submit">
         <i class='bx bx-search'></i>
@@ -329,6 +337,7 @@ document.addEventListener("click", function(e){
 
 const searchInput = document.getElementById("search-input");
 const suggestionsBox = document.getElementById("search-suggestions");
+const departmentFilter = document.getElementById("department-filter");
 
 let searchTimer;
 let selectedIndex = -1;
@@ -351,9 +360,17 @@ searchInput.addEventListener("input", function () {
 
         }
 
-        suggestionsBox.style.display = "none";
+        suggestionsBox.style.display = "block";
 
-        fetch(`/search-api/?q=${query}`)
+        suggestionsBox.innerHTML = `
+            <div class="loading-search">
+                🔄 Searching...
+            </div>
+        `;
+
+        const department = departmentFilter.value;
+
+        fetch(`/search-api/?q=${query}&department=${department}`)
 
         .then(response => response.json())
 

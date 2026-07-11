@@ -202,6 +202,7 @@ def delete_subject_pdf(request, pdf_id):
 def search_page(request):
 
     query = request.GET.get("q", "").strip()
+    department = request.GET.get("department", "").strip()
 
     results = SubjectPDF.objects.none()
 
@@ -209,34 +210,48 @@ def search_page(request):
 
         results = SubjectPDF.objects.filter(
 
-            Q(subject__icontains=query) |
-            Q(department__icontains=query) |
-            Q(semester__icontains=query)
+           Q(subject__icontains=query) |
+           Q(department__icontains=query) |
+           Q(semester__icontains=query)
 
-        ).order_by("-uploaded_at")
+        )
+
+        if department:
+
+            results = results.filter(department=department)
+
+        results = results.order_by("-uploaded_at")
 
     return render(request, "main/search.html", {
 
         "query": query,
-        "results": results
+        "department": department,
+        "results": results,
 
     })
 def search_api(request):
+
     query = request.GET.get("q", "").strip()
+    department = request.GET.get("department", "").strip()
 
     results = SubjectPDF.objects.filter(
         subject__icontains=query
-    )[:8]
+    )
+
+    if department:
+        results = results.filter(department=department)
+
+    results = results[:8]
 
     data = []
 
     for pdf in results:
         data.append({
-           "id": pdf.id,
-           "subject": pdf.subject,
-           "department": pdf.department,
-           "semester": pdf.semester,
-})
+            "id": pdf.id,
+            "subject": pdf.subject,
+            "department": pdf.department,
+            "semester": pdf.semester,
+        })
 
     return JsonResponse(data, safe=False)
 
