@@ -340,35 +340,35 @@ a:hover {
 
 .message-container{
     position: fixed;
-
-    top: 25px;
+    top: 30px;
     left: 50%;
-
     transform: translateX(-50%);
 
-    z-index: 999999;
+    z-index: 99999;
 
     display: flex;
     flex-direction: column;
+    gap: 10px;
 
-    align-items: center;
-
-    width: fit-content;
+    pointer-events: none;
 }
 
 .message{
-    min-width: 320px;
+    min-width: 340px;
     max-width: 450px;
 
-    padding: 14px 20px;
+    padding: 15px 22px;
 
-    border-radius: 10px;
+    border-radius: 12px;
 
     font-size: 15px;
     font-weight: 500;
+
     text-align: center;
 
-    box-shadow: 0 8px 20px rgba(0,0,0,.2);
+    box-shadow: 0 10px 25px rgba(0,0,0,.15);
+
+    animation: fadeDown .35s ease;
 }
 
 /* Success */
@@ -402,10 +402,34 @@ a:hover {
 @keyframes fadeDown{
     from{
         opacity:0;
-        transform:translateY(-15px);
+        transform: translateY(-20px);
     }
+
     to{
         opacity:1;
-        transform:translateY(0);
+        transform: translateY(0);
     }
+}
+
+/* ===========================
+   Forgot Password Header
+=========================== */
+
+.forgot-header{
+    width: 230px;
+}
+
+.forgot-header::before{
+    left: -30px;
+}
+
+.forgot-header::after{
+    right: -30px;
+}
+
+.forgot-header .title-register{
+    position: static;
+    transform: none;
+    font-size: 22px;
+    white-space: nowrap;
 }
