@@ -29,6 +29,7 @@ class SubjectPDFAdmin(admin.ModelAdmin):
         "subject",
         "uploaded_by",
         "preview_pdf",
+        "download_pdf",
         "uploaded_at",
     )
 
@@ -56,6 +57,16 @@ class SubjectPDFAdmin(admin.ModelAdmin):
         return "-"
 
     preview_pdf.short_description = "Preview"
+
+    def download_pdf(self, obj):
+        if obj.pdf_file:
+            return format_html(
+                '<a href="{}" download>⬇ Download</a>',
+                obj.pdf_file.url,
+            )
+        return "-"
+
+    download_pdf.short_description = "Download"
 
 
 @admin.register(Favorite)
