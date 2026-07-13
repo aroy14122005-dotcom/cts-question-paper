@@ -18,6 +18,13 @@ class SubjectPDF(models.Model):
     pdf_file = models.FileField(upload_to='subject_pdfs/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
+    uploaded_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
+
     slug = models.SlugField(max_length=200, blank=True)
 
     def __str__(self):

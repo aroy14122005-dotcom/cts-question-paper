@@ -1,22 +1,87 @@
-from django.urls import path
-from . import views
 from django.contrib import admin
 from .models import PDFUpload, SubjectPDF, Favorite
+from django.utils.html import format_html
 
-admin.site.register(PDFUpload)
-admin.site.register(SubjectPDF)
-admin.site.register(Favorite)
 
-urlpatterns = [
-    path('', views.login_page, name='login'),
-    path('home/', views.home, name='home'),
-    path('semester/<str:dept_name>/', views.semester, name='semester'),
+@admin.register(PDFUpload)
+class PDFUploadAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "semester",
+        "pdf_file",
+    )
 
-    path('upload/<int:sem_no>/', views.upload_pdf, name='upload_pdf'),
+    list_filter = (
+        "semester",
+    )
 
-    path('delete/<int:pdf_id>/', views.delete_pdf, name='delete_pdf'),
+    search_fields = (
+        "pdf_file",
+    )
 
-    path('semester/<str:dept_name>/subjects/', views.subject_page, name='subject_page'),
-    path('semester/<str:dept_name>/<int:sem_no>/<str:subject_name>/subject-upload/', views.subject_upload, name='subject_upload'),
-    path('subject-pdf/delete/<int:pdf_id>/', views.delete_subject_pdf, name='delete_subject_pdf'),
-]
+
+@admin.register(SubjectPDF)
+class SubjectPDFAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "department",
+        "semester",
+        "subject",
+        "uploaded_by",
+        "preview_pdf",
+        "uploaded_at",
+    )
+
+    list_filter = (
+        "department",
+        "semester",
+        "uploaded_at",
+    )
+
+    search_fields = (
+        "subject",
+        "department",
+    )
+
+    ordering = (
+        "-uploaded_at",
+    )
+
+    def preview_pdf(self, obj):
+        if obj.pdf_file:
+            return format_html(
+                '<a href="{}" target="_blank">📄 View PDF</a>',
+                obj.pdf_file.url,
+            )
+        return "-"
+
+    preview_pdf.short_description = "Preview"
+
+
+@admin.register(Favorite)
+class FavoriteAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "user",
+        "paper",
+        "created_at",
+    )
+
+    list_filter = (
+        "created_at",
+    )
+
+    search_fields = (
+        "user__username",
+        "paper__subject",
+        "paper__department",
+    )
+
+    ordering = (
+        "-created_at",
+    )
+
+
+    admin.site.site_header = "CTS Question Paper Admin"
+    admin.site.site_title = "CTS Admin"
+    admin.site.index_title = "Welcome to CTS Question Paper Admin Panel"

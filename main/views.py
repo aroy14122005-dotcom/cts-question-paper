@@ -157,7 +157,8 @@ def subject_upload(request, dept_name, sem_no, subject_name):
             department=dept_name,
             semester=sem_no,
             subject=subject_name,
-            pdf_file=request.FILES["pdf_file"]
+            pdf_file=request.FILES["pdf_file"],
+            uploaded_by=request.user,
         )
 
         return redirect(
