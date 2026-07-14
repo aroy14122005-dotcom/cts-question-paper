@@ -17,6 +17,11 @@ from django.urls import reverse_lazy
 from django.contrib.auth import logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
+
+@staff_member_required
+def admin_dashboard(request):
+    return render(request, "main/admin_dashboard.html")
 
 
 def login_page(request):
@@ -374,3 +379,42 @@ def edit_profile(request):
     "username": request.user.username,
     "email": request.user.email,
 })
+
+@login_required
+def delete_account(request):
+
+    if request.method == "POST":
+
+        password = request.POST.get("password")
+
+        user = authenticate(
+            username=request.user.username,
+            password=password,
+        )
+
+        if user is not None:
+
+            user = request.user
+
+            logout(request)
+
+            user.delete()
+
+            messages.success(
+            request,
+            "Your account has been deleted successfully.",
+            )
+
+            return redirect("login")
+
+        else:
+
+            messages.error(
+                request,
+                "Incorrect password.",
+            )
+
+    return render(
+        request,
+        "main/delete_account.html",
+    )

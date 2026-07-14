@@ -1,0 +1,134 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}
+Delete Account
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/delete_account.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="delete-container">
+
+    <h2 class="delete-title">
+        🗑 Delete Account
+    </h2>
+
+    <div class="warning-box">
+
+        <h3>⚠ Warning!</h3>
+
+        <p>
+            This action is permanent and cannot be undone.
+        </p>
+
+        <p>Deleting your account will permanently remove:</p>
+
+        <ul>
+            <li>Your account</li>
+            <li>Your profile information</li>
+            <li>Your favorite papers</li>
+        </ul>
+
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p class="message">
+                {{ message }}
+            </p>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST" onsubmit="return confirmDeleteAccount()">
+
+        {% csrf_token %}
+
+        <label class="password-label">
+            Enter your password
+        </label>
+
+        <input
+            type="password"
+            name="password"
+            class="password-input"
+            required
+        >
+
+        <div class="checkbox-area">
+
+            <label>
+
+                <input
+                    type="checkbox"
+                    id="confirmDelete"
+                >
+
+                I understand that this action cannot be undone.
+
+            </label>
+
+        </div>
+
+        <div class="button-group">
+
+            <a
+                href="{% url 'profile' %}"
+                class="cancel-btn"
+            >
+                Cancel
+            </a>
+
+            <button
+                type="submit"
+                class="delete-btn"
+                id="deleteBtn"
+                Disabled
+            >
+                🗑 Delete My Account
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+<script>
+
+console.log("Delete Account JS Loaded");
+const checkbox = document.getElementById("confirmDelete");
+const button = document.getElementById("deleteBtn");
+
+checkbox.addEventListener("change", function () {
+
+    button.disabled = !this.checked;
+
+    if (this.checked) {
+        button.style.opacity = "1";
+        button.style.cursor = "pointer";
+    } else {
+        button.style.opacity = "0.5";
+        button.style.cursor = "not-allowed";
+    }
+
+});
+
+function confirmDeleteAccount() {
+
+    return confirm(
+        "⚠ WARNING!\n\n" +
+        "Your account will be permanently deleted.\n\n" +
+        "This action cannot be undone.\n\n" +
+        "Do you want to continue?"
+    );
+
+}
+
+</script>
+
+{% endblock %}
+

@@ -26,22 +26,50 @@
 .profile-buttons{
     margin-top:30px;
     display:flex;
-    justify-content:center;
+    flex-direction:column;
     gap:15px;
+    align-items:center;
 }
 
+
 .profile-buttons a{
+    display:block;
+    width:85%;
     text-decoration:none;
-    padding:12px 22px;
-    border-radius:8px;
+    padding:14px;
+    border-radius:10px;
     color:#fff;
     font-weight:bold;
+    font-size:16px;
+    transition:.3s ease;
+    box-sizing:border-box;
+}
+
+.profile-buttons a:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
 }
 
 .favorite-btn{
     background:#e91e63;
 }
 
+.favorite-btn:hover{
+    background:#d81b60;
+}
+
 .home-btn{
     background:#007bff;
+}
+
+.home-btn:hover{
+    background:#0056b3;
+}
+
+.delete-btn{
+    background:#dc3545;
+}
+
+.delete-btn:hover{
+    background:#b02a37;
 }

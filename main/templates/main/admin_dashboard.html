@@ -1,0 +1,52 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-container">
+
+    <h1>🛠 Admin Dashboard</h1>
+
+    <p class="admin-subtitle">
+        Welcome, {{ request.user.username }}
+    </p>
+
+    <div class="dashboard-grid">
+
+        <a href="#" class="dashboard-card">
+            👥
+            <h3>Manage Users</h3>
+            <p>View, edit and delete users</p>
+        </a>
+
+        <a href="#" class="dashboard-card">
+            📄
+            <h3>Manage Papers</h3>
+            <p>Upload and manage PDFs</p>
+        </a>
+
+        <a href="#" class="dashboard-card">
+            ❤️
+            <h3>Favorites</h3>
+            <p>View favorite statistics</p>
+        </a>
+
+        <a href="#" class="dashboard-card">
+            📊
+            <h3>Statistics</h3>
+            <p>Website analytics</p>
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
