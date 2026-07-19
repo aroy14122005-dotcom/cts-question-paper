@@ -214,6 +214,15 @@
                 </a>
             </li>
 
+            {% if user.is_staff %}
+            <li>
+                <a href="{% url 'admin:index' %}">
+                    <i class='bx bx-cog'></i>
+                    Admin Panel
+                </a>
+            </li>
+            {% endif %}
+
             <li>
                 <a href="{% url 'logout' %}" id="logout-btn">
                     <i class='bx bx-log-out'></i>
