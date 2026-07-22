@@ -418,3 +418,13 @@ def delete_account(request):
         request,
         "main/delete_account.html",
     )
+
+from django.http import HttpResponse
+
+def robots_txt(request):
+    return HttpResponse(
+        "User-agent: *\n"
+        "Allow: /\n\n"
+        "Sitemap: https://cts-question-paper.onrender.com/sitemap.xml",
+        content_type="text/plain",
+    )

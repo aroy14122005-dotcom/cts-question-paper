@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
+from django.http import HttpResponse
 
 urlpatterns = [
     path('', views.login_page, name='login'),
@@ -61,4 +62,6 @@ urlpatterns = [
     path("delete-account/", views.delete_account, name="delete_account"),
     path("logout/", views.logout_user, name="logout"),
     path("admin-dashboard/", views.admin_dashboard, name="admin_dashboard"),
+    path("robots.txt", views.robots_txt, name="robots_txt"),
+    path("test/", lambda request: HttpResponse("WORKING")),
 ]
