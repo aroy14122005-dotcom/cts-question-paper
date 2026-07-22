@@ -46,13 +46,12 @@
 
             </a>
 
-            <a href="{{ pdf.pdf_file.url }}"
-               download
-               class="download-btn">
+          <a href="{% url 'download_pdf' pdf.slug %}"
+             class="download-btn">
 
-                📥 Download PDF
+              📥 Download PDF
 
-            </a>
+          </a>
             {% if user.is_authenticated %}
 
     {% if is_favorite %}

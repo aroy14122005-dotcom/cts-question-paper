@@ -18,6 +18,7 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
+from django.http import FileResponse
 
 @staff_member_required
 def admin_dashboard(request):
@@ -427,4 +428,16 @@ def robots_txt(request):
         "Allow: /\n\n"
         "Sitemap: https://cts-question-paper.onrender.com/sitemap.xml",
         content_type="text/plain",
+    )
+
+def download_pdf(request, slug):
+    paper = get_object_or_404(SubjectPDF, slug=slug)
+
+    paper.download_count += 1
+    paper.save(update_fields=["download_count"])
+
+    return FileResponse(
+        paper.pdf_file.open("rb"),
+        as_attachment=True,
+        filename=paper.pdf_file.name.split("/")[-1],
     )

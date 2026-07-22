@@ -62,6 +62,7 @@ urlpatterns = [
     path("delete-account/", views.delete_account, name="delete_account"),
     path("logout/", views.logout_user, name="logout"),
     path("admin-dashboard/", views.admin_dashboard, name="admin_dashboard"),
+    path("download/<slug:slug>/", views.download_pdf, name="download_pdf"),
     path("robots.txt", views.robots_txt, name="robots_txt"),
     path("test/", lambda request: HttpResponse("WORKING")),
 ]
