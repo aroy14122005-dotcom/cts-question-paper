@@ -27,3 +27,80 @@ h1 {
 .dept-box:hover {
   background: #007bff;
 }
+
+.hero{
+    background: linear-gradient(135deg,#0d1936,#1d3b73);
+    color:white;
+
+    border-radius:20px;
+
+    padding:80px 40px;
+
+    text-align:center;
+
+    margin-bottom:50px;
+}
+
+.hero h1{
+    font-size:48px;
+    margin-bottom:20px;
+}
+
+.hero p{
+    font-size:20px;
+    max-width:800px;
+    margin:auto;
+    line-height:1.8;
+}
+
+.hero-buttons{
+    margin-top:35px;
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+}
+
+.btn-primary,
+.btn-secondary{
+
+    padding:15px 35px;
+
+    border-radius:50px;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.3s;
+}
+
+.btn-primary{
+
+    background:white;
+
+    color:#0d1936;
+}
+
+.btn-secondary{
+
+    border:2px solid white;
+
+    color:white;
+}
+
+.btn-primary:hover{
+
+    transform:translateY(-4px);
+}
+
+.btn-secondary:hover{
+
+    background:white;
+
+    color:#0d1936;
+}
