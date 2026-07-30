@@ -250,3 +250,45 @@ h1 {
     color:#666;
     line-height:1.7;
 }
+
+/* ==========================
+   STATISTICS
+========================== */
+
+.stats{
+    max-width:1200px;
+    margin:100px auto;
+    padding:0 20px;
+}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:30px;
+}
+
+.stat-card{
+    background:linear-gradient(135deg,#0d1936,#2563eb);
+    color:#fff;
+    border-radius:18px;
+    padding:45px 20px;
+    text-align:center;
+    box-shadow:0 12px 30px rgba(37,99,235,.18);
+    transition:.35s ease;
+}
+
+.stat-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 40px rgba(37,99,235,.30);
+}
+
+.stat-card h3{
+    font-size:42px;
+    font-weight:700;
+    margin-bottom:12px;
+}
+
+.stat-card p{
+    font-size:18px;
+    opacity:.95;
+}
