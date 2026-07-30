@@ -45,27 +45,71 @@ Download previous year diploma engineering question papers for CST, Civil, Mecha
 
 </section>
 
-    <h1>Select Department</h1>
+    <section class="departments" id="departments">
 
-    <div class="dept-box"
-         onclick="window.location.href='{% url 'semester' 'cst' %}'">
-        Computer Science and Technology
+    <div class="section-title">
+
+        <h2>Select Your Department</h2>
+
+        <p>
+            Choose your diploma engineering department and access previous year question papers.
+        </p>
+
     </div>
 
-    <div class="dept-box"
-         onclick="window.location.href='{% url 'semester' 'civil' %}'">
-        Civil Engineering
+    <div class="department-grid">
+
+        <a href="{% url 'semester' 'cst' %}" class="department-card">
+
+            <i class='bx bx-laptop'></i>
+
+            <h3>Computer Science & Technology</h3>
+
+            <p>Programming, Networking, Database & Software subjects.</p>
+
+            <span>Explore →</span>
+
+        </a>
+
+        <a href="{% url 'semester' 'civil' %}" class="department-card">
+
+            <i class='bx bx-building-house'></i>
+
+            <h3>Civil Engineering</h3>
+
+            <p>Construction, Survey, Structural & Environmental papers.</p>
+
+            <span>Explore →</span>
+
+        </a>
+
+        <a href="{% url 'semester' 'electrical' %}" class="department-card">
+
+            <i class='bx bx-bolt-circle'></i>
+
+            <h3>Electrical Engineering</h3>
+
+            <p>Machines, Power Systems & Electrical Technology.</p>
+
+            <span>Explore →</span>
+
+        </a>
+
+        <a href="{% url 'semester' 'mechanical' %}" class="department-card">
+
+            <i class='bx bx-cog'></i>
+
+            <h3>Mechanical Engineering</h3>
+
+            <p>Thermal, Manufacturing & Machine Design papers.</p>
+
+            <span>Explore →</span>
+
+        </a>
+
     </div>
 
-    <div class="dept-box"
-         onclick="window.location.href='{% url 'semester' 'electrical' %}'">
-        Electrical Engineering
-    </div>
-
-    <div class="dept-box"
-         onclick="window.location.href='{% url 'semester' 'mechanical' %}'">
-        Mechanical Engineering
-    </div>
+</section>
 
 </div>
 

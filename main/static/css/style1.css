@@ -28,6 +28,10 @@ h1 {
   background: #007bff;
 }
 
+/* ==========================
+   hero section
+========================== */
+
 .hero{
     background: linear-gradient(135deg,#0d1936,#1d3b73);
     color:white;
@@ -103,4 +107,100 @@ h1 {
     background:white;
 
     color:#0d1936;
+}
+
+/* ==========================
+   DEPARTMENTS SECTION
+========================== */
+
+.departments{
+    max-width:1200px;
+    margin:90px auto;
+    padding:0 20px;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.section-title h2{
+    font-size:42px;
+    color:#0d1936;
+    margin-bottom:15px;
+}
+
+.section-title p{
+    font-size:18px;
+    color:#666;
+    max-width:700px;
+    margin:auto;
+    line-height:1.7;
+}
+
+.department-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:30px;
+}
+
+.department-card{
+    background:#ffffff;
+    border-radius:20px;
+    padding:35px 25px;
+    text-decoration:none;
+    color:#111;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    transition:.35s ease;
+    border:2px solid transparent;
+}
+
+.department-card:hover{
+    transform:translateY(-10px);
+    border-color:#1d4ed8;
+    box-shadow:0 20px 40px rgba(29,78,216,.18);
+}
+
+.department-card i{
+    font-size:55px;
+    color:#1d4ed8;
+    margin-bottom:20px;
+}
+
+.department-card h3{
+    font-size:24px;
+    margin-bottom:15px;
+    color:#0d1936;
+}
+
+.department-card p{
+    color:#666;
+    line-height:1.7;
+    margin-bottom:25px;
+}
+
+.department-card span{
+    color:#1d4ed8;
+    font-weight:600;
+    font-size:16px;
+}
+
+.department-card:hover span{
+    letter-spacing:.5px;
+}
+
+@media(max-width:768px){
+
+.section-title h2{
+    font-size:32px;
+}
+
+.section-title p{
+    font-size:16px;
+}
+
+.department-card{
+    padding:28px 22px;
+}
+
 }
