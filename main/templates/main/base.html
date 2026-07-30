@@ -308,16 +308,67 @@
 </div>
 
     <!-- ================= FOOTER ================= -->
+    <footer class="site-footer">
 
-    <footer>
+    <div class="footer-container">
 
-        <p>
+        <div class="footer-column">
+            <h2>CTS Question Paper</h2>
 
-            © 2026 CTS Question Paper | All Rights Reserved
+            <p>
+                Helping diploma engineering students download previous year
+                question papers quickly and completely free.
+            </p>
+        </div>
 
-        </p>
+        <div class="footer-column">
 
-    </footer>
+            <h3>Quick Links</h3>
+
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="#departments">Departments</a></li>
+                <li><a href="{% url 'search' %}">Search</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+
+        </div>
+
+        <div class="footer-column">
+
+            <h3>Departments</h3>
+
+            <ul>
+                <li><a href="{% url 'semester' 'cst' %}">Computer Science</a></li>
+                <li><a href="{% url 'semester' 'civil' %}">Civil</a></li>
+                <li><a href="{% url 'semester' 'electrical' %}">Electrical</a></li>
+                <li><a href="{% url 'semester' 'mechanical' %}">Mechanical</a></li>
+            </ul>
+
+        </div>
+
+        <div class="footer-column">
+
+            <h3>Contact</h3>
+
+            <p>Email</p>
+
+            <a href="mailto:aroy14122005@gmail.com">
+                aroy14122005@gmail.com
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        © 2026 CTS Question Paper. All Rights Reserved.
+
+    </div>
+
+</footer>
+
 <script>
 
 const btn = document.getElementById("department-btn");

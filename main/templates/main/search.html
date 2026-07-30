@@ -12,18 +12,24 @@ Search previous year diploma engineering question papers by department, semester
 
 <div class="search-container">
 
-    <h1>🔍 Search Results</h1>
+    <div class="search-header">
+        <h1>🔍 Search Question Papers</h1>
+
+        <p>
+            Find previous year diploma engineering question papers quickly and easily.
+        </p>
+    </div>
 
     {% if query %}
-        <p style="text-align:center; margin-bottom:25px;">
-            Search for:
-            <strong>"{{ query }}"</strong>
-        </p>
+    <div class="search-query">
+        Showing results for
+        <strong>"{{ query }}"</strong>
+    </div>
     {% endif %}
 
-    <p style="text-align:center; margin-bottom:35px;">
+    <div class="result-count">
         {{ results|length }} Result{{ results|length|pluralize }} Found
-    </p>
+    </div>
 
     {% if results %}
 
@@ -56,9 +62,13 @@ Search previous year diploma engineering question papers by department, semester
 
     {% else %}
 
-        <div class="paper-card" style="text-align:center;">
+        <div class="paper-card no-results">
             <h2>❌ No Question Paper Found</h2>
-            <p>Try another subject, department or semester.</p>
+
+            <p>
+                Try another subject, department or semester.
+            </p>
+
         </div>
 
     {% endif %}

@@ -217,3 +217,85 @@
     font-weight:500;
 
 }
+
+/* ==========================
+   SEARCH PAGE HEADER
+========================== */
+
+.search-header{
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.search-header h1{
+    font-size:42px;
+    color:#0f172a;
+    margin-bottom:12px;
+}
+
+.search-header p{
+    font-size:18px;
+    color:#64748b;
+    max-width:650px;
+    margin:auto;
+    line-height:1.7;
+}
+
+/* ==========================
+   SEARCH QUERY
+========================== */
+
+.search-query{
+    background:#eff6ff;
+    color:#1d4ed8;
+    border-left:5px solid #2563eb;
+    padding:16px 22px;
+    border-radius:12px;
+    margin-bottom:25px;
+    font-size:16px;
+}
+
+/* ==========================
+   RESULT COUNT
+========================== */
+
+.result-count{
+    text-align:center;
+    font-size:17px;
+    font-weight:600;
+    color:#475569;
+    margin-bottom:35px;
+}
+
+/* ==========================
+   NO RESULT
+========================== */
+
+.no-results{
+    text-align:center;
+    padding:60px 30px;
+}
+
+.no-results h2{
+    color:#dc2626;
+    margin-bottom:15px;
+}
+
+.no-results p{
+    color:#64748b;
+    font-size:17px;
+}
+
+.search-container{
+    max-width:1100px;
+    margin:50px auto;
+    min-height:60vh;
+    padding:0 20px;
+}
+
+.paper-card{
+    background:#fff;
+    border-radius:20px;
+    padding:40px;
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+}

@@ -1,0 +1,191 @@
+/* =========================
+   Tablet (991px)
+========================= */
+
+@media (max-width:991px){
+
+    .hero{
+        padding:70px 30px;
+    }
+
+    .hero h1{
+        font-size:42px;
+    }
+
+    .department-grid,
+    .features-grid,
+    .stats-grid,
+    .footer-grid{
+        grid-template-columns:repeat(2,1fr);
+        gap:25px;
+    }
+
+}
+
+
+/* =========================
+   Mobile (768px)
+========================= */
+
+@media (max-width:768px){
+
+    /* Navbar */
+
+    nav{
+        flex-wrap:wrap;
+        gap:18px;
+        padding:15px 20px;
+    }
+
+    .nav-links{
+        width:100%;
+        justify-content:center;
+        flex-wrap:wrap;
+        gap:15px;
+    }
+
+    .search-wrapper{
+        width:100%;
+    }
+
+    .profile-menu{
+        margin-left:auto;
+    }
+
+    /* Hero */
+
+    .hero{
+
+        padding:60px 20px;
+        text-align:center;
+
+    }
+
+    .hero h1{
+
+        font-size:34px;
+
+    }
+
+    .hero p{
+
+        font-size:17px;
+
+    }
+
+    .hero-buttons{
+
+        flex-direction:column;
+        align-items:center;
+
+    }
+
+    /* Grid */
+
+    .department-grid,
+    .features-grid,
+    .stats-grid,
+    .footer-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .department-card,
+    .feature-card,
+    .stat-card{
+
+        margin:auto;
+        width:100%;
+
+    }
+
+    .section-title{
+
+        font-size:34px;
+
+    }
+
+}
+
+
+/* =========================
+   Small Mobile (480px)
+========================= */
+
+@media (max-width:480px){
+
+    body{
+
+        overflow-x:hidden;
+
+    }
+
+    .logo{
+
+        font-size:28px;
+
+    }
+
+    .hero h1{
+
+        font-size:28px;
+
+    }
+
+    .hero p{
+
+        font-size:15px;
+
+    }
+
+    .section-title{
+
+        font-size:28px;
+
+    }
+
+    .department-card{
+
+        padding:25px;
+
+    }
+
+    .feature-card{
+
+        padding:25px;
+
+    }
+
+    .stat-card{
+
+        padding:30px 20px;
+
+    }
+
+    .footer{
+
+        text-align:center;
+
+    }
+
+    .paper-card{
+
+        padding:20px;
+
+    }
+
+    .paper-buttons{
+
+        flex-direction:column;
+
+    }
+
+    .paper-buttons a{
+
+        width:100%;
+        text-align:center;
+
+    }
+
+}
