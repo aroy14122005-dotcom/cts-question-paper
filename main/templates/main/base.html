@@ -443,23 +443,27 @@
 const btn = document.getElementById("department-btn");
 const menu = document.getElementById("department-menu");
 
-btn.addEventListener("click", function(e){
+if (btn && menu) {
 
-    e.preventDefault();
+    btn.addEventListener("click", function(e){
 
-    menu.classList.toggle("show");
-    
-    btn.querySelector("i").classList.toggle("bx-rotate-180");
+        e.preventDefault();
 
-});
+        menu.classList.toggle("show");
 
-document.addEventListener("click", function(e){
+        btn.querySelector("i").classList.toggle("bx-rotate-180");
 
-    if(!btn.contains(e.target) && !menu.contains(e.target)){
-        menu.classList.remove("show");
-    }
+    });
 
-});
+    document.addEventListener("click", function(e){
+
+        if(!btn.contains(e.target) && !menu.contains(e.target)){
+            menu.classList.remove("show");
+        }
+
+    });
+
+}
 const papersBtn = document.getElementById("papers-btn");
 const papersMenu = document.getElementById("papers-menu");
 

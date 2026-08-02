@@ -188,29 +188,6 @@ nav{
     color: white;
 }
 
-/* ================= SEARCH SUGGESTIONS ================= */
-
-#search-suggestions{
-    position: absolute;
-
-    top: 100%;
-    right: 0;
-
-    width: 350px;
-
-    background: white;
-
-    border-radius: 10px;
-
-    box-shadow: 0 8px 25px rgba(0,0,0,.15);
-
-    display: none;
-
-    overflow: hidden;
-
-    z-index: 999;
-}
-
 /* ================= PROFILE DROPDOWN ================= */
 
 .profile-dropdown{
@@ -345,6 +322,18 @@ nav{
 
 .logout-confirm:hover{
     background:#b91c1c;
+}
+
+/* =========================
+   Hide Mobile Menu Items on Desktop
+========================= */
+
+.mobile-menu-bottom{
+    display: none;
+}
+
+.mobile-menu-bottom hr{
+    display: none;
 }
 
 @keyframes popup{

@@ -128,6 +128,16 @@
 
     }
 
+    .nav-links > li > a{
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    min-height:44px;
+
+}
+
     .nav-overlay{
 
          position:fixed;
@@ -223,79 +233,15 @@
 
     }
 
-}
-
-
-/* =========================
-   Small Mobile (480px)
-========================= */
-
-@media (max-width:480px){
-
-    body{
-        overflow-x:hidden;
-    }
-
-    .logo a{
-        font-size:22px;
-    }
-
-    .hero{
-        padding:45px 15px;
-    }
-
-    .hero h1{
-        font-size:28px;
-    }
-
-    .hero p{
-        font-size:15px;
-    }
-
-    .section-title{
-        font-size:28px;
-    }
-
-    .department-card{
-        padding:25px;
-    }
-
-    .feature-card{
-        padding:25px;
-    }
-
-    .stat-card{
-        padding:30px 20px;
-    }
-
-    .paper-card{
-        padding:20px;
-    }
-
-    .paper-buttons{
-        flex-direction:column;
-    }
-
-    .paper-buttons a{
-        width:100%;
-        text-align:center;
-    }
-
-    .site-footer{
-        text-align:center;
-    }
-
-}
-
 /* ==========================================
    Mobile Sidebar Bottom
 ========================================== */
 
 .mobile-menu-bottom{
 
-    margin-top:30px;
+    margin-top:20px;
 
-    padding-top:20px;
+    padding-top:18px;
 
 }
 
@@ -370,6 +316,10 @@
 
     text-align:center;
 
+}
+
+.mobile-menu-bottom{
+    display: block;
 }
 
 /* =========================
@@ -448,5 +398,68 @@
     color:#60a5fa !important;
 
     background:transparent !important;
+
+}
+
+/* =========================
+   Small Mobile (480px)
+========================= */
+
+@media (max-width:480px){
+
+    body{
+        overflow-x:hidden;
+    }
+
+    .logo a{
+        font-size:22px;
+    }
+
+    .hero{
+        padding:45px 15px;
+    }
+
+    .hero h1{
+        font-size:28px;
+    }
+
+    .hero p{
+        font-size:15px;
+    }
+
+    .section-title{
+        font-size:28px;
+    }
+
+    .department-card{
+        padding:25px;
+    }
+
+    .feature-card{
+        padding:25px;
+    }
+
+    .stat-card{
+        padding:30px 20px;
+    }
+
+    .paper-card{
+        padding:20px;
+    }
+
+    .paper-buttons{
+        flex-direction:column;
+    }
+
+    .paper-buttons a{
+        width:100%;
+        text-align:center;
+    }
+
+    .site-footer{
+        text-align:center;
+    }
+
+}
 
 }

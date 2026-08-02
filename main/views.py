@@ -1,24 +1,18 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
-from django.contrib import messages
-from .models import PDFUpload, SubjectPDF
-import os
-from django.db.models import Q
-from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
-from django.contrib.auth.decorators import login_required
-from .models import Favorite
-from django.shortcuts import get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from .models import SubjectPDF, Favorite
-from django.contrib.auth.views import PasswordChangeView
-from django.urls import reverse_lazy
-from django.contrib.auth import logout
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from django.http import FileResponse
+from django.contrib.auth.views import PasswordChangeView
+
+from django.db.models import Q
+from django.urls import reverse_lazy
+from django.http import JsonResponse, FileResponse
+
+from .models import PDFUpload, SubjectPDF, Favorite
+
+import os
 
 @staff_member_required
 def admin_dashboard(request):
@@ -73,7 +67,32 @@ def login_page(request):
 
 
 def home(request):
-    return render(request, "main/home.html")
+    print("HOME VIEW CALLED")
+
+    total_papers = SubjectPDF.objects.count()
+    total_students = User.objects.count()
+
+    total_departments = (
+        SubjectPDF.objects.values("department").distinct().count()
+    )
+
+    total_semesters = (
+        SubjectPDF.objects.values("semester").distinct().count()
+    )
+
+    print(total_papers)
+    print(total_students)
+    print(total_departments)
+    print(total_semesters)
+
+    context = {
+        "total_papers": total_papers,
+        "total_students": total_students,
+        "total_departments": total_departments,
+        "total_semesters": total_semesters,
+    }
+
+    return render(request, "main/home.html", context)
 
 
 def semester(request, dept_name):
