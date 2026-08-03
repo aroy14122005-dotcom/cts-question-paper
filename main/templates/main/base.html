@@ -162,12 +162,10 @@
 
     <hr>
 
-    <div class="mobile-search-link">
+    <div class="mobile-search-link" id="mobile-search-btn">
 
-        <a href="{% url 'search' %}">
-            <i class='bx bx-search'></i>
-            Search Question Papers
-        </a>
+        <i class='bx bx-search'></i>
+        Search Question Papers
 
     </div>
 
@@ -438,6 +436,28 @@
 
 </footer>
 
+<!-- Mobile Search Overlay -->
+
+<div class="mobile-search-overlay" id="mobile-search-overlay">
+
+    <div class="mobile-search-header">
+
+        <input
+            type="text"
+            id="mobile-search-input"
+            placeholder="Search question papers..."
+        >
+
+        <button id="close-mobile-search">
+            ✕
+        </button>
+
+    </div>
+
+    <div id="mobile-search-results"></div>
+
+</div>
+
 <script>
 
 const btn = document.getElementById("department-btn");
@@ -467,6 +487,7 @@ if (btn && menu) {
 const papersBtn = document.getElementById("papers-btn");
 const papersMenu = document.getElementById("papers-menu");
 
+if (papersBtn && papersMenu) {
 papersBtn.addEventListener("click", function(e){
 
     e.preventDefault();
@@ -482,6 +503,8 @@ document.addEventListener("click", function(e){
     }
 
 });
+
+}
 
 const searchInput = document.getElementById("search-input");
 const suggestionsBox = document.getElementById("search-suggestions");
@@ -673,6 +696,7 @@ function updateSelection(){
 const profileBtn = document.getElementById("profile-btn");
 const profileMenu = document.getElementById("profile-menu");
 
+if(profileBtn && profileMenu){
 profileBtn.addEventListener("click", function(e){
 
     e.preventDefault();
@@ -689,6 +713,7 @@ document.addEventListener("click", function(e){
 
 });
 
+}
 const logoutBtn = document.getElementById("logout-btn");
 const logoutModal = document.getElementById("logout-modal");
 const cancelLogout = document.getElementById("cancel-logout");
@@ -746,6 +771,8 @@ const menuToggle = document.getElementById("menu-toggle");
 const nav = document.querySelector("nav");
 const overlay = document.getElementById("nav-overlay");
 
+if(menuToggle && nav && overlay){
+
 menuToggle.addEventListener("click",()=>{
 
     nav.classList.toggle("active");
@@ -772,6 +799,30 @@ overlay.addEventListener("click",()=>{
 
 });
 
+}
+
+const mobileSearchBtn = document.getElementById("mobile-search-btn");
+const mobileSearchOverlay = document.getElementById("mobile-search-overlay");
+const closeMobileSearch = document.getElementById("close-mobile-search");
+const mobileSearchInput = document.getElementById("mobile-search-input");
+
+if (mobileSearchBtn) {
+    mobileSearchBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        console.log("Button clicked");
+
+        mobileSearchOverlay.classList.add("show");
+        mobileSearchInput.focus();
+    });
+}
+
+if (closeMobileSearch) {
+    closeMobileSearch.addEventListener("click", function () {
+        mobileSearchOverlay.classList.remove("show");
+    });
+}
 </script>
 </body>
 

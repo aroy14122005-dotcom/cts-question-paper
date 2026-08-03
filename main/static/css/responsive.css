@@ -322,6 +322,67 @@
     display: block;
 }
 
+    .mobile-menu-bottom hr{
+        display:block;
+    }
+
+
+.mobile-search-overlay{
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+
+    width: 100vw !important;
+    height: 100vh !important;
+
+    background: #fff !important;
+
+    z-index: 99999 !important;
+
+    display: none;
+
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.mobile-search-overlay.show{
+    display: block !important;
+}
+.mobile-search-box {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.mobile-search-header{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    padding:16px;
+}
+
+.mobile-search-header input{
+    flex:1;
+}
+
+#mobile-search-results{
+    height:calc(100vh - 70px);
+    overflow-y:auto;
+}
+
+.mobile-search-header button{
+
+    border: none;
+
+    background: none;
+
+    font-size: 28px;
+
+    cursor: pointer;
+
+}
+
 /* =========================
    Mobile Dropdown
 ========================= */
