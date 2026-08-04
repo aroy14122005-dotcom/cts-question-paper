@@ -267,8 +267,8 @@
 
 }
 
-.mobile-search-link a,
-.mobile-profile-links a{
+.mobile-search-link,
+.mobile-profile-links{
 
     display:flex;
 
@@ -355,15 +355,20 @@
 }
 
 .mobile-search-header{
-    display:flex;
-    align-items:center;
-    gap:10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
-    padding:16px;
+    padding: 16px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .mobile-search-header input{
     flex:1;
+    width:100%;
+    font-size:16px;
+    padding:12px;
 }
 
 #mobile-search-results{
@@ -380,6 +385,49 @@
     font-size: 28px;
 
     cursor: pointer;
+
+    flex-shrink:0;
+}
+
+/* =========================
+   Mobile search-item
+========================= */
+
+.mobile-search-item{
+
+    display:block;
+
+    padding:18px;
+
+    border-bottom:1px solid #eee;
+
+    text-decoration:none;
+
+    color:#222;
+
+}
+
+.mobile-search-item strong{
+
+    display:block;
+
+    font-size:17px;
+
+}
+
+.mobile-search-item small{
+
+    display:block;
+
+    margin-top:6px;
+
+    color:#666;
+
+}
+
+.mobile-search-item:hover{
+
+    background:#f5f5f5;
 
 }
 
@@ -462,6 +510,8 @@
 
 }
 
+}
+
 /* =========================
    Small Mobile (480px)
 ========================= */
@@ -520,7 +570,5 @@
     .site-footer{
         text-align:center;
     }
-
-}
 
 }

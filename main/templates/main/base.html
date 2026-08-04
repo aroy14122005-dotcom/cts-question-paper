@@ -801,27 +801,265 @@ overlay.addEventListener("click",()=>{
 
 }
 
+/* ===========================
+   MOBILE SEARCH
+=========================== */
+
 const mobileSearchBtn = document.getElementById("mobile-search-btn");
 const mobileSearchOverlay = document.getElementById("mobile-search-overlay");
 const closeMobileSearch = document.getElementById("close-mobile-search");
 const mobileSearchInput = document.getElementById("mobile-search-input");
+const mobileSearchResults = document.getElementById("mobile-search-results");
+const mobileDepartmentFilter = document.getElementById("mobile-department-filter");
 
-if (mobileSearchBtn) {
+let mobileSearchTimer;
+let mobileSelectedIndex = -1;
+let mobileSuggestionItems = [];
+
+// ================= OPEN =================
+
+if (mobileSearchBtn && mobileSearchOverlay) {
+
     mobileSearchBtn.addEventListener("click", function (e) {
+
         e.preventDefault();
         e.stopPropagation();
 
-        console.log("Button clicked");
+        // Close Sidebar
+        if (nav) nav.classList.remove("active");
+        if (overlay) overlay.classList.remove("show");
 
+        if (menuToggle) {
+            menuToggle.innerHTML = "<i class='bx bx-menu'></i>";
+        }
+
+        // Open Search
         mobileSearchOverlay.classList.add("show");
-        mobileSearchInput.focus();
+
+       if (mobileSearchInput) {
+           mobileSearchInput.value = "";
+           mobileSearchInput.focus();
+        }
+
+       if (mobileSearchResults) {
+           mobileSearchResults.innerHTML = "";
+        }
+
     });
+
 }
 
-if (closeMobileSearch) {
+// ================= CLOSE =================
+
+if (closeMobileSearch && mobileSearchOverlay) {
+
     closeMobileSearch.addEventListener("click", function () {
+
         mobileSearchOverlay.classList.remove("show");
+
+        if (mobileSearchInput) {
+            mobileSearchInput.value = "";
+        }
+
+        if (mobileSearchResults) {
+            mobileSearchResults.innerHTML = "";
+        }
+
+        mobileSuggestionItems = [];
+        mobileSelectedIndex = -1;
+
     });
+
+}
+
+// ================= LIVE SEARCH =================
+
+if (mobileSearchInput) {
+
+    mobileSearchInput.addEventListener("input", function () {
+
+        clearTimeout(mobileSearchTimer);
+
+        mobileSearchTimer = setTimeout(() => {
+
+            const query = this.value.trim();
+
+           if (query.length < 2) {
+
+               if (mobileSearchResults) {
+                   mobileSearchResults.innerHTML = "";
+                }
+
+                mobileSuggestionItems = [];
+                mobileSelectedIndex = -1;
+
+                return;
+
+            }
+
+           if (mobileSearchResults) {
+
+                mobileSearchResults.innerHTML = `
+                    <div style="padding:20px;text-align:center">
+                        🔄 Searching...
+                    </div>
+                `;
+
+            }
+
+            const department =
+            mobileDepartmentFilter
+            ? mobileDepartmentFilter.value
+            : "";
+
+            fetch(
+            `/search-api/?q=${encodeURIComponent(query)}&department=${encodeURIComponent(department)}`
+            )
+
+            .then(response => response.json())
+
+            .then(data => {
+
+                if (mobileSearchResults) {
+                    mobileSearchResults.innerHTML = "";
+                }
+
+                if (data.length === 0) {
+
+                   if (mobileSearchResults) {
+
+                        mobileSearchResults.innerHTML = `
+                            <div style="padding:20px;text-align:center">
+                                No results found
+                            </div>
+                        `;
+
+                    }
+
+                    return;
+
+                }
+
+                if (!mobileSearchResults) return;
+
+                data.forEach(item => {
+
+                    mobileSearchResults.innerHTML += `
+
+                <a href="/paper/${item.id}/" class="mobile-search-item">
+
+                    <strong>${item.subject}</strong>
+
+                    <small>
+                        ${item.department.toUpperCase()} |
+                        Semester ${item.semester}
+                    </small>
+
+                </a>
+
+                `;
+
+            });
+
+                mobileSuggestionItems =
+                    document.querySelectorAll(".mobile-search-item");
+
+                    mobileSelectedIndex = -1;
+
+            })
+
+            .catch(function () {
+
+                if (mobileSearchResults) {
+
+                    mobileSearchResults.innerHTML = `
+                        <div style="padding:20px;text-align:center;color:red">
+                            Something went wrong
+                        </div>
+                    `;
+
+                }
+
+            });
+
+        }, 300);
+
+    });
+
+}
+
+if (mobileSearchInput) {
+
+    mobileSearchInput.addEventListener("keydown", function(e){
+
+        if(mobileSuggestionItems.length === 0) return;
+
+        if(e.key === "ArrowDown"){
+
+            e.preventDefault();
+
+            mobileSelectedIndex++;
+
+            if(mobileSelectedIndex >= mobileSuggestionItems.length){
+
+                mobileSelectedIndex = 0;
+
+            }
+
+            updateMobileSelection();
+
+        }
+
+        else if(e.key === "ArrowUp"){
+
+            e.preventDefault();
+
+            mobileSelectedIndex--;
+
+            if(mobileSelectedIndex < 0){
+
+                mobileSelectedIndex =
+                mobileSuggestionItems.length - 1;
+
+            }
+
+            updateMobileSelection();
+
+        }
+
+        else if(e.key === "Enter"){
+
+            if(mobileSelectedIndex >= 0){
+
+                e.preventDefault();
+
+                mobileSuggestionItems[
+                    mobileSelectedIndex
+                ].click();
+
+            }
+
+        }
+
+    });
+
+}
+function updateMobileSelection(){
+
+    mobileSuggestionItems.forEach(item => {
+
+        item.classList.remove("active");
+
+    });
+
+    if(mobileSelectedIndex >= 0){
+
+        mobileSuggestionItems[
+            mobileSelectedIndex
+        ].classList.add("active");
+
+    }
+
 }
 </script>
 </body>
