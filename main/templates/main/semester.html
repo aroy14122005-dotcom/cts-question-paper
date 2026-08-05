@@ -1,38 +1,142 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Semester System</title>
+
     <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+
 </head>
 
 <body>
-<div class="container">
 
-    <div class="title">SEMESTER SYSTEM</div>
-    <br>
+<div class="semester-container">
 
-    <div class="semester">
-        <a href="{% url 'upload_pdf' 1 %}"><button class="sem-btn">1 SEMESTER</button></a>
-        <a href="{% url 'upload_pdf' 2 %}"><button class="sem-btn">2 SEMESTER</button></a>
-        <a href="{% url 'upload_pdf' 3 %}"><button class="sem-btn">3 SEMESTER</button></a>
-        <a href="{% url 'upload_pdf' 4 %}"><button class="sem-btn">4 SEMESTER</button></a>
-        <a href="{% url 'upload_pdf' 5 %}"><button class="sem-btn">5 SEMESTER</button></a>
-        <a href="{% url 'upload_pdf' 6 %}"><button class="sem-btn">6 SEMESTER</button></a>
+    <div class="semester-header">
+
+        <div class="header-badge">
+            📚 CTS Question Paper
+        </div>
+
+        <h1>Semester System</h1>
+
+        <p>
+            Choose your semester to explore previous year question papers,
+            download PDFs, and prepare smarter for your exams.
+        </p>
+
     </div>
 
-    <hr>
-    <hr>
+    <div class="semester-grid">
 
-    <div class="subject-section">
-        <h3 class="subject-title">Subject</h3>
-        <button class="subject-btn" onclick="window.location.href='{% url 'subject_page' dept_name %}'">
-          Subject
-       </button>
+       <a href="{% url 'upload_pdf' 1 %}" class="semester-card">
+
+            <span>01</span>
+
+            <h3>1st Semester</h3>
+
+            <p>View previous year question papers</p>
+
+            <div class="card-arrow">
+                →
+            </div>
+
+        </a>
+
+        <a href="{% url 'upload_pdf' 2 %}" class="semester-card">
+
+            <span>02</span>
+
+            <h3>2nd Semester</h3>
+
+            <p>View previous year question papers</p>
+
+            <div class="card-arrow">
+                →
+            </div>
+
+        </a>
+
+        <a href="{% url 'upload_pdf' 3 %}" class="semester-card">
+
+            <span>03</span>
+
+            <h3>3rd Semester</h3>
+
+            <p>View previous year question papers</p>
+
+            <div class="card-arrow">
+                →
+            </div>
+
+        </a>
+
+        <a href="{% url 'upload_pdf' 4 %}" class="semester-card">
+
+            <span>04</span>
+
+            <h3>4th Semester</h3>
+
+            <p>View previous year question papers</p>
+
+            <div class="card-arrow">
+                →
+            </div>
+
+        </a>
+
+        <a href="{% url 'upload_pdf' 5 %}" class="semester-card">
+
+            <span>05</span>
+
+            <h3>5th Semester</h3>
+
+            <p>View previous year question papers</p>
+
+            <div class="card-arrow">
+                →
+            </div>
+
+        </a>
+
+       <a href="{% url 'upload_pdf' 6 %}" class="semester-card">
+
+            <span>06</span>
+
+            <h3>6th Semester</h3>
+
+            <p>View previous year question papers</p>
+
+            <div class="card-arrow">
+                →
+            </div>
+
+        </a>
+
+    </div>
+
+    <div class="subject-box">
+
+       <h2>📚 Browse Subjects</h2>
+
+        <p>
+            Select any subject and access previous year question papers,
+            important PDFs and study materials.
+        </p>
+
+        <a href="{% url 'subject_page' dept_name %}" class="subject-button">
+            Browse Subjects →
+        </a>
+
     </div>
 
 </div>
+
 </body>
+
 </html>

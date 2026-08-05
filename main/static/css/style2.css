@@ -1,134 +1,549 @@
-body {
-    /*font-family: Arial, sans-serif;
-    background: #f2f2f2;
-    margin: 0;*/
+/* ===========================
+   BODY
+=========================== */
+
+body{
+
+    font-family:Arial, Helvetica, sans-serif;
+
+    background:
+    radial-gradient(circle at top left,#bfdbfe 0%,transparent 35%),
+    radial-gradient(circle at bottom right,#93c5fd 0%,transparent 35%),
+    linear-gradient(135deg,#eff6ff,#dbeafe,#bfdbfe);
+
+    min-height:100vh;
+
+    padding:50px 20px;
+
+    overflow-x:hidden;
+
+    position:relative;
+
 }
 
-/* Header */
-.header {
-    background: white;
-    padding: 10px;
-    text-align: center;
-    border-bottom: 4px solid rgb(75, 38, 221);
+/* ===========================
+   CONTAINER
+=========================== */
+
+.semester-container{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    position:relative;
+
+    z-index:2;
+
 }
 
-.header h1 {
-    margin: 0;
-    color: #2b2b8f;
+/* ===========================
+   FLOATING BACKGROUND
+=========================== */
+
+body::before,
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    width:350px;
+
+    height:350px;
+
+    border-radius:50%;
+
+    filter:blur(80px);
+
+    opacity:.35;
+
+    z-index:0;
+
+    animation:floatBlob 12s infinite alternate ease-in-out;
+
 }
 
-/* Main Container */
-.container {
-    max-width: 500px;
-    margin: 20px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
+body::before{
+
+    background:#3b82f6;
+
+    top:-120px;
+
+    left:-120px;
+
 }
 
-.title {
-    text-align: center;
-    color: rgb(255, 0, 0);
-    text-decoration: underline;
-    text-decoration-color: #1a56db; /* blue color */
-    font-size: 20px;
-    margin-bottom: 20px;
+body::after{
+
+    background:#60a5fa;
+
+    bottom:-120px;
+
+    right:-120px;
+
 }
 
-/* Semester Grid */
-.semester {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
+@keyframes floatBlob{
+
+    from{
+
+        transform:translateY(0) translateX(0);
+
+    }
+
+    to{
+
+        transform:translateY(40px) translateX(30px);
+
+    }
+
 }
 
-/* Buttons */
-.sem-btn {
-    padding: 15px;
-    border: 2px solid #999;
-    border-radius: 8px;
-    background: #fafafa;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
+/* ===========================
+   HEADER
+=========================== */
+
+.semester-header{
+
+    text-align:center;
+
+    margin-bottom:50px;
+
+    animation:fadeDown .8s ease;
+
 }
 
-.sem-btn:hover {
-    background: rgb(0, 64, 255);
-    color: white;
-    border-color: rgb(2, 2, 2);
-}
-/* Subject Section */
-.subject-section {
-    margin-top: 40px;
+.semester-header h1{
+
+    font-size:48px;
+
+    color:#0f172a;
+
+    margin-bottom:15px;
+
 }
 
-/* Subject Title */
-.subject-title {
-    text-align: center;
-    color: #8b0000;
-    text-decoration: underline;
-    font-size: 20px;
+.semester-header p{
+
+    font-size:18px;
+
+    color:#64748b;
+
+    max-width:700px;
+
+    margin:auto;
+
+    line-height:1.7;
+
 }
 
-/* Subject Button */
-/*.subject-btn {
-    margin-top: 15px;
-    padding: 10px 20px;
-    border: 2px solid #999;
-    border-radius: 6px;
-    background: white;
-    cursor: pointer;
+/* ===========================
+   HEADER BADGE
+=========================== */
+
+.header-badge{
+
+    display:inline-block;
+
+    padding:10px 22px;
+
+    background:#dbeafe;
+
+    color:#2563eb;
+
+    border-radius:50px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    margin-bottom:20px;
+
+    box-shadow:0 5px 15px rgba(37,99,235,.15);
+
 }
 
-.subject-btn:hover {
-    background: orange;
-    color: white;
-}*/
-/*.subject-btn {
-    padding: 15px;
-    border: 2px solid #999;
-    border-radius: 8px;
-    background: #fafafa;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
+/* ===========================
+   GRID
+=========================== */
+
+.semester-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
+    gap:25px;
+
 }
-.subject-btn:hover {
-    background: rgb(0, 64, 255);
-    color: white;
-    border-color: rgb(2, 2, 2);
-}*/
-/* Subject title center */
-.subject-title{
-    text-align: center;
-    margin-top: 40px;
-    font-size: 32px;
-    text-decoration: underline;
-    color: maroon;
+/* ===========================
+   CARD
+=========================== */
+
+.semester-card{
+
+    position:relative;
+
+    background:white;
+
+    border-radius:24px;
+
+    padding:35px;
+
+    text-decoration:none;
+
+    color:#0f172a;
+
+    overflow:hidden;
+
+    box-shadow:0 12px 35px rgba(0,0,0,.08);
+
+    transition:.35s;
+
+    opacity:0;
+
+    transform:translateY(40px);
+
+    animation:cardFade .7s forwards;
+
 }
 
-/* Subject button container middle e anar jonno */
-.subject-container{
-    display: flex;
-    justify-content: center;   /* middle e anbe */
-    margin-top: 30px;
+.semester-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:-120px;
+
+    right:-120px;
+
+    width:220px;
+
+    height:220px;
+
+    background:rgba(37,99,235,.08);
+
+    border-radius:50%;
+
+    transition:.5s;
+
 }
 
-/* Subject button semester er moto size */
-.subject-btn{
-    width: 340px;      /* semester button er width */
-    height: 80px;      /* semester button er height */
-    font-size: 28px;
-    border: 2px solid black;
-    border-radius: 15px;
-    background: white;
-    cursor: pointer;
+.semester-card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:0 25px 55px rgba(37,99,235,.25);
+
+    transform:translateY(-12px) scale(1.03);
+
+    box-shadow:
+        0 30px 60px rgba(37,99,235,.25),
+        0 0 0 1px rgba(37,99,235,.12);
+
 }
 
-.subject-btn:hover{
-   /* background: #f0f0f0;*/
-    background: rgb(0, 64, 255);
-    color: white;
-    border-color: rgb(2, 2, 2);
+.semester-card:hover::before{
+
+    transform:scale(1.4);
+
+}
+
+.semester-card span{
+
+    width:72px;
+
+    height:72px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    margin-bottom:25px;
+
+    transition:.35s;
+
+}
+
+.semester-card:hover span{
+
+    transform:rotate(12deg) scale(1.15);
+
+    box-shadow:0 10px 25px rgba(37,99,235,.35);
+
+}
+
+.semester-card h3{
+
+    font-size:30px;
+
+    margin-bottom:12px;
+
+}
+
+.semester-card p{
+
+    color:#64748b;
+
+    line-height:1.7;
+
+    font-size:16px;
+
+}
+
+.card-arrow{
+
+    margin-top:25px;
+
+    font-size:26px;
+
+    color:#2563eb;
+
+    transition:.35s;
+
+}
+
+.semester-card:hover .card-arrow{
+
+    transform:translateX(12px);
+
+}
+
+/* ===========================
+   CARD APPEAR ANIMATION
+=========================== */
+
+.semester-card:nth-child(1){animation-delay:.1s;}
+.semester-card:nth-child(2){animation-delay:.2s;}
+.semester-card:nth-child(3){animation-delay:.3s;}
+.semester-card:nth-child(4){animation-delay:.4s;}
+.semester-card:nth-child(5){animation-delay:.5s;}
+.semester-card:nth-child(6){animation-delay:.6s;}
+
+@keyframes cardFade{
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ===========================
+   SUBJECT BOX
+=========================== */
+
+.subject-box{
+
+    margin-top:80px;
+
+    background:rgba(255,255,255,.82);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.45);
+
+    border-radius:28px;
+
+    padding:55px 40px;
+
+    text-align:center;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.08),
+        0 0 0 1px rgba(255,255,255,.25);
+
+    position:relative;
+
+    overflow:hidden;
+
+    -webkit-backdrop-filter: blur(18px);
+     backdrop-filter: blur(18px);
+     background: rgba(255,255,255,0.55);
+
+}
+
+.subject-box::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:-140px;
+
+    right:-140px;
+
+    width:260px;
+
+    height:260px;
+
+    border-radius:50%;
+
+    background:rgba(37,99,235,.08);
+
+    transition:.5s;
+
+}
+
+.subject-box:hover::before{
+
+    transform:scale(1.4);
+
+}
+
+.subject-box h2{
+
+    font-size:40px;
+
+    color:#0f172a;
+
+    margin-bottom:15px;
+
+    font-weight:700;
+
+}
+
+.subject-box p{
+
+    font-size:18px;
+
+    color:#64748b;
+
+    line-height:1.8;
+
+    margin-bottom:35px;
+
+}
+
+.subject-button{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    padding:18px 42px;
+
+    border-radius:14px;
+
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+
+    color:#fff;
+
+    text-decoration:none;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    letter-spacing:.3px;
+
+    box-shadow:0 10px 25px rgba(37,99,235,.30);
+
+    transition:all .35s ease;
+
+}
+
+.subject-button:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 18px 40px rgba(37,99,235,.40);
+
+    background:linear-gradient(135deg,#3b82f6,#2563eb);
+
+}
+
+.subject-button:active{
+
+    transform:scale(.97);
+
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:768px){
+
+    body{
+
+        padding:25px 15px;
+
+    }
+
+    .semester-header h1{
+
+        font-size:36px;
+
+    }
+
+    .semester-header p{
+
+        font-size:16px;
+
+    }
+
+    .semester-card{
+
+        padding:28px;
+
+    }
+
+    .subject-box{
+
+        padding:30px 20px;
+
+    }
+
+    .subject-box h2{
+
+        font-size:28px;
+
+    }
+
+}
+
+/* ===========================
+   ANIMATIONS
+=========================== */
+
+@keyframes fadeDown{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-40px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
 }

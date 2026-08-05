@@ -1,27 +1,81 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Semester Subjects</title>
+
     <link rel="stylesheet" href="{% static 'css/style3.css' %}">
+
 </head>
+
 <body>
 
-<div class="page-box">
-    <div class="header">Semester Subjects Page</div>
+<div class="subject-container">
+
+    <div class="subject-header">
+
+        <div class="header-badge">
+            📚 CTS Question Paper
+        </div>
+
+        <h1>Subject Library</h1>
+
+        <p>
+            Select any subject to access previous year question papers,
+            important PDFs and study materials.
+        </p>
+
+    </div>
 
     {% for sem, subject_list in subjects.items %}
-        <div class="sem-title">Semester {{ sem }}</div>
 
-        <div class="subject-list">
-            {% for subject in subject_list %}
-                <a class="subject-link" href="{% url 'subject_upload' dept_name sem subject %}">
-                    📄 {{ subject }}
-                </a>
-            {% endfor %}
+    <div class="semester-card">
+
+        <div class="semester-title">
+
+            <span>📘</span>
+
+            <h2>Semester {{ sem }}</h2>
+
         </div>
+
+        <div class="subject-grid">
+
+            {% for subject in subject_list %}
+
+            <a href="{% url 'subject_upload' dept_name sem subject %}"
+               class="subject-item">
+
+                <span class="subject-icon">
+                    📄
+                </span>
+
+                <span class="subject-name">
+                    {{ subject }}
+                </span>
+
+                <span class="subject-arrow">
+                    →
+                </span>
+
+            </a>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
     {% endfor %}
+
 </div>
 
 </body>
+
 </html>

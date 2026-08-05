@@ -1,84 +1,213 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Semester {{ sem_no }} PDF Upload</title>
 
-   {% load static %}
-<link rel="stylesheet" href="{% static 'css/style4.css' %}">
+    <title>{{ subject_name }} | CTS Question Paper</title>
 
+    <link rel="stylesheet" href="{% static 'css/style4.css' %}">
 </head>
+
 <body>
 
-<div class="container">
+<div class="upload-container">
 
-    <h1>Upload PDF</h1>
+    <!-- HEADER -->
 
-{% if subject_name %}
-    <h3>Subject: {{ subject_name }}</h3>
-{% endif %}
+    <div class="upload-header">
 
-<h3>Semester: {{ sem_no }}</h3>
+        <div class="header-badge">
+            📚 CTS Question Paper
+        </div>
 
-    <!-- Upload Form -->
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
+        <h1>{{ subject_name }}</h1>
 
-        <input type="file" 
-               name="pdf_file" 
-               accept=".pdf" 
-               required>
+        <div class="subject-meta">
 
-        <button type="submit">
-            Upload PDF
-        </button>
-    </form>
+            <span>🏛 {{ dept_name|upper }}</span>
 
-    <hr>
+            <span>🎓 Semester {{ sem_no }}</span>
 
-    <h2>Uploaded PDFs</h2>
+        </div>
 
-    <!-- Uploaded PDF List -->
-    {% for pdf in pdfs %}
+        <p>
 
-       <div class="pdf-box">
+            Browse previous year question papers and upload new PDFs for this subject.
 
-    <a href="{{ pdf.pdf_file.url }}"
-       target="_blank"
-       class="pdf-link">
-        📄 {{ pdf.pdf_file.name }}
-    </a>
-
-    <div class="action-buttons">
-
-        <a href="{{ pdf.pdf_file.url }}"
-           download
-           class="download-btn">
-            Download
-        </a>
-
-        {% if is_subject_upload %}
-    <a href="{% url 'delete_subject_pdf' pdf.id %}"
-       class="delete-btn">
-        Delete
-    </a>
-{% else %}
-    <a href="{% url 'delete_pdf' pdf.id %}"
-       class="delete-btn">
-        Delete
-    </a>
-{% endif %}
+        </p>
 
     </div>
 
+    <!-- UPLOAD BOX -->
+
+    <div class="upload-box">
+
+        <h2>Upload PDF</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <input
+                type="file"
+                name="pdf_file"
+                accept=".pdf"
+                required
+            >
+
+            <button type="submit">
+
+                ⬆ Upload PDF
+
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- PDF LIST -->
+
+    <div class="pdf-section">
+
+        <h2>
+
+            Uploaded PDFs
+
+        </h2>
+
+        <div id="pdf-list">
+
+           {% for pdf in pdfs %}
+
+        <div class="pdf-card">
+
+            <div class="pdf-info">
+
+                <div class="pdf-icon">
+
+                    📄
+
+                </div>
+
+                <div>
+
+                    <h3>
+
+                        {{ pdf.pdf_file.name }}
+
+                    </h3>
+
+                    <p>
+
+                        Uploaded :
+                        {{ pdf.uploaded_at|date:"d M Y" }}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="pdf-actions">
+
+                <a
+                    href="{{ pdf.pdf_file.url }}"
+                    target="_blank"
+                    class="preview-btn">
+
+                    👁 Preview
+
+                </a>
+
+                <a
+                    href="{{ pdf.pdf_file.url }}"
+                    download
+                    class="download-btn">
+
+                    ⬇ Download
+
+                </a>
+
+                {% if is_subject_upload %}
+
+                <a
+                    href="{% url 'delete_subject_pdf' pdf.id %}"
+                    class="delete-btn">
+
+                    🗑 Delete
+
+                </a>
+
+                {% else %}
+
+                <a
+                    href="{% url 'delete_pdf' pdf.id %}"
+                    class="delete-btn">
+
+                    🗑 Delete
+
+                </a>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+
+                📂
+
+            </div>
+
+            <h3>
+
+                No PDF Available
+
+            </h3>
+
+            <p>
+
+                Upload the first PDF for this subject.
+
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+        </div>
+
+    </div>
+
+    <div class="pdf-toolbar">
+
+    <input
+        type="text"
+        id="pdf-search"
+        placeholder="🔍 Search PDF..."
+    >
+
+    <select id="pdf-sort">
+
+        <option value="newest">
+            Newest First
+        </option>
+
+        <option value="oldest">
+            Oldest First
+        </option>
+
+    </select>
+
 </div>
-
-    {% empty %}
-
-        <p>No PDF uploaded yet.</p>
-
-    {% endfor %}
 
 </div>
 

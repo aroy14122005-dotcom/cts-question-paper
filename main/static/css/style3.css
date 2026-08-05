@@ -1,51 +1,344 @@
+/* ==========================================
+   RESET
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* ==========================================
+   BODY
+========================================== */
+
 body{
-    background:#f4f7fc;
-    font-family:Arial, sans-serif;
-    display:flex;
-    justify-content:center;
-    padding:30px;
+
+    font-family:Arial, Helvetica, sans-serif;
+
+    background:
+    radial-gradient(circle at top left,#bfdbfe 0%,transparent 35%),
+    radial-gradient(circle at bottom right,#93c5fd 0%,transparent 35%),
+    linear-gradient(135deg,#eff6ff,#dbeafe,#bfdbfe);
+
+    min-height:100vh;
+
+    padding:50px 20px;
+
+    overflow-x:hidden;
+
 }
 
-.page-box{
-    width:100%;
-    max-width:650px;
-    background:white;
-    border:1px solid #ddd;
-    border-radius:10px;
-    overflow:hidden;
-    box-shadow:0 5px 18px rgba(0,0,0,0.12);
+/* ==========================================
+   CONTAINER
+========================================== */
+
+.subject-container{
+
+    max-width:1200px;
+
+    margin:auto;
+
 }
 
-.header{
-    background:#06276b;
-    color:white;
+/* ==========================================
+   HEADER
+========================================== */
+
+.subject-header{
+
     text-align:center;
-    padding:14px;
-    font-size:22px;
-    font-weight:bold;
+
+    margin-bottom:60px;
+
 }
 
-.sem-title{
-    background:#e8f1ff;
-    margin:20px 25px 10px;
-    padding:8px 15px;
-    font-weight:bold;
-    border-radius:5px;
-}
+.header-badge{
 
-.subject-list{
-    padding:0 45px 10px;
-}
+    display:inline-block;
 
-.subject-link{
-    display:block;
-    color:#064bb5;
-    font-size:17px;
-    text-decoration:none;
-    margin:9px 0;
+    padding:10px 24px;
+
+    border-radius:50px;
+
+    background:#dbeafe;
+
+    color:#2563eb;
+
     font-weight:600;
+
+    box-shadow:0 8px 20px rgba(37,99,235,.15);
+
+    margin-bottom:20px;
+
 }
 
-.subject-link:hover{
-    text-decoration:underline;
+.subject-header h1{
+
+    font-size:56px;
+
+    color:#0f172a;
+
+    margin-bottom:18px;
+
+}
+
+.subject-header p{
+
+    max-width:760px;
+
+    margin:auto;
+
+    font-size:19px;
+
+    color:#64748b;
+
+    line-height:1.8;
+
+}
+
+/* ==========================================
+   SEMESTER CARD
+========================================== */
+
+.semester-card{
+
+    background:rgba(255,255,255,.78);
+
+    backdrop-filter:blur(16px);
+
+    border-radius:24px;
+
+    padding:35px;
+
+    margin-bottom:35px;
+
+    box-shadow:0 12px 35px rgba(0,0,0,.08);
+
+    transition:.35s;
+
+}
+
+.semester-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 20px 45px rgba(37,99,235,.18);
+
+}
+
+/* ==========================================
+   TITLE
+========================================== */
+
+.semester-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    margin-bottom:30px;
+
+}
+
+.semester-title span{
+
+    font-size:32px;
+
+}
+
+.semester-title h2{
+
+    font-size:34px;
+
+    color:#0f172a;
+
+}
+
+/* ==========================================
+   SUBJECT GRID
+========================================== */
+
+.subject-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+
+    gap:18px;
+
+}
+
+/* ==========================================
+   SUBJECT ITEM
+========================================== */
+
+.subject-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    width:100%;
+
+    padding:18px 20px;
+
+    background:white;
+
+    border-radius:16px;
+
+    text-decoration:none;
+
+    color:#0f172a;
+
+    border:1px solid rgba(37,99,235,.08);
+
+    box-shadow:0 8px 18px rgba(0,0,0,.05);
+
+    transition:.35s;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.subject-item::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:-70px;
+
+    right:-70px;
+
+    width:140px;
+
+    height:140px;
+
+    border-radius:50%;
+
+    background:rgba(37,99,235,.07);
+
+    transition:.4s;
+
+}
+
+.subject-item:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 16px 35px rgba(37,99,235,.18);
+
+    border-color:#2563eb;
+
+}
+
+.subject-item:hover::before{
+
+    transform:scale(1.4);
+
+}
+
+.subject-icon{
+
+    font-size:24px;
+
+    flex-shrink:0;
+
+}
+
+.subject-name{
+
+    flex:1;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    line-height:1.5;
+
+    color:#0f172a;
+
+    word-break:break-word;
+
+}
+
+.subject-arrow{
+
+    font-size:24px;
+
+    color:#2563eb;
+
+    transition:.35s;
+
+    flex-shrink:0;
+
+}
+
+.subject-item:hover .subject-arrow{
+
+    transform:translateX(8px);
+
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:768px){
+
+    body{
+
+        padding:25px 15px;
+
+    }
+
+    .subject-header h1{
+
+        font-size:38px;
+
+    }
+
+    .subject-header p{
+
+        font-size:16px;
+
+    }
+
+    .semester-card{
+
+        padding:25px;
+
+    }
+
+    .semester-title h2{
+
+        font-size:28px;
+
+    }
+
+    .subject-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .subject-item{
+
+        padding:16px;
+
+    }
+
+    .subject-name{
+
+        font-size:16px;
+
+    }
+
 }

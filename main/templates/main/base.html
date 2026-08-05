@@ -810,7 +810,6 @@ const mobileSearchOverlay = document.getElementById("mobile-search-overlay");
 const closeMobileSearch = document.getElementById("close-mobile-search");
 const mobileSearchInput = document.getElementById("mobile-search-input");
 const mobileSearchResults = document.getElementById("mobile-search-results");
-const mobileDepartmentFilter = document.getElementById("mobile-department-filter");
 
 let mobileSearchTimer;
 let mobileSelectedIndex = -1;
@@ -907,14 +906,7 @@ if (mobileSearchInput) {
 
             }
 
-            const department =
-            mobileDepartmentFilter
-            ? mobileDepartmentFilter.value
-            : "";
-
-            fetch(
-            `/search-api/?q=${encodeURIComponent(query)}&department=${encodeURIComponent(department)}`
-            )
+            fetch(`/search-api/?q=${encodeURIComponent(query)}`)
 
             .then(response => response.json())
 
