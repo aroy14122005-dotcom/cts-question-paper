@@ -34,9 +34,7 @@
         </div>
 
         <p>
-
             Browse previous year question papers and upload new PDFs for this subject.
-
         </p>
 
     </div>
@@ -59,155 +57,140 @@
             >
 
             <button type="submit">
-
                 ⬆ Upload PDF
-
             </button>
 
         </form>
 
     </div>
 
-    <!-- PDF LIST -->
+    <!-- PDF SECTION -->
 
     <div class="pdf-section">
 
-        <h2>
+        <h2>Uploaded PDFs</h2>
 
-            Uploaded PDFs
+        <!-- SEARCH + SORT -->
 
-        </h2>
+        <div class="pdf-toolbar">
+
+            <input
+                type="text"
+                id="pdf-search"
+                placeholder="🔍 Search PDF..."
+            >
+
+            <select id="pdf-sort">
+
+                <option value="newest">
+                    Newest First
+                </option>
+
+                <option value="oldest">
+                    Oldest First
+                </option>
+
+            </select>
+
+        </div>
+
+        <!-- PDF LIST -->
 
         <div id="pdf-list">
 
-           {% for pdf in pdfs %}
+            {% for pdf in pdfs %}
 
-        <div class="pdf-card">
+            <div class="pdf-card">
 
-            <div class="pdf-info">
+                <div class="pdf-info">
 
-                <div class="pdf-icon">
+                    <div class="pdf-icon">
+                        📄
+                    </div>
 
-                    📄
+                    <div>
 
-                </div>
+                        <h3>
+                            {{ pdf.filename }}
+                        </h3>
 
-                <div>
+                        <p>
+                            📅 {{ pdf.uploaded_at|date:"d M Y" }} &nbsp; • &nbsp; 📦 {{ pdf.filesize }}
+                        </p>
 
-                    <h3>
-
-                        {{ pdf.pdf_file.name }}
-
-                    </h3>
-
-                    <p>
-
-                        Uploaded :
-                        {{ pdf.uploaded_at|date:"d M Y" }}
-
-                    </p>
+                    </div>
 
                 </div>
 
-            </div>
+                <div class="pdf-actions">
 
-            <div class="pdf-actions">
+                    <a
+                        href="{{ pdf.pdf_file.url }}"
+                        target="_blank"
+                        class="preview-btn">
 
-                <a
-                    href="{{ pdf.pdf_file.url }}"
-                    target="_blank"
-                    class="preview-btn">
+                        👁 Preview
 
-                    👁 Preview
+                    </a>
 
-                </a>
+                    <a
+                        href="{{ pdf.pdf_file.url }}"
+                        download
+                        class="download-btn">
 
-                <a
-                    href="{{ pdf.pdf_file.url }}"
-                    download
-                    class="download-btn">
+                        ⬇ Download
 
-                    ⬇ Download
+                    </a>
 
-                </a>
+                    {% if is_subject_upload %}
 
-                {% if is_subject_upload %}
+                    <a
+                        href="{% url 'delete_subject_pdf' pdf.id %}"
+                        class="delete-btn">
 
-                <a
-                    href="{% url 'delete_subject_pdf' pdf.id %}"
-                    class="delete-btn">
+                        🗑 Delete
 
-                    🗑 Delete
+                    </a>
 
-                </a>
+                    {% else %}
 
-                {% else %}
+                    <a
+                        href="{% url 'delete_pdf' pdf.id %}"
+                        class="delete-btn">
 
-                <a
-                    href="{% url 'delete_pdf' pdf.id %}"
-                    class="delete-btn">
+                        🗑 Delete
 
-                    🗑 Delete
+                    </a>
 
-                </a>
+                    {% endif %}
 
-                {% endif %}
-
-            </div>
-
-        </div>
-
-        {% empty %}
-
-        <div class="empty-state">
-
-            <div class="empty-icon">
-
-                📂
+                </div>
 
             </div>
 
-            <h3>
+            {% empty %}
 
-                No PDF Available
+            <div class="empty-state">
 
-            </h3>
+                <div class="empty-icon">
+                    📂
+                </div>
 
-            <p>
+                <h3>
+                    No PDF Available
+                </h3>
 
-                Upload the first PDF for this subject.
+                <p>
+                    Upload the first PDF for this subject.
+                </p>
 
-            </p>
+            </div>
 
-        </div>
-
-        {% endfor %}
+            {% endfor %}
 
         </div>
 
     </div>
-
-    <div class="pdf-toolbar">
-
-    <input
-        type="text"
-        id="pdf-search"
-        placeholder="🔍 Search PDF..."
-    >
-
-    <select id="pdf-sort">
-
-        <option value="newest">
-            Newest First
-        </option>
-
-        <option value="oldest">
-            Oldest First
-        </option>
-
-    </select>
-
-</div>
 
 </div>
 

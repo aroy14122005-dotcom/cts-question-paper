@@ -19,14 +19,45 @@
 /* ================= LOGO ================= */
 
 .logo{
-    flex: 0 0 170px;
+    flex:0 0 auto;
 }
 
 .logo a{
-    font-size: 24px;
-    font-weight: 700;
-    color: rgb(234,54,54);
-    white-space: nowrap;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-decoration:none;
+}
+
+.logo-img{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    object-fit:cover;
+
+    background:#fff;
+    padding:4px;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.25);
+}
+
+.logo-title{
+    font-size:28px;
+    font-weight:800;
+    color:#FFD54F;
+    letter-spacing:0.5px;
+}
+
+.logo-title small{
+    color:#ffffff99;
+}
+
+.logo-subtitle{
+    color:#97e44a;
+    font-size:14px;
+    font-weight: 600;
+    letter-spacing:2px;
+    text-transform:uppercase;
 }
 
 /* ================= MENU ================= */

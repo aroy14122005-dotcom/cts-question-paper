@@ -41,15 +41,21 @@
 <body>
 
     <!-- ================= NAVBAR ================= -->
-
+     
+    {% load static %}
     <header class="navbar">
 
         <!-- Logo -->
-        <div class="logo">
+       <div class="logo">
             <a href="{% url 'home' %}">
-                CTS Question Paper
+                <img src="{% static 'images/logo.png' %}" alt="CTS Logo" class="logo-img">
+
+                <div class="logo-text">
+                    <span class="logo-title">CTS</span>
+                    <span class="logo-subtitle">Question Paper</span>
+                </div>
             </a>
-        </div>
+       </div>
 
         <button class="menu-toggle" id="menu-toggle">
             <i class='bx bx-menu'></i>

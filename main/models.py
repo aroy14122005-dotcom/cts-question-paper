@@ -1,14 +1,17 @@
 from django.db import models
 from django.utils.text import slugify
 from django.contrib.auth.models import User
+from django.utils import timezone
+import os
 
 
 class PDFUpload(models.Model):
     semester = models.IntegerField()
-    pdf_file = models.FileField(upload_to='pdfs/')
+    pdf_file = models.FileField(upload_to="pdfs/")
+    uploaded_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.pdf_file.name
+        return os.path.basename(self.pdf_file.name)
 
 
 class SubjectPDF(models.Model):

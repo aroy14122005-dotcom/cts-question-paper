@@ -114,6 +114,29 @@ def upload_pdf(request, sem_no):
 
     pdfs = PDFUpload.objects.filter(semester=sem_no)
 
+    import os
+    import re
+
+    for pdf in pdfs:
+        filename = os.path.basename(pdf.pdf_file.name)
+
+        # Remove .pdf extension
+        filename = os.path.splitext(filename)[0]
+
+        # Remove random suffix
+        filename = re.sub(r'_[A-Za-z0-9]+$', '', filename)
+        pdf.filename = filename
+
+        # File size
+        size = pdf.pdf_file.size
+
+        if size < 1024:
+            pdf.filesize = f"{size} B"
+        elif size < 1024 * 1024:
+            pdf.filesize = f"{size / 1024:.1f} KB"
+        else:
+            pdf.filesize = f"{size / (1024 * 1024):.2f} MB"
+
     return render(request, "main/upload.html", {
         "sem_no": sem_no,
         "pdfs": pdfs
@@ -198,6 +221,26 @@ def subject_upload(request, dept_name, sem_no, subject_name):
         semester=sem_no,
         subject=subject_name
     ).order_by("-uploaded_at")
+
+    import os
+    import re
+
+    for pdf in pdfs:
+        # Clean filename
+        filename = os.path.basename(pdf.pdf_file.name)
+        filename = os.path.splitext(filename)[0]
+        filename = re.sub(r'_[A-Za-z0-9]+$', '', filename)
+        pdf.filename = filename
+
+        # File Size
+        size = pdf.pdf_file.size
+
+        if size < 1024:
+            pdf.filesize = f"{size} B"
+        elif size < 1024 * 1024:
+            pdf.filesize = f"{size / 1024:.1f} KB"
+        else:
+            pdf.filesize = f"{size / (1024 * 1024):.2f} MB"
 
     return render(request, "main/upload.html", {
         "dept_name": dept_name,
