@@ -19,6 +19,9 @@
 
     <meta property="og:description"
       content="{% block og_description %}Download previous year diploma engineering question papers.{% endblock %}">
+
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+
     <!-- Boxicons -->
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
@@ -787,10 +790,12 @@ menuToggle.addEventListener("click",()=>{
     if(nav.classList.contains("active")){
 
         menuToggle.innerHTML = "✕";
+        document.body.style.overflow = "hidden";
 
     }else{
 
         menuToggle.innerHTML = "☰";
+        document.body.style.overflow = "";
 
     }
 
@@ -802,10 +807,23 @@ overlay.addEventListener("click",()=>{
     overlay.classList.remove("show");
 
     menuToggle.innerHTML="☰";
+    document.body.style.overflow = "";
 
 });
 
 }
+
+window.addEventListener("resize", () => {
+
+    if(window.innerWidth > 767){
+
+        nav.classList.remove("active");
+        overlay.classList.remove("show");
+        menuToggle.innerHTML = "☰";
+
+    }
+
+});
 
 /* ===========================
    MOBILE SEARCH
