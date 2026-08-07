@@ -143,6 +143,7 @@ def upload_pdf(request, sem_no):
     })
 
 
+@staff_member_required
 def delete_pdf(request, pdf_id):
     pdf = PDFUpload.objects.get(id=pdf_id)
     sem_no = pdf.semester
@@ -251,6 +252,7 @@ def subject_upload(request, dept_name, sem_no, subject_name):
     })
 
 
+@staff_member_required
 def delete_subject_pdf(request, pdf_id):
     pdf = SubjectPDF.objects.get(id=pdf_id)
     dept_name = pdf.department
@@ -298,6 +300,7 @@ def search_page(request):
         "results": results,
 
     })
+
 def search_api(request):
 
     query = request.GET.get("q", "").strip()
@@ -317,6 +320,7 @@ def search_api(request):
     for pdf in results:
         data.append({
             "id": pdf.id,
+            "slug": pdf.slug,
             "subject": pdf.subject,
             "department": pdf.department,
             "semester": pdf.semester,
@@ -324,8 +328,8 @@ def search_api(request):
 
     return JsonResponse(data, safe=False)
 
-def paper_detail(request, pdf_id):
-    pdf = get_object_or_404(SubjectPDF, id=pdf_id)
+def paper_detail(request, slug):
+    pdf = get_object_or_404(SubjectPDF, slug=slug)
 
     is_favorite = False
 

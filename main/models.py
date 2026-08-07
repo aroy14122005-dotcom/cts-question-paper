@@ -38,10 +38,17 @@ class SubjectPDF(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.subject)
+            base_slug = slugify(
+                f"{self.department}-semester-{self.semester}-{self.subject}"
+            )
+
+            if self.pk:
+                self.slug = f"{base_slug}-{self.pk}"
+            else:
+                super().save(*args, **kwargs)
+                self.slug = f"{base_slug}-{self.pk}"
 
         super().save(*args, **kwargs)
-
 
 class Favorite(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

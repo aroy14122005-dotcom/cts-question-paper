@@ -2,7 +2,23 @@
 {% load static %}
 
 {% block title %}
-{{ pdf.subject }}
+{{ pdf.subject }} Question Paper | {{ pdf.department|upper }} Semester {{ pdf.semester }}
+{% endblock %}
+
+{% block canonical_url %}
+{{ request.scheme }}://{{ request.get_host }}{% url 'paper_detail' pdf.slug %}
+{% endblock %}
+
+{% block og_title %}
+{{ pdf.subject }} Question Paper | {{ pdf.department|upper }} Semester {{ pdf.semester }}
+{% endblock %}
+
+{% block og_description %}
+Download {{ pdf.subject }} question paper for {{ pdf.department|upper }} Semester {{ pdf.semester }}. View and download the diploma engineering question paper in PDF format from CTS Question Paper.
+{% endblock %}
+
+{% block meta_description %}
+Download {{ pdf.subject }} question paper for {{ pdf.department|upper }} Semester {{ pdf.semester }}. View and download the diploma engineering question paper in PDF format from CTS Question Paper.
 {% endblock %}
 
 {% block extra_css %}

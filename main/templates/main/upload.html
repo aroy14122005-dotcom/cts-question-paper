@@ -144,6 +144,7 @@
 
                     {% if is_subject_upload %}
 
+                    {% if user.is_staff %}
                     <a
                         href="{% url 'delete_subject_pdf' pdf.id %}"
                         class="delete-btn">
@@ -152,8 +153,11 @@
 
                     </a>
 
-                    {% else %}
+                    {% endif %}
 
+                    {% else %} 
+
+                    {% if user.is_staff %}
                     <a
                         href="{% url 'delete_pdf' pdf.id %}"
                         class="delete-btn">
@@ -161,6 +165,8 @@
                         🗑 Delete
 
                     </a>
+
+                    {% endif %}
 
                     {% endif %}
 

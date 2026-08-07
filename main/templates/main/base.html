@@ -10,12 +10,15 @@
     <meta name="description"
       content="{% block meta_description %}Download previous year diploma engineering question papers for CST, Civil, Mechanical and Electrical departments.{% endblock %}">
 
+    <link rel="canonical"
+      href="{% block canonical_url %}{{ request.build_absolute_uri }}{% endblock %}">
+
     <meta property="og:type" content="website">
 
     <meta property="og:title"
       content="{% block og_title %}CTS Question Paper{% endblock %}">
 
-      <meta property="og:image" content="https://yourdomain.com/static/images/logo.png">
+      <meta property="og:image" content="https://cts-question-paper.onrender.com/static/images/logo.png">
 
     <meta property="og:description"
       content="{% block og_description %}Download previous year diploma engineering question papers.{% endblock %}">
@@ -575,7 +578,7 @@ searchInput.addEventListener("input", function () {
 
                 suggestionsBox.innerHTML += `
 
-                <a href="/paper/${item.id}/" class="suggestion-item">
+                <a href="/paper/${item.slug}/" class="suggestion-item">
 
                     <strong>${item.subject}</strong>
 
@@ -962,7 +965,7 @@ if (mobileSearchInput) {
 
                     mobileSearchResults.innerHTML += `
 
-                <a href="/paper/${item.id}/" class="mobile-search-item">
+                <a href="/paper/${item.slug}/" class="mobile-search-item">
 
                     <strong>${item.subject}</strong>
 
