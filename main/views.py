@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
+from django.core.exceptions import PermissionDenied
 from django.contrib.auth.views import PasswordChangeView
 
 from django.db.models import Q
@@ -100,8 +101,14 @@ def semester(request, dept_name):
         "dept_name": dept_name
     })
 
+
 def upload_pdf(request, sem_no):
+
     if request.method == "POST":
+
+        if not request.user.is_staff:
+            raise PermissionDenied
+
         pdf_file = request.FILES.get("pdf_file")
 
         if pdf_file:
@@ -118,29 +125,41 @@ def upload_pdf(request, sem_no):
     import re
 
     for pdf in pdfs:
+
         filename = os.path.basename(pdf.pdf_file.name)
 
-        # Remove .pdf extension
         filename = os.path.splitext(filename)[0]
 
-        # Remove random suffix
-        filename = re.sub(r'_[A-Za-z0-9]+$', '', filename)
+        filename = re.sub(
+            r'_[A-Za-z0-9]+$',
+            '',
+            filename
+        )
+
         pdf.filename = filename
 
-        # File size
         size = pdf.pdf_file.size
 
         if size < 1024:
+
             pdf.filesize = f"{size} B"
+
         elif size < 1024 * 1024:
+
             pdf.filesize = f"{size / 1024:.1f} KB"
+
         else:
+
             pdf.filesize = f"{size / (1024 * 1024):.2f} MB"
 
-    return render(request, "main/upload.html", {
-        "sem_no": sem_no,
-        "pdfs": pdfs
-    })
+    return render(
+        request,
+        "main/upload.html",
+        {
+            "sem_no": sem_no,
+            "pdfs": pdfs
+        }
+    )
 
 
 @staff_member_required

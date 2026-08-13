@@ -39,6 +39,7 @@
 
     </div>
 
+    {% if user.is_staff %}
     <!-- UPLOAD BOX -->
 
     <div class="upload-box">
@@ -63,6 +64,7 @@
         </form>
 
     </div>
+    {% endif %}
 
     <!-- PDF SECTION -->
 
