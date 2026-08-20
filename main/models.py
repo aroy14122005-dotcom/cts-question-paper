@@ -1,62 +1,155 @@
 from django.db import models
-from django.utils.text import slugify
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 from django.utils import timezone
+
 import os
 
 
 class PDFUpload(models.Model):
+    """
+    Legacy PDF model.
+
+    বর্তমানে নতুন upload-এর জন্য SubjectPDF ব্যবহার করা হচ্ছে।
+    পুরোনো database record থাকলে এই model রাখা হয়েছে।
+    """
+
     semester = models.IntegerField()
-    pdf_file = models.FileField(upload_to="pdfs/")
-    uploaded_at = models.DateTimeField(default=timezone.now)
+
+    subject = models.CharField(
+        max_length=150,
+        default="General"
+    )
+
+    pdf_file = models.FileField(
+        upload_to="pdfs/"
+    )
+
+    uploaded_at = models.DateTimeField(
+        default=timezone.now
+    )
 
     def __str__(self):
-        return os.path.basename(self.pdf_file.name)
+        return os.path.basename(
+            self.pdf_file.name
+        )
 
 
 class SubjectPDF(models.Model):
-    department = models.CharField(max_length=100)
+
+    department = models.CharField(
+        max_length=100
+    )
+
     semester = models.IntegerField()
-    subject = models.CharField(max_length=150)
-    pdf_file = models.FileField(upload_to='subject_pdfs/')
-    uploaded_at = models.DateTimeField(auto_now_add=True)
-    
-    # 👇 নতুন field
-    download_count = models.PositiveIntegerField(default=0)
+
+    subject = models.CharField(
+        max_length=150
+    )
+
+    pdf_file = models.FileField(
+        upload_to="subject_pdfs/"
+    )
+
+    uploaded_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    download_count = models.PositiveIntegerField(
+        default=0
+    )
 
     uploaded_by = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
+        related_name="uploaded_papers"
     )
 
-    slug = models.SlugField(max_length=200, blank=True)
-
-    def __str__(self):
-        return f"{self.department} - Sem {self.semester} - {self.subject}"
+    slug = models.SlugField(
+        max_length=200,
+        blank=True,
+        unique=True
+    )
 
     def save(self, *args, **kwargs):
-        if not self.slug:
+
+        # ==================================================
+        # FIRST SAVE
+        # ==================================================
+
+        if not self.pk:
+
+            # First save creates the database ID.
+            super().save(*args, **kwargs)
+
+            # Create base slug.
             base_slug = slugify(
                 f"{self.department}-semester-{self.semester}-{self.subject}"
             )
 
-            if self.pk:
-                self.slug = f"{base_slug}-{self.pk}"
-            else:
-                super().save(*args, **kwargs)
-                self.slug = f"{base_slug}-{self.pk}"
+            # Add primary key to guarantee uniqueness.
+            self.slug = f"{base_slug}-{self.pk}"
+
+            # Save only slug.
+            super().save(
+                update_fields=["slug"]
+            )
+
+            return
+
+        # ==================================================
+        # EXISTING OBJECT
+        # ==================================================
+
+        if not self.slug:
+
+            base_slug = slugify(
+                f"{self.department}-semester-{self.semester}-{self.subject}"
+            )
+
+            self.slug = f"{base_slug}-{self.pk}"
 
         super().save(*args, **kwargs)
 
+    def __str__(self):
+
+        return (
+            f"{self.department} - "
+            f"Sem {self.semester} - "
+            f"{self.subject}"
+        )
+
+
 class Favorite(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    paper = models.ForeignKey(SubjectPDF, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE
+    )
+
+    paper = models.ForeignKey(
+        SubjectPDF,
+        on_delete=models.CASCADE
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
 
     class Meta:
-        unique_together = ("user", "paper")
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "paper"],
+                name="unique_user_favorite_paper"
+            )
+        ]
 
     def __str__(self):
-        return f"{self.user.username} - {self.paper.subject}"
+
+        return (
+            f"{self.user.username} - "
+            f"{self.paper.subject}"
+        )

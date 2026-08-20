@@ -1,30 +1,152 @@
 from django.urls import path
-from . import views
 from django.contrib.auth import views as auth_views
 from django.http import HttpResponse
 
+from . import views
+
+
 urlpatterns = [
-    path('', views.login_page, name='login'),
-    path('home/', views.home, name='home'),
-    path('semester/<str:dept_name>/', views.semester, name='semester'),
-    path('upload/<int:sem_no>/', views.upload_pdf, name='upload_pdf'),
-    path('delete/<int:pdf_id>/', views.delete_pdf, name='delete_pdf'),
 
-    path('semester/<str:dept_name>/subjects/', views.subject_page, name='subject_page'),
-    path('semester/<str:dept_name>/<int:sem_no>/<str:subject_name>/subject-upload/', views.subject_upload, name='subject_upload'),
-    path('subject-pdf/delete/<int:pdf_id>/', views.delete_subject_pdf, name='delete_subject_pdf'),
+    # ======================================================
+    # AUTH / HOME
+    # ======================================================
 
-    path("search/", views.search_page, name="search"),
-    path("search-api/", views.search_api, name="search_api"),
-    path("paper/<slug:slug>/", views.paper_detail, name="paper_detail"),
+    path(
+        "",
+        views.login_page,
+        name="login"
+    ),
 
-    path("favorites/", views.favorites, name="favorites"),
-    path("favorite/add/<int:paper_id>/", views.add_favorite, name="add_favorite"),
-    path("favorite/remove/<int:paper_id>/", views.remove_favorite, name="remove_favorite"),
+    path(
+        "home/",
+        views.home,
+        name="home"
+    ),
 
-    path("profile/", views.profile, name="profile"),
-    path("profile/edit/", views.edit_profile, name="edit_profile"),
-    path("change-password/", views.CustomPasswordChangeView.as_view(), name="change_password"),
+
+    # ======================================================
+    # SEMESTER
+    # ======================================================
+
+    path(
+        "semester/<str:dept_name>/",
+        views.semester,
+        name="semester"
+    ),
+
+
+    # ======================================================
+    # UPLOAD
+    # ======================================================
+
+    path(
+        "upload/<str:dept_name>/<int:sem_no>/",
+        views.upload_pdf,
+        name="upload_pdf"
+    ),
+
+    path(
+        "semester/<str:dept_name>/subjects/",
+        views.subject_page,
+        name="subject_page"
+    ),
+
+    path(
+        "semester/<str:dept_name>/<int:sem_no>/<str:subject_name>/subject-upload/",
+        views.subject_upload,
+        name="subject_upload"
+    ),
+
+
+    # ======================================================
+    # DELETE
+    # ======================================================
+
+    path(
+        "subject-pdf/delete/<int:pdf_id>/",
+        views.delete_subject_pdf,
+        name="delete_subject_pdf"
+    ),
+
+    path(
+        "delete/<int:pdf_id>/",
+        views.delete_pdf,
+        name="delete_pdf"
+    ),
+
+
+    # ======================================================
+    # SEARCH
+    # ======================================================
+
+    path(
+        "search/",
+        views.search_page,
+        name="search"
+    ),
+
+    path(
+        "search-api/",
+        views.search_api,
+        name="search_api"
+    ),
+
+    path(
+        "paper/<slug:slug>/",
+        views.paper_detail,
+        name="paper_detail"
+    ),
+
+
+    # ======================================================
+    # FAVORITES
+    # ======================================================
+
+    path(
+        "favorites/",
+        views.favorites,
+        name="favorites"
+    ),
+
+    path(
+        "favorite/add/<int:paper_id>/",
+        views.add_favorite,
+        name="add_favorite"
+    ),
+
+    path(
+        "favorite/remove/<int:paper_id>/",
+        views.remove_favorite,
+        name="remove_favorite"
+    ),
+
+
+    # ======================================================
+    # PROFILE
+    # ======================================================
+
+    path(
+        "profile/",
+        views.profile,
+        name="profile"
+    ),
+
+    path(
+        "profile/edit/",
+        views.edit_profile,
+        name="edit_profile"
+    ),
+
+    path(
+        "change-password/",
+        views.CustomPasswordChangeView.as_view(),
+        name="change_password"
+    ),
+
+
+    # ======================================================
+    # PASSWORD RESET
+    # ======================================================
 
     path(
         "password-reset/",
@@ -58,11 +180,49 @@ urlpatterns = [
         name="password_reset_complete",
     ),
 
-    path("contact/", views.contact, name="contact"),
-    path("delete-account/", views.delete_account, name="delete_account"),
-    path("logout/", views.logout_user, name="logout"),
-    path("admin-dashboard/", views.admin_dashboard, name="admin_dashboard"),
-    path("download/<slug:slug>/", views.download_pdf, name="download_pdf"),
-    path("robots.txt", views.robots_txt, name="robots_txt"),
-    path("test/", lambda request: HttpResponse("WORKING")),
+
+    # ======================================================
+    # OTHER
+    # ======================================================
+
+    path(
+        "contact/",
+        views.contact,
+        name="contact"
+    ),
+
+    path(
+        "delete-account/",
+        views.delete_account,
+        name="delete_account"
+    ),
+
+    path(
+        "logout/",
+        views.logout_user,
+        name="logout"
+    ),
+
+    path(
+        "admin-dashboard/",
+        views.admin_dashboard,
+        name="admin_dashboard"
+    ),
+
+    path(
+        "download/<slug:slug>/",
+        views.download_pdf,
+        name="download_pdf"
+    ),
+
+    path(
+        "robots.txt",
+        views.robots_txt,
+        name="robots_txt"
+    ),
+
+    path(
+        "test/",
+        lambda request: HttpResponse("WORKING")
+    ),
 ]

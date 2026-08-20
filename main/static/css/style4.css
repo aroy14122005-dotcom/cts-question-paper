@@ -593,3 +593,58 @@ body{
     }
 
 }
+
+/* ================================
+   SUBJECT FILTER
+================================ */
+
+.subject-filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin: 18px 0 10px;
+}
+
+.subject-filter label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #17233f;
+    white-space: nowrap;
+}
+
+.subject-filter select {
+    min-width: 220px;
+    padding: 10px 40px 10px 14px;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+
+    background-color: #ffffff;
+    color: #17233f;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+
+    appearance: auto;
+}
+
+.subject-filter select:hover {
+    border-color: #2563eb;
+}
+
+.subject-filter select:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.15);
+}

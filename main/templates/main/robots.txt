@@ -1,0 +1,8 @@
+def robots_txt(request):
+
+    return HttpResponse(
+        "User-agent: *\n"
+        "Allow: /\n\n"
+        "Sitemap: https://cts-question-paper.onrender.com/sitemap.xml\n",
+        content_type="text/plain",
+    )

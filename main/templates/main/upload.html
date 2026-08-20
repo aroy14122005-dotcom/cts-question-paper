@@ -1,21 +1,36 @@
 {% load static %}
+
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{{ subject_name }} | CTS Question Paper</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="{% static 'css/style4.css' %}">
+    <title>
+        {{ subject_name }} | CTS Question Paper
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style4.css' %}"
+    >
+
 </head>
 
 <body>
 
 <div class="upload-container">
 
+    <!-- ================================================== -->
     <!-- HEADER -->
+    <!-- ================================================== -->
 
     <div class="upload-header">
 
@@ -23,56 +38,153 @@
             📚 CTS Question Paper
         </div>
 
-        <h1>{{ subject_name }}</h1>
+        <h1>
+            {{ subject_name }}
+        </h1>
 
         <div class="subject-meta">
 
-            <span>🏛 {{ dept_name|upper }}</span>
+            <span>
+                🏛 {{ dept_name|upper }}
+            </span>
 
-            <span>🎓 Semester {{ sem_no }}</span>
+            <span>
+                🎓 Semester {{ sem_no }}
+            </span>
 
         </div>
 
         <p>
-            Browse previous year question papers and upload new PDFs for this subject.
+            Browse previous year question papers
+            and upload new PDFs for this subject.
         </p>
 
     </div>
 
-    {% if user.is_staff %}
-    <!-- UPLOAD BOX -->
 
-    <div class="upload-box">
+    <!-- ================================================== -->
+    <!-- DJANGO MESSAGES -->
+    <!-- ================================================== -->
 
-        <h2>Upload PDF</h2>
+    {% if messages %}
 
-        <form method="POST" enctype="multipart/form-data">
+        <div class="messages">
 
-            {% csrf_token %}
+            {% for message in messages %}
 
-            <input
-                type="file"
-                name="pdf_file"
-                accept=".pdf"
-                required
-            >
+                <div class="message {{ message.tags }}">
 
-            <button type="submit">
-                ⬆ Upload PDF
-            </button>
+                    {{ message }}
 
-        </form>
+                </div>
 
-    </div>
+            {% endfor %}
+
+        </div>
+
     {% endif %}
 
+
+    <!-- ================================================== -->
+    <!-- UPLOAD BOX -->
+    <!-- ================================================== -->
+
+    {% if user.is_staff %}
+
+        <div class="upload-box">
+
+            <h2>
+                Upload PDF
+            </h2>
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+            >
+
+                {% csrf_token %}
+
+                <!-- ====================================== -->
+                <!-- SUBJECT -->
+                <!-- ====================================== -->
+
+                <label for="upload-subject">
+
+                    📚 Upload Subject
+
+                </label>
+
+                <select
+                    id="upload-subject"
+                    name="upload_subject"
+                    required
+                >
+
+                    <option value="">
+                        Select Subject
+                    </option>
+
+                    {% for subject in subjects %}
+
+                        <option
+                            value="{{ subject }}"
+                            {% if selected_subject == subject %}
+                                selected
+                            {% endif %}
+                        >
+
+                            {{ subject }}
+
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+
+                <!-- ====================================== -->
+                <!-- PDF -->
+                <!-- ====================================== -->
+
+                <input
+                    type="file"
+                    name="pdf_file"
+                    accept="application/pdf,.pdf"
+                    required
+                >
+
+
+                <!-- ====================================== -->
+                <!-- UPLOAD -->
+                <!-- ====================================== -->
+
+                <button type="submit">
+
+                    ⬆ Upload PDF
+
+                </button>
+
+            </form>
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- ================================================== -->
     <!-- PDF SECTION -->
+    <!-- ================================================== -->
 
     <div class="pdf-section">
 
-        <h2>Uploaded PDFs</h2>
+        <h2>
+            Uploaded PDFs
+        </h2>
 
+
+        <!-- ================================================== -->
         <!-- SEARCH + SORT -->
+        <!-- ================================================== -->
 
         <div class="pdf-toolbar">
 
@@ -80,6 +192,7 @@
                 type="text"
                 id="pdf-search"
                 placeholder="🔍 Search PDF..."
+                autocomplete="off"
             >
 
             <select id="pdf-sort">
@@ -96,103 +209,211 @@
 
         </div>
 
+
+        <!-- ================================================== -->
+        <!-- SUBJECT FILTER -->
+        <!-- ================================================== -->
+
+        <div class="subject-filter">
+
+            <label for="subject-filter">
+
+                📚 Subject
+
+            </label>
+
+            <select
+                id="subject-filter"
+                onchange="filterSubject()"
+            >
+
+                {% if not is_subject_upload %}
+
+                    <option value="">
+                        All Subjects
+                    </option>
+
+                {% endif %}
+
+
+                {% for subject in subjects %}
+
+                    <option
+                        value="{{ subject }}"
+                        {% if selected_subject == subject %}
+                            selected
+                        {% endif %}
+                    >
+
+                        {{ subject }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+        <!-- ================================================== -->
         <!-- PDF LIST -->
+        <!-- ================================================== -->
 
         <div id="pdf-list">
 
             {% for pdf in pdfs %}
 
-            <div class="pdf-card">
+                <div
+                    class="pdf-card"
+                    data-filename="{{ pdf.filename|lower }}"
+                    data-date="{{ pdf.uploaded_at|date:'U' }}"
+                >
 
-                <div class="pdf-info">
+                    <!-- ====================================== -->
+                    <!-- PDF INFO -->
+                    <!-- ====================================== -->
 
-                    <div class="pdf-icon">
-                        📄
+                    <div class="pdf-info">
+
+                        <div class="pdf-icon">
+                            📄
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                {{ pdf.filename }}
+                            </h3>
+
+                            <p>
+
+                                📅
+                                {{ pdf.uploaded_at|date:"d M Y" }}
+
+                                &nbsp; • &nbsp;
+
+                                📦
+                                {{ pdf.filesize }}
+
+                            </p>
+
+                        </div>
+
                     </div>
 
-                    <div>
 
-                        <h3>
-                            {{ pdf.filename }}
-                        </h3>
+                    <!-- ====================================== -->
+                    <!-- ACTIONS -->
+                    <!-- ====================================== -->
 
-                        <p>
-                            📅 {{ pdf.uploaded_at|date:"d M Y" }} &nbsp; • &nbsp; 📦 {{ pdf.filesize }}
-                        </p>
+                    <div class="pdf-actions">
+
+                        <!-- ================================== -->
+                        <!-- PREVIEW -->
+                        <!-- ================================== -->
+
+                        <a
+                            href="{{ pdf.pdf_file.url }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="preview-btn"
+                        >
+
+                            👁 Preview
+
+                        </a>
+
+
+                        <!-- ================================== -->
+                        <!-- DOWNLOAD -->
+                        <!-- ================================== -->
+
+                        <a
+                            href="{% url 'download_pdf' pdf.slug %}"
+                            class="download-btn"
+                        >
+
+                            ⬇ Download
+
+                        </a>
+
+
+                        <!-- ================================== -->
+                        <!-- DELETE -->
+                        <!-- ================================== -->
+
+                        {% if user.is_staff %}
+
+                            {% if is_subject_upload %}
+
+                                <form
+                                    method="POST"
+                                    action="{% url 'delete_subject_pdf' pdf.id %}"
+                                    class="delete-form"
+                                    onsubmit="return confirmDelete();"
+                                >
+
+                                    {% csrf_token %}
+
+                                    <button
+                                        type="submit"
+                                        class="delete-btn"
+                                    >
+
+                                        🗑 Delete
+
+                                    </button>
+
+                                </form>
+
+                            {% else %}
+
+                                <form
+                                    method="POST"
+                                    action="{% url 'delete_pdf' pdf.id %}"
+                                    class="delete-form"
+                                    onsubmit="return confirmDelete();"
+                                >
+
+                                    {% csrf_token %}
+
+                                    <button
+                                        type="submit"
+                                        class="delete-btn"
+                                    >
+
+                                        🗑 Delete
+
+                                    </button>
+
+                                </form>
+
+                            {% endif %}
+
+                        {% endif %}
 
                     </div>
 
                 </div>
-
-                <div class="pdf-actions">
-
-                    <a
-                        href="{{ pdf.pdf_file.url }}"
-                        target="_blank"
-                        class="preview-btn">
-
-                        👁 Preview
-
-                    </a>
-
-                    <a
-                        href="{{ pdf.pdf_file.url }}"
-                        download
-                        class="download-btn">
-
-                        ⬇ Download
-
-                    </a>
-
-                    {% if is_subject_upload %}
-
-                    {% if user.is_staff %}
-                    <a
-                        href="{% url 'delete_subject_pdf' pdf.id %}"
-                        class="delete-btn">
-
-                        🗑 Delete
-
-                    </a>
-
-                    {% endif %}
-
-                    {% else %} 
-
-                    {% if user.is_staff %}
-                    <a
-                        href="{% url 'delete_pdf' pdf.id %}"
-                        class="delete-btn">
-
-                        🗑 Delete
-
-                    </a>
-
-                    {% endif %}
-
-                    {% endif %}
-
-                </div>
-
-            </div>
 
             {% empty %}
 
-            <div class="empty-state">
+                <div class="empty-state">
 
-                <div class="empty-icon">
-                    📂
+                    <div class="empty-icon">
+                        📂
+                    </div>
+
+                    <h3>
+                        No PDF Available
+                    </h3>
+
+                    <p>
+                        Upload the first PDF for this subject.
+                    </p>
+
                 </div>
-
-                <h3>
-                    No PDF Available
-                </h3>
-
-                <p>
-                    Upload the first PDF for this subject.
-                </p>
-
-            </div>
 
             {% endfor %}
 
@@ -202,5 +423,206 @@
 
 </div>
 
+
+<!-- ====================================================== -->
+<!-- JAVASCRIPT -->
+<!-- ====================================================== -->
+
+<script>
+
+/* =========================================================
+   SUBJECT FILTER
+   ========================================================= */
+
+function filterSubject() {
+
+    const subjectSelect =
+        document.getElementById(
+            "subject-filter"
+        );
+
+    if (!subjectSelect) {
+        return;
+    }
+
+    const subject =
+        subjectSelect.value.trim();
+
+    const url =
+        new URL(
+            window.location.href
+        );
+
+    if (subject) {
+
+        url.searchParams.set(
+            "subject",
+            subject
+        );
+
+    } else {
+
+        url.searchParams.delete(
+            "subject"
+        );
+
+    }
+
+    window.location.href =
+        url.toString();
+}
+
+
+/* =========================================================
+   SEARCH PDF
+   ========================================================= */
+
+const searchInput =
+    document.getElementById(
+        "pdf-search"
+    );
+
+
+if (searchInput) {
+
+    searchInput.addEventListener(
+        "input",
+        function () {
+
+            const searchText =
+                this.value
+                    .trim()
+                    .toLowerCase();
+
+            const cards =
+                document.querySelectorAll(
+                    ".pdf-card"
+                );
+
+            cards.forEach(
+                function (card) {
+
+                    const filename =
+                        card.dataset.filename
+                        || "";
+
+                    if (
+                        filename.includes(
+                            searchText
+                        )
+                    ) {
+
+                        card.style.display =
+                            "";
+
+                    } else {
+
+                        card.style.display =
+                            "none";
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SORT PDF
+   ========================================================= */
+
+const sortSelect =
+    document.getElementById(
+        "pdf-sort"
+    );
+
+
+if (sortSelect) {
+
+    sortSelect.addEventListener(
+        "change",
+        function () {
+
+            const sortType =
+                this.value;
+
+            const pdfList =
+                document.getElementById(
+                    "pdf-list"
+                );
+
+            if (!pdfList) {
+                return;
+            }
+
+            const cards =
+                Array.from(
+                    pdfList.querySelectorAll(
+                        ".pdf-card"
+                    )
+                );
+
+            cards.sort(
+                function (a, b) {
+
+                    const dateA =
+                        Number(
+                            a.dataset.date
+                        );
+
+                    const dateB =
+                        Number(
+                            b.dataset.date
+                        );
+
+                    if (
+                        sortType ===
+                        "oldest"
+                    ) {
+
+                        return dateA - dateB;
+
+                    }
+
+                    return dateB - dateA;
+
+                }
+            );
+
+            cards.forEach(
+                function (card) {
+
+                    pdfList.appendChild(
+                        card
+                    );
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   DELETE CONFIRMATION
+   ========================================================= */
+
+function confirmDelete() {
+
+    return window.confirm(
+        "Are you sure you want to delete this PDF?"
+    );
+
+}
+
+</script>
+
 </body>
+
 </html>

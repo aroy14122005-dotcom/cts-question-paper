@@ -6,44 +6,75 @@ from django.utils.html import format_html
 from .models import PDFUpload, SubjectPDF, Favorite
 
 
-# ==========================
-# PDF Upload Actions
-# ==========================
+# ==========================================================
+# PDF UPLOAD ACTION
+# ==========================================================
 
-@admin.action(description="🗑 Delete selected papers")
-def delete_selected_papers(modeladmin, request, queryset):
-    queryset.delete()
+@admin.action(
+    description="🗑 Delete selected papers"
+)
+def delete_selected_papers(
+    modeladmin,
+    request,
+    queryset
+):
+
+    for obj in queryset:
+
+        if obj.pdf_file:
+
+            try:
+                obj.pdf_file.delete(
+                    save=False
+                )
+            except Exception:
+                pass
+
+        obj.delete()
 
 
-# ==========================
-# PDF Upload Admin
-# ==========================
+# ==========================================================
+# PDFUpload ADMIN
+# ==========================================================
 
 @admin.register(PDFUpload)
 class PDFUploadAdmin(admin.ModelAdmin):
 
     actions = [
-        delete_selected_papers,
+        delete_selected_papers
     ]
 
     list_display = (
         "id",
         "semester",
+        "subject",
         "pdf_file",
+        "uploaded_at",
     )
 
     list_filter = (
         "semester",
+        "subject",
+        "uploaded_at",
     )
 
     search_fields = (
+        "subject",
         "pdf_file",
     )
 
+    readonly_fields = (
+        "uploaded_at",
+    )
 
-# ==========================
-# Subject PDF Admin
-# ==========================
+    ordering = (
+        "-uploaded_at",
+    )
+
+
+# ==========================================================
+# SubjectPDF ADMIN
+# ==========================================================
 
 @admin.register(SubjectPDF)
 class SubjectPDFAdmin(admin.ModelAdmin):
@@ -54,6 +85,7 @@ class SubjectPDFAdmin(admin.ModelAdmin):
         "semester",
         "subject",
         "uploaded_by",
+        "download_count",
         "preview_pdf",
         "download_pdf",
         "uploaded_at",
@@ -73,6 +105,8 @@ class SubjectPDFAdmin(admin.ModelAdmin):
     search_fields = (
         "subject",
         "department",
+        "slug",
+        "uploaded_by__username",
     )
 
     ordering = (
@@ -82,9 +116,12 @@ class SubjectPDFAdmin(admin.ModelAdmin):
     readonly_fields = (
         "uploaded_at",
         "slug",
+        "download_count",
+        "uploaded_by",
     )
 
     fieldsets = (
+
         (
             "📚 Paper Information",
             {
@@ -96,6 +133,7 @@ class SubjectPDFAdmin(admin.ModelAdmin):
                 )
             },
         ),
+
         (
             "📄 PDF",
             {
@@ -104,6 +142,16 @@ class SubjectPDFAdmin(admin.ModelAdmin):
                 )
             },
         ),
+
+        (
+            "📊 Statistics",
+            {
+                "fields": (
+                    "download_count",
+                )
+            },
+        ),
+
         (
             "👤 Upload Information",
             {
@@ -116,29 +164,37 @@ class SubjectPDFAdmin(admin.ModelAdmin):
     )
 
     def preview_pdf(self, obj):
-        if obj.pdf_file:
-            return format_html(
-                '<a href="{}" target="_blank">📄 View PDF</a>',
-                obj.pdf_file.url,
-            )
-        return "-"
+
+        if not obj.pdf_file:
+            return "-"
+
+        return format_html(
+            '<a href="{}" target="_blank" rel="noopener noreferrer">'
+            '📄 View PDF'
+            '</a>',
+            obj.pdf_file.url,
+        )
 
     preview_pdf.short_description = "Preview"
 
     def download_pdf(self, obj):
-        if obj.pdf_file:
-            return format_html(
-                '<a href="{}" download>⬇ Download</a>',
-                obj.pdf_file.url,
-            )
-        return "-"
+
+        if not obj.pdf_file:
+            return "-"
+
+        return format_html(
+            '<a href="{}" download>'
+            '⬇ Download'
+            '</a>',
+            obj.pdf_file.url,
+        )
 
     download_pdf.short_description = "Download"
 
 
-# ==========================
-# Favorite Admin
-# ==========================
+# ==========================================================
+# FAVORITE ADMIN
+# ==========================================================
 
 @admin.register(Favorite)
 class FavoriteAdmin(admin.ModelAdmin):
@@ -165,9 +221,9 @@ class FavoriteAdmin(admin.ModelAdmin):
     )
 
 
-# ==========================
-# User Admin
-# ==========================
+# ==========================================================
+# USER ADMIN
+# ==========================================================
 
 admin.site.unregister(User)
 
@@ -206,35 +262,9 @@ class CustomUserAdmin(UserAdmin):
     )
 
 
-# ==========================
-# Admin Site Customization
-# ==========================
-
-admin.site.site_header = "CTS Question Paper Admin"
-admin.site.site_title = "CTS Admin"
-teacher_count = User.objects.filter(groups__name="Teacher").count()
-
-student_count = (
-    User.objects
-    .exclude(groups__name="Teacher")
-    .exclude(is_superuser=True)
-    .count()
-)
-
-admin.site.index_title = (
-    f"""
-    📄 Subject PDFs: {SubjectPDF.objects.count()} |
-    📁 PDFs: {PDFUpload.objects.count()} |
-    ❤️ Favorites: {Favorite.objects.count()} |
-    👨‍🏫 Teachers: {teacher_count} |
-    🎓 Students: {student_count} |
-    👤 Total Users: {User.objects.count()}
-    """
-)
-
-# ==========================
-# Group Admin
-# ==========================
+# ==========================================================
+# GROUP ADMIN
+# ==========================================================
 
 admin.site.unregister(Group)
 
@@ -248,17 +278,44 @@ class CustomGroupAdmin(GroupAdmin):
         "member_list",
     )
 
+    search_fields = (
+        "name",
+        "user__username",
+    )
+
     def member_count(self, obj):
+
         return obj.user_set.count()
 
     member_count.short_description = "Members"
 
     def member_list(self, obj):
+
         users = obj.user_set.all()
 
         if not users.exists():
             return "-"
 
-        return ", ".join(user.username for user in users)
+        return ", ".join(
+            user.username
+            for user in users
+        )
 
     member_list.short_description = "Teachers"
+
+
+# ==========================================================
+# ADMIN SITE
+# ==========================================================
+
+admin.site.site_header = (
+    "CTS Question Paper Admin"
+)
+
+admin.site.site_title = (
+    "CTS Admin"
+)
+
+admin.site.index_title = (
+    "📚 CTS Question Paper Management"
+)
