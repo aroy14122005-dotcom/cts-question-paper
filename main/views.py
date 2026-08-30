@@ -299,7 +299,7 @@ def add_file_information(pdfs):
     for pdf in pdfs:
 
         # --------------------------------------------------
-        # Filename
+        # FILENAME
         # --------------------------------------------------
 
         try:
@@ -312,6 +312,26 @@ def add_file_information(pdfs):
                 filename
             )[0]
 
+            # --------------------------------------------------
+            # REMOVE CLOUDINARY RANDOM SUFFIX
+            # --------------------------------------------------
+            #
+            # Example:
+            #
+            # computer-networks-nov-2022_hhfxty
+            #
+            # becomes:
+            #
+            # computer-networks-nov-2022
+            #
+            # --------------------------------------------------
+
+            filename = re.sub(
+                r'_[A-Za-z0-9]+$',
+                '',
+                filename
+            )
+
             pdf.filename = filename
 
         except Exception:
@@ -319,7 +339,7 @@ def add_file_information(pdfs):
             pdf.filename = "Unknown file"
 
         # --------------------------------------------------
-        # File size
+        # FILE SIZE
         # --------------------------------------------------
 
         try:

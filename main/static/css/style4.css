@@ -648,3 +648,112 @@ body{
     box-shadow:
         0 0 0 3px rgba(37, 99, 235, 0.15);
 }
+
+/* ==========================================================
+   DELETE BUTTON
+   ========================================================== */
+
+.delete-form {
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+
+.delete-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: auto;
+    min-width: 100px;
+    height: 46px;
+
+    padding: 0 18px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #dc2626;
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    font-family: inherit;
+
+    line-height: 1;
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.delete-btn:hover {
+    background: #b91c1c;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 5px 12px rgba(220, 38, 38, 0.25);
+}
+
+
+.delete-btn:active {
+    transform: translateY(0);
+
+    box-shadow: none;
+}
+
+
+.delete-btn:focus-visible {
+    outline: 3px solid rgba(220, 38, 38, 0.25);
+    outline-offset: 2px;
+}
+
+
+/* ==========================================================
+   PDF ACTIONS
+   ========================================================== */
+
+.pdf-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+}
+
+
+/* ==========================================================
+   MOBILE
+   ========================================================== */
+
+@media (max-width: 600px) {
+
+    .pdf-actions {
+        width: 100%;
+
+        justify-content: flex-start;
+    }
+
+    .delete-btn {
+        min-width: 100px;
+        height: 44px;
+
+        padding: 0 16px;
+
+        font-size: 14px;
+    }
+
+}
