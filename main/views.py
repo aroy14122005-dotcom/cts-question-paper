@@ -9,14 +9,19 @@ from django.contrib.auth.views import PasswordChangeView
 from django.contrib.admin.views.decorators import staff_member_required
 
 from django.core.exceptions import PermissionDenied
-from django.db.models import Q
-from django.db.models import F
+from django.db.models import Q, F
 from django.http import JsonResponse, FileResponse, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
 
-from .models import PDFUpload, SubjectPDF, Favorite
+from .models import (
+    PDFUpload,
+    SubjectPDF,
+    PreviousYearPaper,
+    SubjectMaterial,
+    Favorite,
+)
 
 
 # ==========================================================
@@ -222,20 +227,29 @@ def validate_pdf_file(pdf_file):
     if not pdf_file:
         return "Please select a PDF file."
 
+    # ------------------------------------------------------
     # File size
+    # ------------------------------------------------------
+
     if pdf_file.size <= 0:
         return "The uploaded file is empty."
 
     if pdf_file.size > MAX_PDF_SIZE:
         return "PDF size must be 10 MB or less."
 
+    # ------------------------------------------------------
     # Extension
+    # ------------------------------------------------------
+
     filename = pdf_file.name.lower()
 
     if not filename.endswith(".pdf"):
         return "Only PDF files are allowed."
 
-    # Content type check
+    # ------------------------------------------------------
+    # Content type
+    # ------------------------------------------------------
+
     content_type = (
         getattr(
             pdf_file,
@@ -252,8 +266,12 @@ def validate_pdf_file(pdf_file):
     ):
         return "Invalid PDF file."
 
+    # ------------------------------------------------------
     # Basic PDF signature check
+    # ------------------------------------------------------
+
     try:
+
         current_position = pdf_file.tell()
 
         pdf_file.seek(0)
@@ -266,6 +284,7 @@ def validate_pdf_file(pdf_file):
             return "The uploaded file is not a valid PDF."
 
     except Exception:
+
         return "Could not validate the PDF file."
 
     return None
@@ -279,9 +298,9 @@ def add_file_information(pdfs):
 
     for pdf in pdfs:
 
-        # ----------------------------------------------
+        # --------------------------------------------------
         # Filename
-        # ----------------------------------------------
+        # --------------------------------------------------
 
         try:
 
@@ -299,10 +318,9 @@ def add_file_information(pdfs):
 
             pdf.filename = "Unknown file"
 
-
-        # ----------------------------------------------
+        # --------------------------------------------------
         # File size
-        # ----------------------------------------------
+        # --------------------------------------------------
 
         try:
 
@@ -359,7 +377,6 @@ def login_page(request):
             ""
         ).strip()
 
-
         # ==================================================
         # REGISTER
         # ==================================================
@@ -381,7 +398,6 @@ def login_page(request):
                 ""
             )
 
-
             if not username:
 
                 messages.error(
@@ -393,7 +409,6 @@ def login_page(request):
                     "login"
                 )
 
-
             if not password:
 
                 messages.error(
@@ -404,7 +419,6 @@ def login_page(request):
                 return redirect(
                     "login"
                 )
-
 
             if User.objects.filter(
                 username__iexact=username
@@ -419,7 +433,6 @@ def login_page(request):
                     "/?login=true"
                 )
 
-
             if email and User.objects.filter(
                 email__iexact=email
             ).exists():
@@ -433,13 +446,11 @@ def login_page(request):
                     "/?login=true"
                 )
 
-
             User.objects.create_user(
                 username=username,
                 email=email,
                 password=password,
             )
-
 
             messages.success(
                 request,
@@ -449,7 +460,6 @@ def login_page(request):
             return redirect(
                 "/?login=true"
             )
-
 
         # ==================================================
         # LOGIN
@@ -467,13 +477,11 @@ def login_page(request):
                 ""
             )
 
-
             user = authenticate(
                 request,
                 username=username,
                 password=password,
             )
-
 
             if user is not None:
 
@@ -486,7 +494,6 @@ def login_page(request):
                     "home"
                 )
 
-
             messages.error(
                 request,
                 "Invalid username or password."
@@ -495,7 +502,6 @@ def login_page(request):
             return redirect(
                 "login"
             )
-
 
     return render(
         request,
@@ -595,7 +601,9 @@ def upload_pdf(request, dept_name, sem_no):
             "Invalid department or semester."
         )
 
-        return redirect("home")
+        return redirect(
+            "home"
+        )
 
     # ======================================================
     # PDF UPLOAD — STAFF ONLY
@@ -683,7 +691,7 @@ def upload_pdf(request, dept_name, sem_no):
         # SAVE PDF
         # --------------------------------------------------
 
-        SubjectPDF.objects.create(
+        PreviousYearPaper.objects.create(
 
             department=dept_name,
 
@@ -743,7 +751,7 @@ def upload_pdf(request, dept_name, sem_no):
     # PDF LIST
     # ======================================================
 
-    pdfs = SubjectPDF.objects.filter(
+    pdfs = PreviousYearPaper.objects.filter(
 
         department=dept_name,
 
@@ -767,57 +775,9 @@ def upload_pdf(request, dept_name, sem_no):
     # FILE INFORMATION
     # ======================================================
 
-    for pdf in pdfs:
-
-        # --------------------------------------------------
-        # CLEAN FILENAME
-        # --------------------------------------------------
-
-        filename = os.path.basename(
-            pdf.pdf_file.name
-        )
-
-        filename = os.path.splitext(
-            filename
-        )[0]
-
-        filename = re.sub(
-            r'_[A-Za-z0-9]+$',
-            '',
-            filename
-        )
-
-        pdf.filename = filename
-
-        # --------------------------------------------------
-        # FILE SIZE
-        # --------------------------------------------------
-
-        try:
-
-            size = pdf.pdf_file.size
-
-            if size < 1024:
-
-                pdf.filesize = (
-                    f"{size} B"
-                )
-
-            elif size < 1024 * 1024:
-
-                pdf.filesize = (
-                    f"{size / 1024:.1f} KB"
-                )
-
-            else:
-
-                pdf.filesize = (
-                    f"{size / (1024 * 1024):.2f} MB"
-                )
-
-        except Exception:
-
-            pdf.filesize = "Unknown size"
+    add_file_information(
+        pdfs
+    )
 
     # ======================================================
     # RENDER
@@ -848,7 +808,7 @@ def upload_pdf(request, dept_name, sem_no):
 
 
 # ==========================================================
-# DELETE PDF
+# DELETE PREVIOUS YEAR PDF
 # ==========================================================
 
 @staff_member_required
@@ -860,7 +820,7 @@ def delete_pdf(request, pdf_id):
     # ======================================================
 
     pdf = get_object_or_404(
-        SubjectPDF,
+        PreviousYearPaper,
         id=pdf_id
     )
 
@@ -871,8 +831,6 @@ def delete_pdf(request, pdf_id):
     dept_name = pdf.department
 
     sem_no = pdf.semester
-
-    subject_name = pdf.subject
 
     # ======================================================
     # DELETE ACTUAL FILE
@@ -941,7 +899,6 @@ def subject_page(
             "home"
         )
 
-
     return render(
         request,
         "main/subjects.html",
@@ -954,6 +911,13 @@ def subject_page(
 
 # ==========================================================
 # SUBJECT UPLOAD
+# ==========================================================
+#
+# Browse Subjects থেকে একটি নির্দিষ্ট subject নির্বাচন করে
+# এই page-এ আসা হয়।
+#
+# তাই এখানে subject dropdown থেকে subject নেওয়ার দরকার নেই।
+# URL-এর subject_name-ই selected subject।
 # ==========================================================
 
 @login_required
@@ -987,26 +951,15 @@ def subject_upload(
             "Invalid department or semester."
         )
 
-        return redirect("home")
+        return redirect(
+            "home"
+        )
 
     # ======================================================
-    # SELECTED SUBJECT
+    # URL SUBJECT VALIDATION
     # ======================================================
 
-    selected_subject = request.GET.get(
-        "subject",
-        ""
-    ).strip()
-
-    if not selected_subject:
-
-        selected_subject = subject_name
-
-    # ======================================================
-    # VALIDATE SUBJECT
-    # ======================================================
-
-    if selected_subject not in semester_subjects:
+    if subject_name not in semester_subjects:
 
         messages.error(
             request,
@@ -1014,11 +967,21 @@ def subject_upload(
         )
 
         return redirect(
-            "subject_upload",
-            dept_name=dept_name,
-            sem_no=sem_no,
-            subject_name=subject_name
+            "subject_page",
+            dept_name=dept_name
         )
+
+    # ======================================================
+    # SELECTED SUBJECT
+    # ======================================================
+    #
+    # Subject URL থেকেই নেওয়া হবে।
+    #
+    # এখানে POST-এর upload_subject-এর উপর
+    # কোনো dependency নেই।
+    # ======================================================
+
+    selected_subject = subject_name
 
     # ======================================================
     # POST — STAFF ONLY
@@ -1057,46 +1020,16 @@ def subject_upload(
                 "subject_upload",
                 dept_name=dept_name,
                 sem_no=sem_no,
-                subject_name=selected_subject
-            )
-
-        # --------------------------------------------------
-        # UPLOAD SUBJECT
-        # --------------------------------------------------
-
-        upload_subject = request.POST.get(
-            "upload_subject",
-            ""
-        ).strip()
-
-        # --------------------------------------------------
-        # DEFAULT SUBJECT
-        # --------------------------------------------------
-
-        if not upload_subject:
-
-            upload_subject = selected_subject
-
-        # --------------------------------------------------
-        # VALIDATE SUBJECT
-        # --------------------------------------------------
-
-        if upload_subject not in semester_subjects:
-
-            messages.error(
-                request,
-                "Invalid subject selected."
-            )
-
-            return redirect(
-                "subject_upload",
-                dept_name=dept_name,
-                sem_no=sem_no,
-                subject_name=selected_subject
+                subject_name=subject_name
             )
 
         # --------------------------------------------------
         # SAVE
+        # --------------------------------------------------
+        #
+        # Subject অবশ্যই URL-এর subject_name।
+        # User POST দিয়ে অন্য subject পাঠালেও
+        # সেটা ব্যবহার হবে না।
         # --------------------------------------------------
 
         SubjectPDF.objects.create(
@@ -1105,7 +1038,7 @@ def subject_upload(
 
             semester=sem_no,
 
-            subject=upload_subject,
+            subject=selected_subject,
 
             pdf_file=pdf_file,
 
@@ -1129,7 +1062,7 @@ def subject_upload(
             "subject_upload",
             dept_name=dept_name,
             sem_no=sem_no,
-            subject_name=upload_subject
+            subject_name=subject_name
         )
 
     # ======================================================
@@ -1158,21 +1091,27 @@ def subject_upload(
         # FILENAME
         # --------------------------------------------------
 
-        filename = os.path.basename(
-            pdf.pdf_file.name
-        )
+        try:
 
-        filename = os.path.splitext(
-            filename
-        )[0]
+            filename = os.path.basename(
+                pdf.pdf_file.name
+            )
 
-        filename = re.sub(
-            r'_[A-Za-z0-9]+$',
-            '',
-            filename
-        )
+            filename = os.path.splitext(
+                filename
+            )[0]
 
-        pdf.filename = filename
+            filename = re.sub(
+                r'_[A-Za-z0-9]+$',
+                '',
+                filename
+            )
+
+            pdf.filename = filename
+
+        except Exception:
+
+            pdf.filename = "Unknown file"
 
         # --------------------------------------------------
         # FILE SIZE
@@ -1315,9 +1254,7 @@ def search_page(request):
         ""
     ).strip()
 
-
     results = SubjectPDF.objects.none()
-
 
     if query:
 
@@ -1327,18 +1264,15 @@ def search_page(request):
             Q(department__icontains=query)
         )
 
-
         if query.isdigit():
 
             filters |= Q(
                 semester=int(query)
             )
 
-
         results = SubjectPDF.objects.filter(
             filters
         )
-
 
         if department:
 
@@ -1346,11 +1280,9 @@ def search_page(request):
                 department=department
             )
 
-
         results = results.order_by(
             "-uploaded_at"
         )
-
 
     return render(
         request,
@@ -1379,8 +1311,10 @@ def search_api(request):
         ""
     ).strip()
 
+    # ======================================================
+    # EMPTY QUERY
+    # ======================================================
 
-    # Empty query → no results
     if not query:
 
         return JsonResponse(
@@ -1388,11 +1322,13 @@ def search_api(request):
             safe=False
         )
 
+    # ======================================================
+    # SEARCH FILTER
+    # ======================================================
 
     filters = Q(
         subject__icontains=query
     )
-
 
     if query.isdigit():
 
@@ -1400,11 +1336,9 @@ def search_api(request):
             semester=int(query)
         )
 
-
     results = SubjectPDF.objects.filter(
         filters
     )
-
 
     if department:
 
@@ -1412,14 +1346,15 @@ def search_api(request):
             department=department
         )
 
-
     results = results.order_by(
         "-uploaded_at"
     )[:8]
 
+    # ======================================================
+    # RESPONSE DATA
+    # ======================================================
 
     data = []
-
 
     for pdf in results:
 
@@ -1432,7 +1367,6 @@ def search_api(request):
                 "semester": pdf.semester,
             }
         )
-
 
     return JsonResponse(
         data,
@@ -1484,7 +1418,6 @@ def favorites(request):
         .order_by("-created_at")
     )
 
-
     return render(
         request,
         "main/favorites.html",
@@ -1493,6 +1426,10 @@ def favorites(request):
         }
     )
 
+
+# ==========================================================
+# ADD FAVORITE
+# ==========================================================
 
 @login_required
 @require_POST
@@ -1506,17 +1443,19 @@ def add_favorite(
         id=paper_id
     )
 
-
     Favorite.objects.get_or_create(
         user=request.user,
         paper=paper
     )
 
-
     return redirect(
         "favorites"
     )
 
+
+# ==========================================================
+# REMOVE FAVORITE
+# ==========================================================
 
 @login_required
 @require_POST
@@ -1530,12 +1469,10 @@ def remove_favorite(
         id=paper_id
     )
 
-
     Favorite.objects.filter(
         user=request.user,
         paper=paper
     ).delete()
-
 
     return redirect(
         "favorites"
@@ -1554,7 +1491,6 @@ def profile(request):
             user=request.user
         ).count()
     )
-
 
     return render(
         request,
@@ -1643,6 +1579,9 @@ def edit_profile(request):
             ""
         ).strip()
 
+        # ==================================================
+        # USERNAME REQUIRED
+        # ==================================================
 
         if not username:
 
@@ -1659,7 +1598,6 @@ def edit_profile(request):
                     "email": email,
                 }
             )
-
 
         # ==================================================
         # USERNAME CHECK
@@ -1685,7 +1623,6 @@ def edit_profile(request):
                 }
             )
 
-
         # ==================================================
         # EMAIL CHECK
         # ==================================================
@@ -1710,10 +1647,14 @@ def edit_profile(request):
                 }
             )
 
+        # ==================================================
+        # UPDATE USER
+        # ==================================================
 
         user = request.user
 
         user.username = username
+
         user.email = email
 
         user.save(
@@ -1723,17 +1664,22 @@ def edit_profile(request):
             ]
         )
 
+        # ==================================================
+        # SUCCESS
+        # ==================================================
 
         messages.success(
             request,
             "Profile updated successfully."
         )
 
-
         return redirect(
             "profile"
         )
 
+    # ======================================================
+    # GET
+    # ======================================================
 
     return render(
         request,
@@ -1760,13 +1706,15 @@ def delete_account(
         ""
     )
 
-
     user = authenticate(
         request,
         username=request.user.username,
         password=password,
     )
 
+    # ======================================================
+    # PASSWORD CHECK
+    # ======================================================
 
     if user is None:
 
@@ -1780,6 +1728,9 @@ def delete_account(
             "main/delete_account.html"
         )
 
+    # ======================================================
+    # DELETE USER
+    # ======================================================
 
     current_user = request.user
 
@@ -1787,12 +1738,14 @@ def delete_account(
 
     current_user.delete()
 
+    # ======================================================
+    # SUCCESS
+    # ======================================================
 
     messages.success(
         request,
         "Your account has been deleted successfully."
     )
-
 
     return redirect(
         "login"
@@ -1809,8 +1762,7 @@ def robots_txt(request):
         "User-agent: *\n"
         "Allow: /\n\n"
         "Sitemap: "
-        "https://cts-question-paper.onrender.com/"
-        "sitemap.xml",
+        "https://cts-question-paper.onrender.com/sitemap.xml\n",
         content_type="text/plain",
     )
 
@@ -1820,6 +1772,10 @@ def robots_txt(request):
 # ==========================================================
 
 def download_pdf(request, slug):
+
+    # ======================================================
+    # FIND PAPER
+    # ======================================================
 
     paper = get_object_or_404(
         SubjectPDF,

@@ -28,6 +28,7 @@
 
 <div class="upload-container">
 
+
     <!-- ================================================== -->
     <!-- HEADER -->
     <!-- ================================================== -->
@@ -97,6 +98,7 @@
                 Upload PDF
             </h2>
 
+
             <form
                 method="POST"
                 enctype="multipart/form-data"
@@ -104,47 +106,87 @@
 
                 {% csrf_token %}
 
-                <!-- ====================================== -->
-                <!-- SUBJECT -->
-                <!-- ====================================== -->
 
-                <label for="upload-subject">
+                <!-- ================================================== -->
+                <!-- NORMAL UPLOAD PAGE -->
+                <!-- ================================================== -->
+                <!--
+                    Normal Upload page-এ Subject manually select
+                    করা যাবে।
+                -->
 
-                    📚 Upload Subject
+                {% if not is_subject_upload %}
 
-                </label>
+                    <label for="upload-subject">
 
-                <select
-                    id="upload-subject"
-                    name="upload_subject"
-                    required
-                >
+                        📚 Upload Subject
 
-                    <option value="">
-                        Select Subject
-                    </option>
+                    </label>
 
-                    {% for subject in subjects %}
 
-                        <option
-                            value="{{ subject }}"
-                            {% if selected_subject == subject %}
-                                selected
-                            {% endif %}
-                        >
+                    <select
+                        id="upload-subject"
+                        name="upload_subject"
+                        required
+                    >
 
-                            {{ subject }}
-
+                        <option value="">
+                            Select Subject
                         </option>
 
-                    {% endfor %}
 
-                </select>
+                        {% for subject in subjects %}
+
+                            <option
+                                value="{{ subject }}"
+                                {% if selected_subject == subject %}
+                                    selected
+                                {% endif %}
+                            >
+
+                                {{ subject }}
+
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
 
 
-                <!-- ====================================== -->
-                <!-- PDF -->
-                <!-- ====================================== -->
+                {% else %}
+
+
+                    <!-- ================================================== -->
+                    <!-- BROWSE SUBJECT UPLOAD PAGE -->
+                    <!-- ================================================== -->
+                    <!--
+                        এখানে Subject dropdown থাকবে না।
+
+                        Browse Subjects থেকে যে Subject select করে
+                        এই page-এ এসেছে, সেটাই automatically selected।
+
+                        views.py:
+                        selected_subject = subject_name
+                    -->
+
+
+                    <div class="selected-subject">
+
+                        📚 Subject:
+
+                        <strong>
+                            {{ subject_name }}
+                        </strong>
+
+                    </div>
+
+
+                {% endif %}
+
+
+                <!-- ================================================== -->
+                <!-- PDF FILE -->
+                <!-- ================================================== -->
 
                 <input
                     type="file"
@@ -154,15 +196,18 @@
                 >
 
 
-                <!-- ====================================== -->
-                <!-- UPLOAD -->
-                <!-- ====================================== -->
+                <!-- ================================================== -->
+                <!-- UPLOAD BUTTON -->
+                <!-- ================================================== -->
 
-                <button type="submit">
+                <button
+                    type="submit"
+                >
 
                     ⬆ Upload PDF
 
                 </button>
+
 
             </form>
 
@@ -195,7 +240,10 @@
                 autocomplete="off"
             >
 
-            <select id="pdf-sort">
+
+            <select
+                id="pdf-sort"
+            >
 
                 <option value="newest">
                     Newest First
@@ -222,10 +270,12 @@
 
             </label>
 
+
             <select
                 id="subject-filter"
                 onchange="filterSubject()"
             >
+
 
                 {% if not is_subject_upload %}
 
@@ -251,6 +301,7 @@
 
                 {% endfor %}
 
+
             </select>
 
         </div>
@@ -262,6 +313,7 @@
 
         <div id="pdf-list">
 
+
             {% for pdf in pdfs %}
 
                 <div
@@ -270,21 +322,29 @@
                     data-date="{{ pdf.uploaded_at|date:'U' }}"
                 >
 
+
                     <!-- ====================================== -->
-                    <!-- PDF INFO -->
+                    <!-- PDF INFORMATION -->
                     <!-- ====================================== -->
 
                     <div class="pdf-info">
 
+
                         <div class="pdf-icon">
+
                             📄
+
                         </div>
+
 
                         <div>
 
                             <h3>
+
                                 {{ pdf.filename }}
+
                             </h3>
+
 
                             <p>
 
@@ -300,6 +360,7 @@
 
                         </div>
 
+
                     </div>
 
 
@@ -308,6 +369,7 @@
                     <!-- ====================================== -->
 
                     <div class="pdf-actions">
+
 
                         <!-- ================================== -->
                         <!-- PREVIEW -->
@@ -345,7 +407,9 @@
 
                         {% if user.is_staff %}
 
+
                             {% if is_subject_upload %}
+
 
                                 <form
                                     method="POST"
@@ -356,6 +420,7 @@
 
                                     {% csrf_token %}
 
+
                                     <button
                                         type="submit"
                                         class="delete-btn"
@@ -365,9 +430,12 @@
 
                                     </button>
 
+
                                 </form>
 
+
                             {% else %}
+
 
                                 <form
                                     method="POST"
@@ -378,6 +446,7 @@
 
                                     {% csrf_token %}
 
+
                                     <button
                                         type="submit"
                                         class="delete-btn"
@@ -387,35 +456,56 @@
 
                                     </button>
 
+
                                 </form>
+
 
                             {% endif %}
 
+
                         {% endif %}
+
 
                     </div>
 
+
                 </div>
 
+
             {% empty %}
+
+
+                <!-- ================================================== -->
+                <!-- EMPTY STATE -->
+                <!-- ================================================== -->
 
                 <div class="empty-state">
 
                     <div class="empty-icon">
+
                         📂
+
                     </div>
 
+
                     <h3>
+
                         No PDF Available
+
                     </h3>
 
+
                     <p>
+
                         Upload the first PDF for this subject.
+
                     </p>
 
                 </div>
 
+
             {% endfor %}
+
 
         </div>
 
@@ -430,6 +520,7 @@
 
 <script>
 
+
 /* =========================================================
    SUBJECT FILTER
    ========================================================= */
@@ -441,17 +532,23 @@ function filterSubject() {
             "subject-filter"
         );
 
+
     if (!subjectSelect) {
+
         return;
+
     }
+
 
     const subject =
         subjectSelect.value.trim();
+
 
     const url =
         new URL(
             window.location.href
         );
+
 
     if (subject) {
 
@@ -468,8 +565,10 @@ function filterSubject() {
 
     }
 
+
     window.location.href =
         url.toString();
+
 }
 
 
@@ -489,22 +588,27 @@ if (searchInput) {
         "input",
         function () {
 
+
             const searchText =
                 this.value
                     .trim()
                     .toLowerCase();
+
 
             const cards =
                 document.querySelectorAll(
                     ".pdf-card"
                 );
 
+
             cards.forEach(
                 function (card) {
+
 
                     const filename =
                         card.dataset.filename
                         || "";
+
 
                     if (
                         filename.includes(
@@ -522,8 +626,10 @@ if (searchInput) {
 
                     }
 
+
                 }
             );
+
 
         }
     );
@@ -547,17 +653,23 @@ if (sortSelect) {
         "change",
         function () {
 
+
             const sortType =
                 this.value;
+
 
             const pdfList =
                 document.getElementById(
                     "pdf-list"
                 );
 
+
             if (!pdfList) {
+
                 return;
+
             }
+
 
             const cards =
                 Array.from(
@@ -566,18 +678,22 @@ if (sortSelect) {
                     )
                 );
 
+
             cards.sort(
                 function (a, b) {
+
 
                     const dateA =
                         Number(
                             a.dataset.date
                         );
 
+
                     const dateB =
                         Number(
                             b.dataset.date
                         );
+
 
                     if (
                         sortType ===
@@ -588,10 +704,13 @@ if (sortSelect) {
 
                     }
 
+
                     return dateB - dateA;
+
 
                 }
             );
+
 
             cards.forEach(
                 function (card) {
@@ -602,6 +721,7 @@ if (sortSelect) {
 
                 }
             );
+
 
         }
     );
@@ -621,7 +741,9 @@ function confirmDelete() {
 
 }
 
+
 </script>
+
 
 </body>
 
