@@ -388,140 +388,117 @@ def admin_dashboard(request):
 # LOGIN / REGISTER
 # ==========================================================
 
+
 def login_page(request):
 
     if request.method == "POST":
 
-        form_type = request.POST.get(
-            "form_type",
-            ""
-        ).strip()
+        form_type = request.POST.get("form_type")
 
-        # ==================================================
-        # REGISTER
-        # ==================================================
+        # =====================================================
+        # LOGIN
+        # =====================================================
 
-        if form_type == "register":
+        if form_type == "login":
 
-            username = request.POST.get(
-                "username",
-                ""
-            ).strip()
+            username = request.POST.get("username", "").strip()
+            password = request.POST.get("password", "")
 
-            email = request.POST.get(
-                "email",
-                ""
-            ).strip()
+            # -------------------------------------------------
+            # CHECK WHETHER USER EXISTS
+            # -------------------------------------------------
 
-            password = request.POST.get(
-                "password",
-                ""
+            user_exists = User.objects.filter(
+                username=username
+            ).exists()
+
+            if not user_exists:
+
+                messages.warning(
+                    request,
+                    "Account not found. Please register first, then login."
+                )
+
+                return redirect(
+                    "/?register=true"
+                )
+
+            # -------------------------------------------------
+            # AUTHENTICATE USER
+            # -------------------------------------------------
+
+            user = authenticate(
+                request,
+                username=username,
+                password=password
             )
 
-            if not username:
+            if user is not None:
+
+                login(request, user)
+
+                return redirect("home")
+
+            else:
 
                 messages.error(
                     request,
-                    "Username is required."
-                )
-
-                return redirect(
-                    "login"
-                )
-
-            if not password:
-
-                messages.error(
-                    request,
-                    "Password is required."
-                )
-
-                return redirect(
-                    "login"
-                )
-
-            if User.objects.filter(
-                username__iexact=username
-            ).exists():
-
-                messages.error(
-                    request,
-                    "Username already exists."
+                    "Incorrect password. Please try again."
                 )
 
                 return redirect(
                     "/?login=true"
                 )
 
-            if email and User.objects.filter(
-                email__iexact=email
-            ).exists():
+
+        # =====================================================
+        # REGISTER
+        # =====================================================
+
+        elif form_type == "register":
+
+            username = request.POST.get("username", "").strip()
+            email = request.POST.get("email", "").strip()
+            password = request.POST.get("password", "")
+
+            # -------------------------------------------------
+            # CHECK USERNAME
+            # -------------------------------------------------
+
+            if User.objects.filter(username=username).exists():
 
                 messages.error(
                     request,
-                    "Email already exists."
+                    "Username already exists. Please choose another username."
                 )
 
                 return redirect(
-                    "/?login=true"
+                    "/?register=true"
                 )
+
+            # -------------------------------------------------
+            # CREATE USER
+            # -------------------------------------------------
 
             User.objects.create_user(
                 username=username,
                 email=email,
-                password=password,
+                password=password
             )
 
             messages.success(
                 request,
-                "Registration successful. Please login."
+                "Registration successful! Please login to continue."
             )
 
             return redirect(
                 "/?login=true"
             )
 
-        # ==================================================
-        # LOGIN
-        # ==================================================
 
-        elif form_type == "login":
-
-            username = request.POST.get(
-                "username",
-                ""
-            ).strip()
-
-            password = request.POST.get(
-                "password",
-                ""
-            )
-
-            user = authenticate(
-                request,
-                username=username,
-                password=password,
-            )
-
-            if user is not None:
-
-                login(
-                    request,
-                    user
-                )
-
-                return redirect(
-                    "home"
-                )
-
-            messages.error(
-                request,
-                "Invalid username or password."
-            )
-
-            return redirect(
-                "login"
-            )
+    # =========================================================
+    # DEFAULT PAGE
+    # =========================================================
 
     return render(
         request,

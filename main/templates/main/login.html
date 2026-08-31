@@ -1,186 +1,1151 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <!-- Boxicons -->
     <link
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-      rel="stylesheet"
-    />
+        href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+        rel="stylesheet"
+    >
 
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2028">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
-    <title>CTS_question paper</title>
-  </head>
+    <!-- Login CSS -->
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}?v=2040"
+    >
 
-  <body>
-    {% if messages %}
+    <title>CTS Question Paper</title>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     BACKGROUND
+========================================================= -->
+
+<div class="login-background"></div>
+
+<div class="background-overlay"></div>
+
+
+<!-- =========================================================
+     DJANGO MESSAGES
+========================================================= -->
+
+{% if messages %}
+
 <div class="message-container">
+
     {% for message in messages %}
+
         <div class="message {{ message.tags }}">
             {{ message }}
         </div>
+
     {% endfor %}
+
 </div>
+
 {% endif %}
-    <div class="wrapper">
 
-      <!-- FORM HEADER -->
-      <div class="form-header">
-        <div class="titles">
-          <!-- Register ke age rakha holo -->
-          <span class="title-register">Register</span>
-          <span class="title-login">Login</span>
-        </div>
-      </div>
 
-      <!-- REGISTER FORM FIRST -->
-      <div class="register-form" style="left: 0px;">
-        <form method="POST">
-          {% csrf_token %}
+<!-- =========================================================
+     MAIN AUTH PAGE
+========================================================= -->
 
-         <input type="hidden" name="form_type" value="register">
-        <div class="input-box">
+<main class="auth-page">
 
-          <input type="text" name="username" id="reg-user" class="input-field" autocomplete="off" required />
 
-          <label for="reg-user" class="label">Username</label>
-          <i class="bx bx-user icon"></i>
-        </div>
+    <!-- =====================================================
+         LEFT BRAND AREA
+    ====================================================== -->
 
-        <div class="input-box">
+    <section class="brand-section">
 
-          <input type="email" name="email" id="email" class="input-field" autocomplete="off" required />
 
-          <label for="email" class="label">Email</label>
-          <i class="bx bx-envelope icon"></i>
-        </div>
+        <!-- BRAND HEADER -->
 
-        <div class="input-box">
+        <div class="brand-header">
 
-          <input type="password" name="password" id="reg-pass" class="input-field" autocomplete="off" required />
+            <div class="brand-logo">
 
-          <label for="reg-pass" class="label">Password</label>
-          <i class="bx bx-lock-alt icon"></i>
-        </div>
+                <!-- YOUR WEBSITE LOGO -->
 
-        <div class="form-cols">
-          <div class="col-1">
-            <input type="checkbox" id="remember" />
-            <label for="remember">
-              I agree to the terms & condition
-            </label>
-          </div>
+                <img
+                    src="{% static 'images/logo.png' %}"
+                    alt="CTS Question Paper Logo"
+                >
+
+            </div>
+
+
+            <div class="brand-title">
+
+                <h2>
+                    CTS Question Paper
+                </h2>
+
+                <p>
+                    Your Academic Partner
+                </p>
+
+            </div>
+
         </div>
 
-        <div class="input-box">
-          <button type="submit" class="btn-submit" id="SignUpBtn">
-          Sign Up <i class="bx bx-user-plus"></i>
-         </button>
+
+        <!-- =================================================
+             HERO
+        ================================================== -->
+
+        <div class="hero-content">
+
+            <p class="welcome-script">
+                Welcome to
+            </p>
+
+            <h1>
+                CTS Question<br>
+                Paper Web
+            </h1>
+
+            <div class="hero-line"></div>
+
+            <p class="hero-description">
+                Your Ultimate Hub for Previous
+                Year Question Papers
+            </p>
+
+
+            <!-- FEATURES -->
+
+            <div class="feature-list">
+
+
+                <div class="feature-item">
+
+                    <div class="feature-icon paper-icon">
+
+                        <i class="bx bx-file"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Previous Year Papers
+                        </h3>
+
+                        <p>
+                            Access semester wise question papers
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <div class="feature-icon upload-icon">
+
+                        <i class="bx bx-cloud-upload"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Easy Upload
+                        </h3>
+
+                        <p>
+                            Contribute and help your peers
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <div class="feature-icon search-icon">
+
+                        <i class="bx bx-search"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Smart Search
+                        </h3>
+
+                        <p>
+                            Find papers quickly and easily
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- QUOTE -->
+
+            <div class="quote-box">
+
+                <i class="bx bxs-quote-alt-left"></i>
+
+                <p>
+                    Education is the most powerful weapon
+                    which you can use to change the world.
+                </p>
+
+                <span>
+                    — Nelson Mandela
+                </span>
+
+            </div>
+
         </div>
 
-        <div class="switch-form">
-          <span>
-            Already have an account?
-            <a href="#" onclick="loginFunction()">Login</a>
-          </span>
-        </div>
-      </div>
-      </form>
 
-      <!-- LOGIN FORM SECOND -->
-      <div class="login-form" style="left: -500px;">
-        <form method="POST">
-       {% csrf_token %}
+        <!-- SECURE LOGIN -->
 
-       <input type="hidden" name="form_type" value="login">
-        <div class="input-box">
+        <div class="secure-login">
 
-          <input type="text" name="username" id="user" class="input-field" required>
+            <i class="bx bx-shield-quarter"></i>
 
-          <label for="user" class="label">Username</label>
-          <i class="bx bx-user icon"></i>
+            <div>
+
+                <strong>
+                    SECURE LOGIN
+                </strong>
+
+                <span>
+                    Your data is safe with us
+                </span>
+
+            </div>
+
         </div>
 
-        <div class="input-box">
-          
-          <input type="password" name="password" id="pass" class="input-field" required>
 
-          <label for="pass" class="label">Password</label>
-          <i class="bx bx-lock-alt icon"></i>
+    </section>
+
+
+
+    <!-- =====================================================
+         RIGHT AUTH AREA
+    ====================================================== -->
+
+    <section class="auth-section">
+
+
+        <div class="auth-card">
+
+
+            <!-- =================================================
+                 LOGIN
+            ================================================== -->
+
+            <div
+                class="auth-form login-form"
+                id="loginForm"
+            >
+
+
+                <div class="auth-icon">
+
+                    <i class="bx bx-lock-alt"></i>
+
+                </div>
+
+
+                <h2>
+                    Welcome Back <span>👋</span>
+                </h2>
+
+
+                <p class="auth-subtitle">
+                    Login to continue to your account
+                </p>
+
+
+                <form
+                    method="POST"
+                    id="loginFormElement"
+                >
+
+                    {% csrf_token %}
+
+                    <input
+                        type="hidden"
+                        name="form_type"
+                        value="login"
+                    >
+
+
+                    <!-- USERNAME -->
+
+                    <div class="modern-input">
+
+                        <label for="login-username">
+                            Username
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="bx bx-user"></i>
+
+                            <input
+                                type="text"
+                                id="login-username"
+                                name="username"
+                                placeholder="Enter your username"
+                                autocomplete="username"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="modern-input">
+
+                        <label for="login-password">
+                            Password
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="bx bx-lock-alt"></i>
+
+                            <input
+                                type="password"
+                                id="login-password"
+                                name="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-target="login-password"
+                                aria-label="Show password"
+                            >
+
+                                <i class="bx bx-show"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- LOGIN OPTIONS -->
+
+                    <div class="login-options">
+
+                        <label class="remember-label">
+
+                            <input
+                                type="checkbox"
+                                id="rememberMe"
+                            >
+
+                            <span class="custom-checkbox"></span>
+
+                            <span>
+                                Remember me
+                            </span>
+
+                        </label>
+
+
+                        <a
+                            href="{% url 'password_reset' %}"
+                            class="forgot-link"
+                        >
+                            Forgot Password?
+                        </a>
+
+                    </div>
+
+
+                    <!-- LOGIN BUTTON -->
+
+                    <button
+                        type="submit"
+                        class="main-btn"
+                    >
+
+                        <span>
+                            Login
+                        </span>
+
+                        <i class="bx bx-right-arrow-alt"></i>
+
+                    </button>
+
+                </form>
+
+
+                <!-- DIVIDER -->
+
+                <div class="divider">
+
+                    <span></span>
+
+                    <p>OR</p>
+
+                    <span></span>
+
+                </div>
+
+
+                <!-- REGISTER -->
+
+                <div class="switch-text">
+
+                    <p>
+                        Don't have an account?
+                    </p>
+
+                    <button
+                        type="button"
+                        class="outline-btn"
+                        onclick="showRegister()"
+                    >
+
+                        <i class="bx bx-user-plus"></i>
+
+                        Register Now
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 REGISTER
+            ================================================== -->
+
+            <div
+                class="auth-form register-form"
+                id="registerForm"
+            >
+
+
+                <div class="auth-icon">
+
+                    <i class="bx bx-user-plus"></i>
+
+                </div>
+
+
+                <h2>
+                    Create Account ✨
+                </h2>
+
+
+                <p class="auth-subtitle">
+                    Join CTS Question Paper today
+                </p>
+
+
+                <form
+                    method="POST"
+                    id="registerFormElement"
+                >
+
+                    {% csrf_token %}
+
+                    <input
+                        type="hidden"
+                        name="form_type"
+                        value="register"
+                    >
+
+
+                    <!-- USERNAME -->
+
+                    <div class="modern-input">
+
+                        <label for="register-username">
+                            Username
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="bx bx-user"></i>
+
+                            <input
+                                type="text"
+                                id="register-username"
+                                name="username"
+                                placeholder="Choose a username"
+                                autocomplete="username"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="modern-input">
+
+                        <label for="register-email">
+                            Email
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="bx bx-envelope"></i>
+
+                            <input
+                                type="email"
+                                id="register-email"
+                                name="email"
+                                placeholder="Enter your email"
+                                autocomplete="email"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="modern-input">
+
+                        <label for="register-password">
+                            Password
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="bx bx-lock-alt"></i>
+
+                            <input
+                                type="password"
+                                id="register-password"
+                                name="password"
+                                placeholder="Create a password"
+                                autocomplete="new-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-target="register-password"
+                                aria-label="Show password"
+                            >
+
+                                <i class="bx bx-show"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TERMS -->
+
+                    <div class="terms-area">
+
+                        <label class="terms-label">
+
+                            <input
+                                type="checkbox"
+                                id="termsCheckbox"
+                                name="terms_agreed"
+                                value="yes"
+                            >
+
+                            <span class="custom-checkbox"></span>
+
+                            <span>
+
+                                I agree to the
+
+                                <button
+                                    type="button"
+                                    id="termsLink"
+                                >
+                                    Terms & Conditions
+                                </button>
+
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- REGISTER BUTTON -->
+
+                    <button
+                        type="submit"
+                        class="main-btn register-btn"
+                        id="registerButton"
+                        disabled
+                    >
+
+                        <span>
+                            Register Now
+                        </span>
+
+                        <i class="bx bx-user-plus"></i>
+
+                    </button>
+
+                </form>
+
+
+                <!-- DIVIDER -->
+
+                <div class="divider">
+
+                    <span></span>
+
+                    <p>OR</p>
+
+                    <span></span>
+
+                </div>
+
+
+                <!-- LOGIN -->
+
+                <div class="switch-text">
+
+                    <p>
+                        Already have an account?
+                    </p>
+
+                    <button
+                        type="button"
+                        class="outline-btn"
+                        onclick="showLogin()"
+                    >
+
+                        <i class="bx bx-log-in"></i>
+
+                        Login
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
         </div>
 
-        <div class="form-cols">
-          <div class="col-2">
-            <a href="{% url 'password_reset' %}">
-                Forgot password?
-            </a>
-          </div>
+    </section>
+
+
+</main>
+
+
+
+<!-- =========================================================
+     TERMS MODAL
+========================================================= -->
+
+<div
+    class="terms-modal"
+    id="termsModal"
+>
+
+    <div class="terms-box">
+
+
+        <button
+            type="button"
+            class="terms-close"
+            id="termsClose"
+        >
+
+            <i class="bx bx-x"></i>
+
+        </button>
+
+
+        <div class="terms-modal-icon">
+
+            <i class="bx bx-file"></i>
+
         </div>
 
-        <button type="submit" class="btn-submit" id="SignInBtn">
-          Login <i class="bx bx-log-in"></i>
-          </button>
-          
-        <div class="switch-form">
-          <span>
-            Don't have an account?
-            <a href="#" onclick="registerFunction()">Register</a>
-          </span>
+
+        <h2>
+            Terms & Conditions
+        </h2>
+
+
+        <div class="terms-content">
+
+
+            <h3>
+                1. Account Responsibility
+            </h3>
+
+            <p>
+                You are responsible for maintaining the
+                confidentiality of your account information
+                and password.
+            </p>
+
+
+            <h3>
+                2. Question Papers
+            </h3>
+
+            <p>
+                Uploaded question papers should be related
+                to academic purposes and should not contain
+                harmful or inappropriate content.
+            </p>
+
+
+            <h3>
+                3. Respectful Usage
+            </h3>
+
+            <p>
+                Users should use this website responsibly
+                and respect other students and contributors.
+            </p>
+
+
+            <h3>
+                4. Uploaded Content
+            </h3>
+
+            <p>
+                Do not upload content that violates applicable
+                laws, copyrights, or the rights of others.
+            </p>
+
+
+            <h3>
+                5. Website Usage
+            </h3>
+
+            <p>
+                CTS Question Paper is intended primarily for
+                educational and academic purposes.
+            </p>
+
+
+            <h3>
+                6. Agreement
+            </h3>
+
+            <p>
+                By creating an account, you agree to follow
+                these terms and use the platform responsibly.
+            </p>
+
+
         </div>
-        </form>
-      </div>
+
+
+        <button
+            type="button"
+            class="terms-agree-btn"
+            id="termsAgree"
+        >
+
+            I Agree & Continue
+
+            <i class="bx bx-check"></i>
+
+        </button>
+
+
     </div>
 
-    <div class="toaster">
-      <p>Logged In !</p>
-    </div>
+</div>
 
-    <!-- SCRIPT -->
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
 <script>
-  function loginFunction() {
-    document.querySelector(".login-form").style.left = "32px";
-    document.querySelector(".register-form").style.left = "100%";
 
-    document.querySelector(".title-login").style.top = "-10px";
-    document.querySelector(".title-register").style.top = "-60px";
-  }
 
-  function registerFunction() {
-    document.querySelector(".login-form").style.left = "-100%";
-    document.querySelector(".register-form").style.left = "32px";
+/* =========================================================
+   LOGIN / REGISTER SWITCH
+========================================================= */
 
-    document.querySelector(".title-login").style.top = "40px";
-    document.querySelector(".title-register").style.top = "-10px";
-  }
+function showLogin() {
 
-  window.onload = function () {
+    document
+        .getElementById("registerForm")
+        .classList.remove("active");
 
-    const params = new URLSearchParams(window.location.search);
+    document
+        .getElementById("loginForm")
+        .classList.add("active");
+
+}
+
+
+function showRegister() {
+
+    document
+        .getElementById("loginForm")
+        .classList.remove("active");
+
+    document
+        .getElementById("registerForm")
+        .classList.add("active");
+
+}
+
+
+
+/* =========================================================
+   PASSWORD SHOW / HIDE
+========================================================= */
+
+document
+    .querySelectorAll(".password-toggle")
+    .forEach(function(button) {
+
+        button.addEventListener("click", function() {
+
+            const targetId =
+                button.getAttribute("data-target");
+
+            const passwordInput =
+                document.getElementById(targetId);
+
+            const icon =
+                button.querySelector("i");
+
+
+            if (passwordInput.type === "password") {
+
+                passwordInput.type = "text";
+
+                icon.classList.remove("bx-show");
+
+                icon.classList.add("bx-hide");
+
+                button.setAttribute(
+                    "aria-label",
+                    "Hide password"
+                );
+
+            } else {
+
+                passwordInput.type = "password";
+
+                icon.classList.remove("bx-hide");
+
+                icon.classList.add("bx-show");
+
+                button.setAttribute(
+                    "aria-label",
+                    "Show password"
+                );
+
+            }
+
+        });
+
+    });
+
+
+
+/* =========================================================
+   REMEMBER USERNAME
+========================================================= */
+
+const rememberMe =
+    document.getElementById("rememberMe");
+
+const usernameInput =
+    document.getElementById("login-username");
+
+
+const savedUsername =
+    localStorage.getItem(
+        "cts_remembered_username"
+    );
+
+
+if (savedUsername) {
+
+    usernameInput.value =
+        savedUsername;
+
+    rememberMe.checked = true;
+
+}
+
+
+document
+    .getElementById("loginFormElement")
+    .addEventListener("submit", function() {
+
+        if (rememberMe.checked) {
+
+            localStorage.setItem(
+                "cts_remembered_username",
+                usernameInput.value.trim()
+            );
+
+        } else {
+
+            localStorage.removeItem(
+                "cts_remembered_username"
+            );
+
+        }
+
+    });
+
+
+
+/* =========================================================
+   TERMS MODAL
+========================================================= */
+
+const termsCheckbox =
+    document.getElementById("termsCheckbox");
+
+const termsModal =
+    document.getElementById("termsModal");
+
+const termsLink =
+    document.getElementById("termsLink");
+
+const termsClose =
+    document.getElementById("termsClose");
+
+const termsAgree =
+    document.getElementById("termsAgree");
+
+const registerButton =
+    document.getElementById("registerButton");
+
+
+
+/* OPEN TERMS */
+
+termsLink.addEventListener(
+    "click",
+    function() {
+
+        termsModal.classList.add("show");
+
+    }
+);
+
+
+
+/* CHECKBOX */
+
+termsCheckbox.addEventListener(
+    "click",
+    function(event) {
+
+        if (!termsCheckbox.checked) {
+
+            return;
+
+        }
+
+        event.preventDefault();
+
+        termsModal.classList.add("show");
+
+    }
+);
+
+
+
+/* CLOSE */
+
+termsClose.addEventListener(
+    "click",
+    function() {
+
+        termsModal.classList.remove("show");
+
+    }
+);
+
+
+
+/* AGREE */
+
+termsAgree.addEventListener(
+    "click",
+    function() {
+
+        termsCheckbox.checked = true;
+
+        registerButton.disabled = false;
+
+        termsModal.classList.remove("show");
+
+    }
+);
+
+
+
+/* OUTSIDE CLICK */
+
+termsModal.addEventListener(
+    "click",
+    function(event) {
+
+        if (event.target === termsModal) {
+
+            termsModal.classList.remove("show");
+
+        }
+
+    }
+);
+
+
+
+/* REGISTER VALIDATION */
+
+document
+    .getElementById("registerFormElement")
+    .addEventListener(
+        "submit",
+        function(event) {
+
+            if (!termsCheckbox.checked) {
+
+                event.preventDefault();
+
+                termsModal.classList.add("show");
+
+            }
+
+        }
+    );
+
+
+
+/* =========================================================
+   INITIAL FORM
+========================================================= */
+
+window.addEventListener("load", function () {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
 
     if (params.get("login") === "true") {
-      loginFunction();
+
+        showLogin();
+
+    } else if (params.get("register") === "true") {
+
+        showRegister();
+
     } else {
-      registerFunction();
-    }
-  };
 
-setTimeout(function(){
+        showRegister();
 
-    const messages = document.querySelector(".message-container");
-
-    if(messages){
-        messages.style.opacity = "0";
-
-        setTimeout(function(){
-            messages.remove();
-        },300);
     }
 
-},3000);
+});
+
+
+
+/* =========================================================
+   DJANGO MESSAGE AUTO HIDE
+========================================================= */
+
+setTimeout(
+    function() {
+
+        const messages =
+            document.querySelector(
+                ".message-container"
+            );
+
+
+        if (messages) {
+
+            messages.style.opacity = "0";
+
+            setTimeout(
+                function() {
+
+                    messages.remove();
+
+                },
+                400
+            );
+
+        }
+
+    },
+    3500
+);
+
+
 </script>
-  </body>
+
+
+</body>
+
 </html>
