@@ -757,3 +757,95 @@ body{
     }
 
 }
+
+/* ================================
+   PREMIUM SUCCESS MESSAGE
+   ================================ */
+
+.messages-container {
+    position: fixed;
+    top: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: auto;
+    max-width: 90%;
+    pointer-events: none;
+}
+
+.message {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 11px 20px;
+
+    min-width: 260px;
+    max-width: 420px;
+
+    border-radius: 12px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    background: rgba(255, 255, 255, 0.95);
+    color: #172554;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.15),
+        0 3px 10px rgba(0, 0, 0, 0.08);
+
+    backdrop-filter: blur(12px);
+
+    animation:
+        messageSlideDown 0.45s ease forwards,
+        messageFadeOut 0.5s ease 2.5s forwards;
+}
+
+/* Green success message */
+
+.message.success {
+    border-left: 4px solid #16a34a;
+}
+
+/* Success icon */
+
+.message.success i {
+    font-size: 22px;
+    color: #16a34a;
+    flex-shrink: 0;
+}
+
+/* Animation */
+
+@keyframes messageSlideDown {
+
+    0% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes messageFadeOut {
+
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.96);
+        visibility: hidden;
+    }
+}

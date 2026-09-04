@@ -2631,3 +2631,870 @@ body {
         font-size: 11px;
     }
 }
+
+/* =========================================================
+   PASSWORD RESET SUCCESS PAGE
+========================================================= */
+
+.success-page {
+
+    width: 100%;
+    min-height: 100dvh;
+
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding:
+        clamp(22px, 4vh, 38px)
+        clamp(25px, 5vw, 80px);
+
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.success-brand {
+
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+}
+
+
+.success-brand .brand-logo {
+
+    width: 58px;
+    height: 58px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    border:
+        2px solid
+        rgba(255,255,255,0.85);
+
+    background:
+        rgba(255,255,255,0.09);
+
+    backdrop-filter:
+        blur(10px);
+
+    overflow: hidden;
+
+}
+
+
+.success-brand .brand-logo img {
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    padding: 7px;
+
+}
+
+
+.success-brand .brand-title h2 {
+
+    font-family: "Outfit", sans-serif;
+
+    font-size: 21px;
+
+    font-weight: 700;
+
+    line-height: 1.2;
+
+}
+
+
+.success-brand .brand-title p {
+
+    margin-top: 3px;
+
+    font-size: 12px;
+
+    color:
+        rgba(255,255,255,0.70);
+
+}
+
+
+/* =========================================================
+   SUCCESS CARD
+========================================================= */
+
+.success-card {
+
+    width: min(520px, 100%);
+
+    margin-top: clamp(65px, 10vh, 110px);
+
+    padding:
+        42px 45px 34px;
+
+    position: relative;
+
+    text-align: center;
+
+    border-radius: 25px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.72);
+
+    background:
+        rgba(246,248,252,0.84);
+
+    backdrop-filter:
+        blur(22px);
+
+    -webkit-backdrop-filter:
+        blur(22px);
+
+    box-shadow:
+        0 30px 80px
+        rgba(0,0,0,0.30);
+
+    overflow: hidden;
+
+}
+
+
+/* CARD GLOW */
+
+.success-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 230px;
+    height: 230px;
+
+    top: -135px;
+    right: -80px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(50,150,255,0.18);
+
+    filter:
+        blur(18px);
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   SUCCESS ICON
+========================================================= */
+
+.success-icon {
+
+    width: 94px;
+    height: 94px;
+
+    margin:
+        0 auto 17px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(35,190,95,0.10);
+
+    border:
+        2px solid
+        rgba(35,190,95,0.25);
+
+    box-shadow:
+        0 10px 30px
+        rgba(35,170,90,0.14);
+
+    animation:
+        successPop 0.5s ease;
+
+}
+
+
+.success-icon i {
+
+    font-size: 55px;
+
+    color:
+        #18b957;
+
+}
+
+
+@keyframes successPop {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            scale(0.65);
+
+    }
+
+    70% {
+
+        transform:
+            scale(1.08);
+
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            scale(1);
+
+    }
+
+}
+
+
+/* =========================================================
+   LABEL
+========================================================= */
+
+.success-label {
+
+    display: inline-block;
+
+    padding:
+        5px 12px;
+
+    margin-bottom: 12px;
+
+    border-radius: 50px;
+
+    background:
+        rgba(35,185,90,0.10);
+
+    color:
+        #15994a;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.success-card h1 {
+
+    position: relative;
+    z-index: 1;
+
+    font-family:
+        "Outfit",
+        sans-serif;
+
+    font-size:
+        clamp(30px, 3vw, 38px);
+
+    line-height: 1.12;
+
+    font-weight: 800;
+
+    letter-spacing: -0.8px;
+
+    color:
+        #101b38;
+
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.success-description {
+
+    max-width: 390px;
+
+    margin:
+        12px auto 22px;
+
+    font-size: 13px;
+
+    line-height: 1.65;
+
+    color:
+        #68738a;
+
+}
+
+
+/* =========================================================
+   SECURITY MESSAGE
+========================================================= */
+
+.security-message {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding:
+        13px 15px;
+
+    margin-bottom: 18px;
+
+    text-align: left;
+
+    border-radius: 12px;
+
+    border:
+        1px solid
+        rgba(35,185,90,0.15);
+
+    background:
+        rgba(35,185,90,0.055);
+
+}
+
+
+.security-icon {
+
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background:
+        rgba(35,185,90,0.12);
+
+}
+
+
+.security-icon i {
+
+    font-size: 21px;
+
+    color:
+        #18aa53;
+
+}
+
+
+.security-message strong {
+
+    display: block;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    color:
+        #1d5939;
+
+}
+
+
+.security-message span {
+
+    display: block;
+
+    margin-top: 2px;
+
+    font-size: 10px;
+
+    color:
+        #718074;
+
+}
+
+
+/* =========================================================
+   LOGIN BUTTON
+========================================================= */
+
+.success-btn {
+
+    width: 100%;
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    background:
+        linear-gradient(
+            90deg,
+            #246ce8,
+            #4d43d7
+        );
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    box-shadow:
+        0 9px 22px
+        rgba(47,103,225,0.22);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+.success-btn i {
+
+    font-size: 20px;
+
+    transition:
+        transform 0.2s ease;
+
+}
+
+
+.success-btn:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 13px 28px
+        rgba(47,103,225,0.30);
+
+}
+
+
+.success-btn:hover i {
+
+    transform:
+        translateX(3px);
+
+}
+
+
+.success-btn:active {
+
+    transform:
+        translateY(0);
+
+}
+
+
+/* =========================================================
+   DIVIDER
+========================================================= */
+
+.success-divider {
+
+    margin:
+        22px 0 15px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+}
+
+
+.success-divider span {
+
+    height: 1px;
+
+    flex: 1;
+
+    background:
+        rgba(90,100,120,0.20);
+
+}
+
+
+.success-divider p {
+
+    font-size: 9px;
+
+    color:
+        #737d90;
+
+    letter-spacing:
+        0.5px;
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.success-footer {
+
+    font-size: 10px;
+
+    line-height: 1.6;
+
+    color:
+        #7a8495;
+
+}
+
+
+.success-footer strong {
+
+    color:
+        #465269;
+
+}
+
+
+/* =========================================================
+   BOTTOM SECURITY
+========================================================= */
+
+.success-security {
+
+    width: min(520px, 100%);
+
+    margin-top: 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: white;
+
+}
+
+
+.success-security > i {
+
+    font-size: 27px;
+
+    color:
+        rgba(255,255,255,0.88);
+
+}
+
+
+.success-security strong {
+
+    display: block;
+
+    font-size: 10px;
+
+    letter-spacing:
+        0.4px;
+
+}
+
+
+.success-security span {
+
+    display: block;
+
+    margin-top: 2px;
+
+    font-size: 9px;
+
+    color:
+        rgba(255,255,255,0.60);
+
+}
+
+
+/* =========================================================
+   SMALL DESKTOP
+========================================================= */
+
+@media (max-height: 750px) and (min-width: 801px) {
+
+    .success-page {
+
+        padding-top: 18px;
+        padding-bottom: 18px;
+
+    }
+
+
+    .success-card {
+
+        margin-top: 45px;
+
+        padding:
+            30px 38px 25px;
+
+    }
+
+
+    .success-icon {
+
+        width: 75px;
+        height: 75px;
+
+        margin-bottom: 12px;
+
+    }
+
+
+    .success-icon i {
+
+        font-size: 44px;
+
+    }
+
+
+    .success-card h1 {
+
+        font-size: 29px;
+
+    }
+
+
+    .success-description {
+
+        margin-top: 9px;
+        margin-bottom: 16px;
+
+        font-size: 11px;
+
+    }
+
+
+    .security-message {
+
+        padding: 10px 12px;
+
+        margin-bottom: 13px;
+
+    }
+
+
+    .success-btn {
+
+        height: 45px;
+
+    }
+
+
+    .success-divider {
+
+        margin-top: 15px;
+        margin-bottom: 10px;
+
+    }
+
+
+    .success-security {
+
+        margin-top: 15px;
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 800px) {
+
+    .success-page {
+
+        min-height: 100vh;
+
+        padding:
+            22px 18px 30px;
+
+    }
+
+
+    .success-card {
+
+        width: 100%;
+
+        margin-top: 55px;
+
+        padding:
+            32px 21px 27px;
+
+        border-radius: 20px;
+
+    }
+
+
+    .success-icon {
+
+        width: 82px;
+        height: 82px;
+
+    }
+
+
+    .success-icon i {
+
+        font-size: 48px;
+
+    }
+
+
+    .success-card h1 {
+
+        font-size: 30px;
+
+    }
+
+
+    .success-description {
+
+        font-size: 12px;
+
+    }
+
+
+    .success-security {
+
+        width: 100%;
+
+        margin-top: 20px;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 430px) {
+
+    .success-page {
+
+        padding:
+            18px 12px 25px;
+
+    }
+
+
+    .success-brand .brand-logo {
+
+        width: 50px;
+        height: 50px;
+
+    }
+
+
+    .success-brand .brand-title h2 {
+
+        font-size: 18px;
+
+    }
+
+
+    .success-brand .brand-title p {
+
+        font-size: 10px;
+
+    }
+
+
+    .success-card {
+
+        margin-top: 40px;
+
+        padding:
+            28px 17px 24px;
+
+    }
+
+
+    .success-icon {
+
+        width: 76px;
+        height: 76px;
+
+    }
+
+
+    .success-icon i {
+
+        font-size: 44px;
+
+    }
+
+
+    .success-card h1 {
+
+        font-size: 27px;
+
+    }
+
+
+    .success-description {
+
+        font-size: 11px;
+
+    }
+
+
+    .security-message span {
+
+        font-size: 9px;
+
+    }
+
+}
