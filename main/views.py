@@ -14,6 +14,7 @@ from django.http import JsonResponse, FileResponse, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
+from django.http import HttpResponse
 
 from .models import (
     PDFUpload,
@@ -1840,3 +1841,6 @@ def download_pdf(request, slug):
             paper.pdf_file.name
         ),
     )
+
+def health_check(request):
+    return HttpResponse("OK")

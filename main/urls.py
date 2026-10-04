@@ -225,4 +225,10 @@ urlpatterns = [
         "test/",
         lambda request: HttpResponse("WORKING")
     ),
+
+    path(
+    "health/",
+    views.health_check,
+    name="health_check"
+    ),
 ]
